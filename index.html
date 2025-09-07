@@ -315,7 +315,8 @@
             }
 
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 2.2rem;
+                white-space: pre-wrap; /* 允許換行 */
             }
 
             .hero p {
@@ -328,6 +329,12 @@
             }
 
             .section-title {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
                 font-size: 2rem;
             }
         }
@@ -376,7 +383,7 @@
 
     <!-- 首頁 -->
     <section id="home" class="hero">
-        <h1>Ecoshane 永續顧問</h1>
+        <h1>Ecoshane<br>永續顧問</h1>
         <p>致力於協助企業實現永續發展目標的專業顧問公司</p>
         <a href="#about" class="cta-button">了解更多</a>
         <div class="scroll-indicator"></div>
