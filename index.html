@@ -148,13 +148,13 @@
 
         /* 關於我們 */
         .about-content {
-            text-align: center;
+            text-align: left; /* 將置中改為靠左 */
             font-size: 1.2rem;
             line-height: 1.8;
             margin-bottom: 4rem;
             color: #666;
         }
-
+        
         .team-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -250,7 +250,11 @@
         }
 
         .contact-content {
-            text-align: center;
+            text-align: left; /* 將置中改為靠左 */
+        }
+        
+        .contact-content p {
+            text-align: left; /* 調整聯絡我們區塊的段落文字靠左對齊 */
         }
 
         .contact-info {
@@ -258,6 +262,7 @@
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
             margin: 3rem 0;
+            text-align: center; /* 讓聯絡資訊卡片內的文字維持置中，視覺上更平衡 */
         }
 
         .contact-item {
@@ -459,7 +464,7 @@
                 </div>
             </div>
             
-            <div style="margin-top: 3rem; padding: 2rem; background: rgba(255, 255, 255, 0.1); border-radius: 15px;">
+            <div style="margin-top: 3rem; padding: 2rem; background: rgba(255, 255, 255, 0.1); border-radius: 15px; text-align: center;">
                 <h3>智慧客服系統</h3>
                 <p>智慧客服系統正在建置中，敬請期待！</p>
             </div>
