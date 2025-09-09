@@ -248,6 +248,18 @@
         }
 
         /* 成功案例卡片 - 獨立樣式 */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .portfolio-card {
             background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
             color: white;
@@ -295,28 +307,7 @@
             position: relative;
             z-index: 2;
         }
-
-        .download-link {
-            display: inline-block;
-            margin-top: 1.5rem;
-            padding: 10px 20px;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 2;
-            text-align: center;
-        }
-
-        .download-link:hover {
-            background: white;
-            color: #182848;
-            transform: translateY(-2px);
-        }
-
+        
         /* 聯絡我們 */
         .contact {
             background: #2c5530;
@@ -520,14 +511,13 @@
 
     <section id="portfolio" class="section services">
         <h2 class="section-title">成功案例</h2>
-        <div class="services-grid">
+        <div class="portfolio-grid">
             <div class="portfolio-card">
                 <div>
                     <h3>範例客戶 A</h3>
                     <p><strong>服務項目：</strong> 碳盤查與減碳策略規劃</p>
                     <p><strong>專案成果：</strong> 協助企業建立碳排放基線，並成功將年度碳排量降低 15%。</p>
                 </div>
-                <a href="文件下載網址.pdf" class="download-link" target="_blank" download>下載詳細文件</a>
             </div>
             <div class="portfolio-card">
                 <div>
@@ -535,7 +525,6 @@
                     <p><strong>服務項目：</strong> 永續報告書撰寫</p>
                     <p><strong>專案成果：</strong> 協助撰寫符合 GRI 準則的永續報告書，提升品牌信賴度。</p>
                 </div>
-                <a href="文件下載網址.pdf" class="download-link" target="_blank" download>下載詳細文件</a>
             </div>
             <div class="portfolio-card">
                 <div>
@@ -543,7 +532,6 @@
                     <p><strong>服務項目：</strong> 永續供應鏈管理輔導</p>
                     <p><strong>專案成果：</strong> 成功導入綠色供應鏈標準，使超過 80% 的供應商符合 ESG 要求。</p>
                 </div>
-                <a href="文件下載網址.pdf" class="download-link" target="_blank" download>下載詳細文件</a>
             </div>
             <div class="portfolio-card">
                 <div>
@@ -551,7 +539,6 @@
                     <p><strong>服務項目：</strong> 綠色轉型與再生能源評估</p>
                     <p><strong>專案成果：</strong> 評估並導入太陽能發電系統，每年減少 50 噸碳排放。</p>
                 </div>
-                <a href="文件下載網址.pdf" class="download-link" target="_blank" download>下載詳細文件</a>
             </div>
         </div>
     </section>
