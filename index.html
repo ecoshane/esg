@@ -187,7 +187,7 @@
             line-height: 1.6;
         }
 
-        /* 服務項目 */
+        /* 服務項目卡片 */
         .services {
             background: white;
         }
@@ -198,7 +198,7 @@
             gap: 2rem;
         }
 
-        .service-card, .portfolio-card {
+        .service-card {
             background: linear-gradient(135deg, #a1d9b3 0%, #5d99c6 100%);
             color: white;
             padding: 2.5rem 2rem;
@@ -209,11 +209,11 @@
             overflow: hidden;
         }
 
-        .service-card h3, .portfolio-card h3 {
+        .service-card h3 {
             text-align: center;
         }
 
-        .service-card::before, .portfolio-card::before {
+        .service-card::before {
             content: '';
             position: absolute;
             top: -50%;
@@ -225,26 +225,96 @@
             transition: transform 0.6s ease;
         }
 
-        .service-card:hover::before, .portfolio-card:hover::before {
+        .service-card:hover::before {
             transform: scale(1);
         }
 
-        .service-card:hover, .portfolio-card:hover {
+        .service-card:hover {
             transform: translateY(-10px) scale(1.05);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
         }
 
-        .service-card h3, .portfolio-card h3 {
+        .service-card h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
             position: relative;
             z-index: 2;
         }
 
-        .service-card p, .portfolio-card p {
+        .service-card p {
             line-height: 1.6;
             position: relative;
             z-index: 2;
+        }
+
+        /* 成功案例卡片 - 獨立樣式 */
+        .portfolio-card {
+            background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+            color: white;
+            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            text-align: left;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .portfolio-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            transform: scale(0);
+            transition: transform 0.6s ease;
+        }
+
+        .portfolio-card:hover::before {
+            transform: scale(1);
+        }
+
+        .portfolio-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .portfolio-card p {
+            line-height: 1.6;
+            position: relative;
+            z-index: 2;
+        }
+
+        .download-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .download-link:hover {
+            background: white;
+            color: #182848;
+            transform: translateY(-2px);
         }
 
         /* 聯絡我們 */
@@ -452,24 +522,36 @@
         <h2 class="section-title">成功案例</h2>
         <div class="services-grid">
             <div class="portfolio-card">
-                <h3>範例客戶 A</h3>
-                <p><strong>服務項目：</strong> 碳盤查與減碳策略規劃</p>
-                <p><strong>專案成果：</strong> 協助企業建立碳排放基線，並成功將年度碳排量降低 15%。</p>
+                <div>
+                    <h3>範例客戶 A</h3>
+                    <p><strong>服務項目：</strong> 碳盤查與減碳策略規劃</p>
+                    <p><strong>專案成果：</strong> 協助企業建立碳排放基線，並成功將年度碳排量降低 15%。</p>
+                </div>
+                <a href="文件下載網址.pdf" class="download-link" target="_blank" download>下載詳細文件</a>
             </div>
             <div class="portfolio-card">
-                <h3>範例客戶 B</h3>
-                <p><strong>服務項目：</strong> 永續報告書撰寫</p>
-                <p><strong>專案成果：</strong> 協助撰寫符合 GRI 準則的永續報告書，提升品牌信賴度。</p>
+                <div>
+                    <h3>範例客戶 B</h3>
+                    <p><strong>服務項目：</strong> 永續報告書撰寫</p>
+                    <p><strong>專案成果：</strong> 協助撰寫符合 GRI 準則的永續報告書，提升品牌信賴度。</p>
+                </div>
+                <a href="文件下載網址.pdf" class="download-link" target="_blank" download>下載詳細文件</a>
             </div>
             <div class="portfolio-card">
-                <h3>範例客戶 C</h3>
-                <p><strong>服務項目：</strong> 永續供應鏈管理輔導</p>
-                <p><strong>專案成果：</strong> 成功導入綠色供應鏈標準，使超過 80% 的供應商符合 ESG 要求。</p>
+                <div>
+                    <h3>範例客戶 C</h3>
+                    <p><strong>服務項目：</strong> 永續供應鏈管理輔導</p>
+                    <p><strong>專案成果：</strong> 成功導入綠色供應鏈標準，使超過 80% 的供應商符合 ESG 要求。</p>
+                </div>
+                <a href="文件下載網址.pdf" class="download-link" target="_blank" download>下載詳細文件</a>
             </div>
             <div class="portfolio-card">
-                <h3>範例客戶 D</h3>
-                <p><strong>服務項目：</strong> 綠色轉型與再生能源評估</p>
-                <p><strong>專案成果：</strong> 評估並導入太陽能發電系統，每年減少 50 噸碳排放。</p>
+                <div>
+                    <h3>範例客戶 D</h3>
+                    <p><strong>服務項目：</strong> 綠色轉型與再生能源評估</p>
+                    <p><strong>專案成果：</strong> 評估並導入太陽能發電系統，每年減少 50 噸碳排放。</p>
+                </div>
+                <a href="文件下載網址.pdf" class="download-link" target="_blank" download>下載詳細文件</a>
             </div>
         </div>
     </section>
