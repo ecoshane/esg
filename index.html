@@ -132,7 +132,7 @@
             font-size: 2.5rem;
             text-align: center;
             margin-bottom: 3rem;
-            color: #2c5530;
+            color: #2c5530; /* 預設標題顏色 */
             position: relative;
         }
 
@@ -247,7 +247,19 @@
             z-index: 2;
         }
 
-        /* 成功案例卡片 - 獨立樣式 */
+        /* 成功案例區塊和卡片樣式 */
+        #portfolio {
+            background: #182848; /* 與成功案例卡片漸層色底部相符的深色背景 */
+        }
+
+        #portfolio .section-title {
+            color: white; /* 讓成功案例標題文字變成白色 */
+        }
+
+        #portfolio .section-title::after {
+            background: linear-gradient(90deg, #667eea, #764ba2); /* 保持漸層線條不變 */
+        }
+
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
