@@ -132,7 +132,7 @@
             font-size: 2.5rem;
             text-align: center;
             margin-bottom: 3rem;
-            color: #2c5530;
+            color: #2c5530; /* 預設標題顏色 */
             position: relative;
         }
 
@@ -154,7 +154,7 @@
             margin-bottom: 4rem;
             color: #666;
         }
-        
+
         .team-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -168,7 +168,7 @@
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
-            text-align: left; /* 將創辦人介紹卡片內的文字調整為靠左對齊 */
+            text-align: left;
         }
 
         .team-card:hover {
@@ -187,7 +187,7 @@
             line-height: 1.6;
         }
 
-        /* 服務項目 */
+        /* 服務項目卡片 */
         .services {
             background: white;
         }
@@ -212,7 +212,7 @@
         .service-card h3 {
             text-align: center;
         }
-        
+
         .service-card::before {
             content: '';
             position: absolute;
@@ -220,7 +220,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
             transform: scale(0);
             transition: transform 0.6s ease;
         }
@@ -247,10 +247,85 @@
             z-index: 2;
         }
 
+        /* 成功案例區塊和卡片樣式 */
+        #portfolio {
+            background: #182848; /* 與成功案例卡片漸層色底部相符的深色背景 */
+        }
+
+        #portfolio .section-title {
+            color: white; /* 讓成功案例標題文字變成白色 */
+        }
+
+        #portfolio .section-title::after {
+            background: linear-gradient(90deg, #667eea, #764ba2); /* 保持漸層線條不變 */
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .portfolio-card {
+            background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+            color: white;
+            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            text-align: left;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .portfolio-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            transform: scale(0);
+            transition: transform 0.6s ease;
+        }
+
+        .portfolio-card:hover::before {
+            transform: scale(1);
+        }
+
+        .portfolio-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .portfolio-card p {
+            line-height: 1.6;
+            position: relative;
+            z-index: 2;
+        }
+        
         /* 聯絡我們 */
         .contact {
             background: #2c5530;
             color: white;
+            /* 新增間距，讓它和上一個區塊分開 */
+            margin-top: 5rem; 
         }
 
         .contact-content {
@@ -297,6 +372,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -321,7 +397,7 @@
 
             .hero h1 {
                 font-size: 2.2rem;
-                white-space: pre-wrap; /* 允許換行 */
+                white-space: pre-wrap;
             }
 
             .hero p {
@@ -337,7 +413,7 @@
                 font-size: 2rem;
             }
         }
-        
+
         @media (max-width: 480px) {
             .hero h1 {
                 font-size: 2rem;
@@ -363,9 +439,11 @@
             0%, 20%, 50%, 80%, 100% {
                 transform: translateX(-50%) translateY(0);
             }
+
             40% {
                 transform: translateX(-50%) translateY(-10px);
             }
+
             60% {
                 transform: translateX(-50%) translateY(-5px);
             }
@@ -373,7 +451,6 @@
     </style>
 </head>
 <body>
-    <!-- 導航欄 -->
     <nav id="navbar">
         <div class="nav-container">
             <a href="#home" class="logo">Ecoshane 永續顧問</a>
@@ -381,12 +458,12 @@
                 <li><a href="#home">首頁</a></li>
                 <li><a href="#about">關於我們</a></li>
                 <li><a href="#services">服務項目</a></li>
+                <li><a href="#portfolio">成功案例</a></li>
                 <li><a href="#contact">聯絡我們</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- 首頁 -->
     <section id="home" class="hero">
         <h1>Ecoshane<br>永續顧問</h1>
         <p>致力於協助企業實現永續發展目標的專業顧問公司</p>
@@ -394,13 +471,12 @@
         <div class="scroll-indicator"></div>
     </section>
 
-    <!-- 關於我們 -->
     <section id="about" class="section">
         <h2 class="section-title">關於我們</h2>
         <div class="about-content">
             <p>Ecoshane 是一家致力於協助企業實現永續發展目標的專業顧問公司。我們相信，環境保護與商業成功可以並行，透過我們的專業知識與客製化服務，幫助客戶應對氣候變遷挑戰，提升企業形象與競爭力。</p>
         </div>
-        
+
         <div class="team-grid">
             <div class="team-card">
                 <h3>創辦人 A</h3>
@@ -417,7 +493,6 @@
         </div>
     </section>
 
-    <!-- 服務項目 -->
     <section id="services" class="section services">
         <h2 class="section-title">服務項目</h2>
         <div class="services-grid">
@@ -426,8 +501,8 @@
                 <p>協助企業進行溫室氣體盤查，建立碳排放基線，制定減碳目標與行動計畫。</p>
             </div>
             <div class="service-card">
-                <h3>永續報告書撰寫</h3>
-                <p>專業團隊協助企業撰寫符合國際標準的永續報告書，提升企業永續形象。</p>
+                <h3>ESG 報告撰寫</h3>
+                <p>專業團隊協助企業撰寫符合國際標準的 ESG 報告，提升企業永續形象。</p>
             </div>
             <div class="service-card">
                 <h3>綠色轉型策略</h3>
@@ -448,12 +523,45 @@
         </div>
     </section>
 
-    <!-- 聯絡我們 -->
+    <section id="portfolio" class="section">
+        <h2 class="section-title">成功案例</h2>
+        <div class="portfolio-grid">
+            <div class="portfolio-card">
+                <div>
+                    <h3>範例客戶 A</h3>
+                    <p><strong>服務項目：</strong> 碳盤查與減碳策略規劃</p>
+                    <p><strong>專案成果：</strong> 協助企業建立碳排放基線，並成功將年度碳排量降低 15%。</p>
+                </div>
+            </div>
+            <div class="portfolio-card">
+                <div>
+                    <h3>範例客戶 B</h3>
+                    <p><strong>服務項目：</strong> 永續報告書撰寫</p>
+                    <p><strong>專案成果：</strong> 協助撰寫符合 GRI 準則的永續報告書，提升品牌信賴度。</p>
+                </div>
+            </div>
+            <div class="portfolio-card">
+                <div>
+                    <h3>範例客戶 C</h3>
+                    <p><strong>服務項目：</strong> 永續供應鏈管理輔導</p>
+                    <p><strong>專案成果：</strong> 成功導入綠色供應鏈標準，使超過 80% 的供應商符合 ESG 要求。</p>
+                </div>
+            </div>
+            <div class="portfolio-card">
+                <div>
+                    <h3>範例客戶 D</h3>
+                    <p><strong>服務項目：</strong> 綠色轉型與再生能源評估</p>
+                    <p><strong>專案成果：</strong> 評估並導入太陽能發電系統，每年減少 50 噸碳排放。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="contact" class="section contact">
         <h2 class="section-title" style="color: white;">聯絡我們</h2>
         <div class="contact-content">
             <p>如果您對我們的服務有任何疑問或需求，歡迎隨時與我們聯繫。</p>
-            
+
             <div class="contact-info">
                 <div class="contact-item">
                     <h3>電子郵件</h3>
@@ -468,26 +576,25 @@
                     <p>[公司地址]</p>
                 </div>
             </div>
-            
+
             <div style="margin-top: 3rem; padding: 2rem; background: rgba(255, 255, 255, 0.1); border-radius: 15px;">
                 <h3>智慧客服系統</h3>
                 <p>智慧客服系統正在建置中，敬請期待！</p>
             </div>
-
         </div>
     </section>
 
     <script>
         // 平滑滾動增強效果
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
                     // 計算目標位置，考慮固定導航欄高度
                     const navHeight = document.getElementById('navbar').offsetHeight;
                     const targetPosition = target.offsetTop - navHeight;
-                    
+
                     window.scrollTo({
                         top: targetPosition,
                         behavior: 'smooth'
@@ -522,7 +629,7 @@
         }, observerOptions);
 
         // 監聽所有需要動畫的元素
-        document.querySelectorAll('.team-card, .service-card, .contact-item').forEach(el => {
+        document.querySelectorAll('.team-card, .service-card, .portfolio-card, .contact-item').forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(30px)';
             el.style.transition = 'all 0.6s ease';
