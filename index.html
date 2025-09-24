@@ -1,11 +1,24 @@
-
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ecoshane 永續顧問</title>
+    <title>Ecoshane 永續家</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
+        /* 定義 CSS 變數 */
+        :root {
+            --primary-blue: #0A1C3B;
+            --secondary-blue: #11367D;
+            --text-color: #333;
+            --background-light: #f8f9fa;
+            --background-dark: #182848;
+            --card-gradient-start: #4b6cb7;
+            --card-gradient-end: #182848;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -15,8 +28,8 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background-color: #f8f9fa;
+            color: var(--text-color);
+            background-color: var(--background-light);
         }
 
         /* 平滑滾動 */
@@ -49,8 +62,16 @@
         .logo {
             font-size: 1.8rem;
             font-weight: bold;
-            color: #2c5530;
+            color: var(--primary-blue);
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 30px;
+            height: 30px;
         }
 
         .nav-links {
@@ -61,7 +82,7 @@
 
         .nav-links a {
             text-decoration: none;
-            color: #333;
+            color: var(--text-color);
             font-weight: 500;
             transition: all 0.3s ease;
             padding: 0.5rem 1rem;
@@ -70,8 +91,8 @@
         }
 
         .nav-links a:hover {
-            color: #2c5530;
-            background: rgba(44, 85, 48, 0.1);
+            color: var(--primary-blue);
+            background: rgba(30, 58, 138, 0.1);
             transform: translateY(-2px);
         }
 
@@ -86,7 +107,7 @@
 
         /* 首頁區塊 */
         .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 100%);
             color: white;
             text-align: center;
             padding: 150px 2rem 100px;
@@ -105,6 +126,10 @@
             margin-bottom: 2rem;
             opacity: 0;
             animation: fadeInUp 1s ease 0.3s forwards;
+            /* 將段落文字靠左對齊 */
+            text-align: left;
+            max-width: 800px;
+            margin: 0 auto 2rem;
         }
 
         .cta-button {
@@ -123,7 +148,7 @@
 
         .cta-button:hover {
             background: white;
-            color: #667eea;
+            color: var(--secondary-blue);
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
@@ -133,7 +158,7 @@
             font-size: 2.5rem;
             text-align: center;
             margin-bottom: 3rem;
-            color: #2c5530; /* 預設標題顏色 */
+            color: var(--primary-blue);
             position: relative;
         }
 
@@ -142,7 +167,7 @@
             display: block;
             width: 80px;
             height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
+            background: linear-gradient(90deg, var(--secondary-blue), var(--primary-blue));
             margin: 1rem auto;
             border-radius: 2px;
         }
@@ -178,7 +203,7 @@
         }
 
         .team-card h3 {
-            color: #2c5530;
+            color: var(--primary-blue);
             margin-bottom: 1rem;
             font-size: 1.3rem;
         }
@@ -200,7 +225,7 @@
         }
 
         .service-card {
-            background: linear-gradient(135deg, #a1d9b3 0%, #5d99c6 100%);
+            background: linear-gradient(135deg, var(--card-gradient-start) 0%, var(--card-gradient-end) 100%);
             color: white;
             padding: 2.5rem 2rem;
             border-radius: 20px;
@@ -250,15 +275,15 @@
 
         /* 成功案例區塊和卡片樣式 */
         #portfolio {
-            background: #182848; /* 與成功案例卡片漸層色底部相符的深色背景 */
+            background: var(--background-dark);
         }
 
         #portfolio .section-title {
-            color: white; /* 讓成功案例標題文字變成白色 */
+            color: white;
         }
 
         #portfolio .section-title::after {
-            background: linear-gradient(90deg, #667eea, #764ba2); /* 保持漸層線條不變 */
+            background: linear-gradient(90deg, var(--secondary-blue), var(--primary-blue));
         }
 
         .portfolio-grid {
@@ -266,7 +291,7 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 2rem;
         }
-        
+
         @media (max-width: 768px) {
             .portfolio-grid {
                 grid-template-columns: 1fr;
@@ -274,7 +299,7 @@
         }
 
         .portfolio-card {
-            background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+            background: linear-gradient(135deg, var(--card-gradient-start) 0%, var(--card-gradient-end) 100%);
             color: white;
             padding: 2.5rem 2rem;
             border-radius: 20px;
@@ -320,13 +345,12 @@
             position: relative;
             z-index: 2;
         }
-        
+
         /* 聯絡我們 */
         .contact {
-            background: #2c5530;
+            background: var(--primary-blue);
             color: white;
-            /* 新增間距，讓它和上一個區塊分開 */
-            margin-top: 5rem; 
+            margin-top: 5rem;
         }
 
         .contact-content {
@@ -367,6 +391,15 @@
             text-decoration: underline;
         }
 
+        /* 頁腳樣式 */
+        .footer {
+            background: var(--background-dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
         /* 動畫 */
         @keyframes fadeInUp {
             from {
@@ -386,12 +419,10 @@
                 display: none;
             }
 
-            /* 調整導覽列容器的邊距，讓內容更置中 */
             .nav-container {
                 padding: 0 1rem;
             }
 
-            /* 調整手機版 logo 的字體大小，避免被切斷 */
             .logo {
                 font-size: 1.5rem;
             }
@@ -437,7 +468,11 @@
         }
 
         @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
                 transform: translateX(-50%) translateY(0);
             }
 
@@ -451,10 +486,15 @@
         }
     </style>
 </head>
+
 <body>
     <nav id="navbar">
         <div class="nav-container">
-            <a href="#home" class="logo">Ecoshane 永續顧問</a>
+            <!-- 更新後的 Logo 標誌 -->
+            <a href="#home" class="logo">
+                <i class="fas fa-leaf logo-icon"></i>
+                Ecoshane Bank
+            </a>
             <ul class="nav-links">
                 <li><a href="#home">首頁</a></li>
                 <li><a href="#about">關於我們</a></li>
@@ -466,16 +506,14 @@
     </nav>
 
     <section id="home" class="hero">
-        <h1>Ecoshane<br>永續顧問</h1>
-        <p>致力於協助企業實現永續發展目標的專業顧問公司</p>
-        <a href="#about" class="cta-button">了解更多</a>
+        <h1>Ecoshane 永續家</h1>
         <div class="scroll-indicator"></div>
     </section>
 
     <section id="about" class="section">
         <h2 class="section-title">關於我們</h2>
         <div class="about-content">
-            <p>Ecoshane 是一家致力於協助企業實現永續發展目標的專業顧問公司。我們相信，環境保護與商業成功可以並行，透過我們的專業知識與客製化服務，幫助客戶應對氣候變遷挑戰，提升企業形象與競爭力。</p>
+            <p>Ecoshane 永續家是一間致力於協助企業實現永續發展目標的專業顧問公司。我們相信，環境保護與商業成功可以並行，透過我們的專業知識與客製化服務，幫助客戶應對氣候變遷挑戰，提升企業形象與競爭力。</p>
         </div>
 
         <div class="team-grid">
@@ -502,8 +540,8 @@
                 <p>協助企業進行溫室氣體盤查，建立碳排放基線，制定減碳目標與行動計畫。</p>
             </div>
             <div class="service-card">
-                <h3>ESG 報告撰寫</h3>
-                <p>專業團隊協助企業撰寫符合國際標準的 ESG 報告，提升企業永續形象。</p>
+                <h3>永續報告書撰寫</h3>
+                <p>專業團隊協助企業撰寫符合主管機關規定的永續報告書，提升企業永續形象。</p>
             </div>
             <div class="service-card">
                 <h3>綠色轉型策略</h3>
@@ -570,20 +608,20 @@
                 </div>
                 <div class="contact-item">
                     <h3>聯絡電話</h3>
-                    <p>+886-9xx-xxx-xxx</p>
+                    <p>+886-2-1234-5678</p>
                 </div>
                 <div class="contact-item">
                     <h3>公司地址</h3>
-                    <p>[公司地址]</p>
+                    <p>台灣台北市信義區永續路101號</p>
                 </div>
-            </div>
-
-            <div style="margin-top: 3rem; padding: 2rem; background: rgba(255, 255, 255, 0.1); border-radius: 15px;">
-                <h3>智慧客服系統</h3>
-                <p>智慧客服系統正在建置中，敬請期待！</p>
             </div>
         </div>
     </section>
+
+    <!-- 新增的頁腳區塊 -->
+    <footer class="footer">
+        <p>© 2025 Ecoshane 永續家. All Rights Reserved.</p>
+    </footer>
 
     <script>
         // 平滑滾動增強效果
@@ -637,220 +675,237 @@
             observer.observe(el);
         });
     </script>
-      <style>
-    /* --- 基本樣式 --- */
-    body {
-      font-family: Arial, sans-serif;
-    }
-    #chat-toggle {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #4caf50;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      font-size: 24px;
-      cursor: pointer;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-    }
-    #chat-window {
-      position: fixed;
-      bottom: 90px;
-      right: 20px;
-      width: 320px;
-      height: 420px;
-      border: 1px solid #ccc;
-      border-radius: 12px;
-      background: white;
-      display: none;
-      flex-direction: column;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.3s ease-in-out;
-    }
-    #chat-window.show {
-      display: flex;
-      opacity: 1;
-      transform: translateY(0);
-    }
-    #chat-messages {
-      flex: 1;
-      padding: 10px;
-      overflow-y: auto;
-    }
-    .message {
-      margin: 8px 0;
-      padding: 8px 12px;
-      border-radius: 8px;
-      max-width: 75%;
-      word-wrap: break-word;
-    }
-    .message.user {
-      background: #4caf50;
-      color: white;
-      align-self: flex-end;
-    }
-    .message.bot {
-      background: #f1f1f1;
-      color: black;
-      align-self: flex-start;
-    }
-    .time {
-      font-size: 10px;
-      color: gray;
-      margin-top: 2px;
-      text-align: right;
-    }
-    #chat-input-container {
-      display: flex;
-      border-top: 1px solid #ccc;
-    }
-    #chat-input {
-      flex: 1;
-      padding: 8px;
-      border: none;
-      outline: none;
-    }
-    #chat-send {
-      background: #4caf50;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      cursor: pointer;
-    }
-  </style>
+    <style>
+        /* --- 基本樣式 --- */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #chat-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        #chat-window {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 320px;
+            height: 420px;
+            border: 1px solid #ccc;
+            border-radius: 12px;
+            background: white;
+            display: none;
+            flex-direction: column;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease-in-out;
+        }
+
+        #chat-window.show {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #chat-messages {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin: 8px 0;
+            padding: 8px 12px;
+            border-radius: 8px;
+            max-width: 75%;
+            word-wrap: break-word;
+        }
+
+        .message.user {
+            background: #3b82f6;
+            color: white;
+            align-self: flex-end;
+        }
+
+        .message.bot {
+            background: #f1f1f1;
+            color: black;
+            align-self: flex-start;
+        }
+
+        .time {
+            font-size: 10px;
+            color: gray;
+            margin-top: 2px;
+            text-align: right;
+        }
+
+        #chat-input-container {
+            display: flex;
+            border-top: 1px solid #ccc;
+        }
+
+        #chat-input {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            outline: none;
+        }
+
+        #chat-send {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+    </style>
 </head>
+
 <body>
-  <!-- 聊天按鈕 -->
-  <button id="chat-toggle">🌱</button>
+    <!-- 聊天按鈕 -->
+    <button id="chat-toggle">🌱</button>
 
-  <!-- 聊天視窗 -->
-  <div id="chat-window">
-    <div id="chat-messages"></div>
-    <div id="chat-input-container">
-      <input type="text" id="chat-input" placeholder="輸入訊息..." />
-      <button id="chat-send">發送</button>
+    <!-- 聊天視窗 -->
+    <div id="chat-window">
+        <div id="chat-messages"></div>
+        <div id="chat-input-container">
+            <input type="text" id="chat-input" placeholder="輸入訊息..." />
+            <button id="chat-send">發送</button>
+        </div>
     </div>
-  </div>
 
-  <!-- AWS SDK -->
-  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1691.0.min.js"></script>
-  <script>
-    class LexChatbot {
-      constructor() {
-        this.chatToggle = document.getElementById('chat-toggle');
-        this.chatWindow = document.getElementById('chat-window');
-        this.chatMessages = document.getElementById('chat-messages');
-        this.chatInput = document.getElementById('chat-input');
-        this.chatSend = document.getElementById('chat-send');
+    <!-- AWS SDK -->
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1691.0.min.js"></script>
+    <script>
+        class LexChatbot {
+            constructor() {
+                this.chatToggle = document.getElementById('chat-toggle');
+                this.chatWindow = document.getElementById('chat-window');
+                this.chatMessages = document.getElementById('chat-messages');
+                this.chatInput = document.getElementById('chat-input');
+                this.chatSend = document.getElementById('chat-send');
 
-        this.hasWelcomed = false; // 確保只顯示一次歡迎語
+                this.hasWelcomed = false; // 確保只顯示一次歡迎語
+                this.chatToggle.addEventListener('click', () => this.toggleChat());
+                this.chatSend.addEventListener('click', () => this.sendMessage());
+                this.chatInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') this.sendMessage();
+                });
 
-        this.chatToggle.addEventListener('click', () => this.toggleChat());
-        this.chatSend.addEventListener('click', () => this.sendMessage());
-        this.chatInput.addEventListener('keypress', (e) => {
-          if (e.key === 'Enter') this.sendMessage();
+                this.initAWS();
+            }
+
+            initAWS() {
+                AWS.config.region = 'us-east-1'; // 改成你 Lex bot 的區域
+                AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                    IdentityPoolId: 'us-east-1:05eec0e5-0c38-45a1-8a36-729ffb25c03d' // 換成同區 Cognito 身份池
+                });
+
+                this.lexRuntime = new AWS.LexRuntimeV2();
+                this.botId = 'BLNBE1X3XG';
+                // 從 AWS Console 複製
+                this.botAliasId = 'TSTALIASID';
+                // 從 AWS Console 複製
+                this.localeId = 'en_US';
+                this.sessionId = Date.now().toString();
+            }
+
+            toggleChat() {
+                if (this.chatWindow.classList.contains('show')) {
+                    this.chatWindow.classList.remove('show');
+                    setTimeout(() => this.chatWindow.style.display = 'none', 300);
+                } else {
+                    this.chatWindow.style.display = 'flex';
+                    setTimeout(() => this.chatWindow.classList.add('show'), 10);
+
+                    if (!this.hasWelcomed) {
+                        this.addMessage("您好！我是 Ecoshane 永續客服 🌱 有什麼可以幫您？", 'bot');
+                        this.hasWelcomed = true;
+                    }
+                }
+            }
+
+            async sendMessage() {
+                const text = this.chatInput.value.trim();
+                if (!text) return;
+
+                this.addMessage(text, 'user');
+                this.chatInput.value = '';
+
+                try {
+                    const params = {
+                        botId: this.botId,
+                        botAliasId: this.botAliasId,
+                        localeId: this.localeId,
+                        sessionId: this.sessionId,
+                        text: text
+                    };
+
+                    const response = await this.lexRuntime.recognizeText(params).promise();
+
+                    if (response.messages && response.messages.length > 0) {
+                        response.messages.forEach(msg => {
+                            this.addMessage(msg.content, 'bot');
+                        });
+                    } else {
+                        this.addMessage("抱歉，我沒有理解你的問題。", 'bot');
+                    }
+                } catch (err) {
+                    console.error('Lex V2 Error:', err);
+                    this.addMessage("系統暫時無法使用，請稍後再試或直接聯繫我們。", 'bot');
+                }
+            }
+
+            addMessage(text, type) {
+                const message = document.createElement('div');
+                message.className = `message ${type}`;
+                const time = new Date().toLocaleTimeString('zh-TW', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                if (type === 'bot') {
+                    let i = 0;
+                    const contentDiv = document.createElement('div');
+                    const timeDiv = document.createElement('div');
+                    timeDiv.className = "time";
+                    timeDiv.innerText = time;
+                    message.appendChild(contentDiv);
+                    message.appendChild(timeDiv);
+                    this.chatMessages.appendChild(message);
+
+                    const typing = setInterval(() => {
+                        contentDiv.innerText = text.substring(0, i);
+                        i++;
+                        if (i > text.length) clearInterval(typing);
+                        this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+                    }, 40);
+                } else {
+                    message.innerHTML = `<div>${text}</div><div class="time">${time}</div>`;
+                    this.chatMessages.appendChild(message);
+                }
+
+                this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            new LexChatbot();
         });
-
-        this.initAWS();
-      }
-
-      initAWS() {
-        AWS.config.region = 'us-east-1'; // 改成你 Lex bot 的區域
-        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-          IdentityPoolId: 'us-east-1:05eec0e5-0c38-45a1-8a36-729ffb25c03d' // 換成同區 Cognito 身份池
-        });
-
-        this.lexRuntime = new AWS.LexRuntimeV2();
-        this.botId = 'BLNBE1X3XG';            // 從 AWS Console 複製
-        this.botAliasId = 'TSTALIASID';  // 從 AWS Console 複製
-        this.localeId = 'en_US';             
-        this.sessionId = Date.now().toString();
-      }
-
-      toggleChat() {
-        if (this.chatWindow.classList.contains('show')) {
-          this.chatWindow.classList.remove('show');
-          setTimeout(() => this.chatWindow.style.display = 'none', 300);
-        } else {
-          this.chatWindow.style.display = 'flex';
-          setTimeout(() => this.chatWindow.classList.add('show'), 10);
-
-          if (!this.hasWelcomed) {
-            this.addMessage("您好！我是 Ecoshane 永續客服 🌱 有什麼可以幫您？", 'bot');
-            this.hasWelcomed = true;
-          }
-        }
-      }
-
-      async sendMessage() {
-        const text = this.chatInput.value.trim();
-        if (!text) return;
-
-        this.addMessage(text, 'user');
-        this.chatInput.value = '';
-
-        try {
-          const params = {
-            botId: this.botId,
-            botAliasId: this.botAliasId,
-            localeId: this.localeId,
-            sessionId: this.sessionId,
-            text: text
-          };
-
-          const response = await this.lexRuntime.recognizeText(params).promise();
-
-          if (response.messages && response.messages.length > 0) {
-            response.messages.forEach(msg => {
-              this.addMessage(msg.content, 'bot');
-            });
-          } else {
-            this.addMessage("抱歉，我沒有理解你的問題。", 'bot');
-          }
-        } catch (err) {
-          console.error('Lex V2 Error:', err);
-          this.addMessage("系統暫時無法使用，請稍後再試或直接聯繫我們。", 'bot');
-        }
-      }
-
-      addMessage(text, type) {
-        const message = document.createElement('div');
-        message.className = `message ${type}`;
-        const time = new Date().toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' });
-
-        if (type === 'bot') {
-          let i = 0;
-          const contentDiv = document.createElement('div');
-          const timeDiv = document.createElement('div');
-          timeDiv.className = "time";
-          timeDiv.innerText = time;
-          message.appendChild(contentDiv);
-          message.appendChild(timeDiv);
-          this.chatMessages.appendChild(message);
-
-          const typing = setInterval(() => {
-            contentDiv.innerText = text.substring(0, i);
-            i++;
-            if (i > text.length) clearInterval(typing);
-            this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
-          }, 40);
-        } else {
-          message.innerHTML = `<div>${text}</div><div class="time">${time}</div>`;
-          this.chatMessages.appendChild(message);
-        }
-
-        this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      new LexChatbot();
-    });
-  </script>
+    </script>
 </body>
+
 </html>
