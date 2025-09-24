@@ -3,637 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ecoshane 永續顧問</title>
+    <title>Ecoshane Bank - 永續綠色金融</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f8f9fa;
+            font-family: 'Inter', sans-serif;
+            background-color: #f0fdf4;
         }
-
-        /* 平滑滾動 */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* 導航欄 */
-        nav {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #2c5530;
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-            position: relative;
-        }
-
-        .nav-links a:hover {
-            color: #2c5530;
-            background: rgba(44, 85, 48, 0.1);
-            transform: translateY(-2px);
-        }
-
-        /* 主要內容區域 */
-        .section {
-            padding: 100px 0 80px;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding-left: 2rem;
-            padding-right: 2rem;
-        }
-
-        /* 首頁區塊 */
         .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-align: center;
-            padding: 150px 2rem 100px;
-            margin-top: 0;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            opacity: 0;
-            animation: fadeInUp 1s ease forwards;
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.3s forwards;
-        }
-
-        .cta-button {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 15px 30px;
-            border: 2px solid white;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            display: inline-block;
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.6s forwards;
-        }
-
-        .cta-button:hover {
-            background: white;
-            color: #667eea;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        /* 區塊標題 */
-        .section-title {
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 3rem;
-            color: #2c5530; /* 預設標題顏色 */
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            margin: 1rem auto;
-            border-radius: 2px;
-        }
-
-        /* 關於我們 */
-        .about-content {
-            text-align: left;
-            font-size: 1.2rem;
-            line-height: 1.8;
-            margin-bottom: 4rem;
-            color: #666;
-        }
-
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .team-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            text-align: left;
-        }
-
-        .team-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .team-card h3 {
-            color: #2c5530;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .team-card p {
-            color: #666;
-            line-height: 1.6;
-        }
-
-        /* 服務項目卡片 */
-        .services {
-            background: white;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .service-card {
-            background: linear-gradient(135deg, #a1d9b3 0%, #5d99c6 100%);
-            color: white;
-            padding: 2.5rem 2rem;
-            border-radius: 20px;
-            text-align: left;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .service-card h3 {
-            text-align: center;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            transform: scale(0);
-            transition: transform 0.6s ease;
-        }
-
-        .service-card:hover::before {
-            transform: scale(1);
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px) scale(1.05);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        .service-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .service-card p {
-            line-height: 1.6;
-            position: relative;
-            z-index: 2;
-        }
-
-        /* 成功案例區塊和卡片樣式 */
-        #portfolio {
-            background: #182848; /* 與成功案例卡片漸層色底部相符的深色背景 */
-        }
-
-        #portfolio .section-title {
-            color: white; /* 讓成功案例標題文字變成白色 */
-        }
-
-        #portfolio .section-title::after {
-            background: linear-gradient(90deg, #667eea, #764ba2); /* 保持漸層線條不變 */
-        }
-
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-        }
-        
-        @media (max-width: 768px) {
-            .portfolio-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .portfolio-card {
-            background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
-            color: white;
-            padding: 2.5rem 2rem;
-            border-radius: 20px;
-            text-align: left;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .portfolio-card:hover {
-            transform: translateY(-10px) scale(1.05);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        .portfolio-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            transform: scale(0);
-            transition: transform 0.6s ease;
-        }
-
-        .portfolio-card:hover::before {
-            transform: scale(1);
-        }
-
-        .portfolio-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .portfolio-card p {
-            line-height: 1.6;
-            position: relative;
-            z-index: 2;
-        }
-        
-        /* 聯絡我們 */
-        .contact {
-            background: #2c5530;
-            color: white;
-            /* 新增間距，讓它和上一個區塊分開 */
-            margin-top: 5rem; 
-        }
-
-        .contact-content {
-            text-align: left;
-        }
-
-        .contact-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-            text-align: center;
-        }
-
-        .contact-item {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: 15px;
-            transition: all 0.3s ease;
-        }
-
-        .contact-item:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-5px);
-        }
-
-        .contact-item h3 {
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .contact-item a {
-            color: white;
-            text-decoration: none;
-        }
-
-        .contact-item a:hover {
-            text-decoration: underline;
-        }
-
-        /* 動畫 */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* 響應式設計 */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            /* 調整導覽列容器的邊距，讓內容更置中 */
-            .nav-container {
-                padding: 0 1rem;
-            }
-
-            /* 調整手機版 logo 的字體大小，避免被切斷 */
-            .logo {
-                font-size: 1.5rem;
-            }
-
-            .hero h1 {
-                font-size: 2.2rem;
-                white-space: pre-wrap;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .section {
-                padding-left: 1rem;
-                padding-right: 1rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-        }
-
-        /* 滾動指示器 */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: bounce 2s infinite;
-        }
-
-        .scroll-indicator::after {
-            content: '↓';
-            font-size: 2rem;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateX(-50%) translateY(0);
-            }
-
-            40% {
-                transform: translateX(-50%) translateY(-10px);
-            }
-
-            60% {
-                transform: translateX(-50%) translateY(-5px);
-            }
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://placehold.co/1920x800/22c55e/ffffff?text=Ecoshane+Bank');
+            background-size: cover;
+            background-position: center;
         }
     </style>
 </head>
-<body>
-    <nav id="navbar">
-        <div class="nav-container">
-            <a href="#home" class="logo">Ecoshane 永續顧問</a>
-            <ul class="nav-links">
-                <li><a href="#home">首頁</a></li>
-                <li><a href="#about">關於我們</a></li>
-                <li><a href="#services">服務項目</a></li>
-                <li><a href="#portfolio">成功案例</a></li>
-                <li><a href="#contact">聯絡我們</a></li>
-            </ul>
+<body class="text-gray-900">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-lg fixed top-0 w-full z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" class="flex items-center space-x-2">
+                <i class="fas fa-leaf text-green-500 text-3xl"></i>
+                <span class="text-2xl font-bold text-gray-800">Ecoshane Bank</span>
+            </a>
+            <div class="space-x-4 hidden md:flex">
+                <a href="#about" class="text-gray-600 hover:text-green-500 transition duration-300">關於我們</a>
+                <a href="#services" class="text-gray-600 hover:text-green-500 transition duration-300">我們的服務</a>
+                <a href="#contact" class="text-gray-600 hover:text-green-500 transition duration-300">聯絡我們</a>
+            </div>
+            <button id="menu-btn" class="text-gray-600 md:hidden focus:outline-none">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white shadow-inner pb-2">
+            <a href="#about" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">關於我們</a>
+            <a href="#services" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">我們的服務</a>
+            <a href="#contact" class="block py-2 px-4 text-sm text-gray-600 hover:bg-gray-100">聯絡我們</a>
         </div>
     </nav>
 
-    <section id="home" class="hero">
-        <h1>Ecoshane<br>永續顧問</h1>
-        <p>致力於協助企業實現永續發展目標的專業顧問公司</p>
-        <a href="#about" class="cta-button">了解更多</a>
-        <div class="scroll-indicator"></div>
-    </section>
-
-    <section id="about" class="section">
-        <h2 class="section-title">關於我們</h2>
-        <div class="about-content">
-            <p>Ecoshane 是一家致力於協助企業實現永續發展目標的專業顧問公司。我們相信，環境保護與商業成功可以並行，透過我們的專業知識與客製化服務，幫助客戶應對氣候變遷挑戰，提升企業形象與競爭力。</p>
+    <!-- Hero Section -->
+    <header class="hero text-white text-center py-40 mt-16">
+        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">
+            綠色金融領航者：Ecoshane Bank
+        </h1>
+        <p class="text-lg md:text-xl max-w-2xl mx-auto mb-8">
+            我們以金融科技加速永續轉型，為您提供專屬的綠色金融解決方案。
+        </p>
+        <div class="space-x-4">
+            <a href="#services" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg transition duration-300">
+                探索我們的服務
+            </a>
         </div>
+    </header>
 
-        <div class="team-grid">
-            <div class="team-card">
-                <h3>創辦人 A</h3>
-                <p>這裡可以寫第一位創辦人的專業背景、經驗與個人理念。例如：擁有 15 年環境工程經驗，專精於碳盤查與綠色轉型策略。</p>
+    <!-- About Section -->
+    <section id="about" class="container mx-auto px-4 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">
+                    關於 Ecoshane Bank
+                </h2>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    Ecoshane Bank 以創新金融科技為核心，積極推動企業淨零轉型。我們的理念是讓綠色金融不再只是口號，而是透過實際可行的工具與服務，引導資金流向永續發展的項目。
+                </p>
+                <div class="space-y-4 text-gray-600 leading-relaxed">
+                    <p>我們的綠色金融核心優勢在於：</p>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li>**智慧碳排評估：** 簡化繁瑣的碳排放計算，提供即時、可視化的數據。</li>
+                        <li>**開放式綠色貸款媒合：** 透過金融數據分析，主動推薦最適合的永續貸款方案。</li>
+                        <li>**AI 永續發展建議：** 運用 AI Agent 分析減碳成效，提供客製化的綠色金融策略。</li>
+                    </ul>
+                </div>
             </div>
-            <div class="team-card">
-                <h3>創辦人 B</h3>
-                <p>這裡可以寫第二位創辦人的專業背景、經驗與個人理念。例如：ESG 報告專家，曾協助 50+ 企業建立永續發展策略。</p>
-            </div>
-            <div class="team-card">
-                <h3>創辦人 C</h3>
-                <p>這裡可以寫第三位創辦人的專業背景、經驗與個人理念。例如：氣候變遷顧問，專長於再生能源與節能技術評估。</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="services" class="section services">
-        <h2 class="section-title">服務項目</h2>
-        <div class="services-grid">
-            <div class="service-card">
-                <h3>碳盤查服務</h3>
-                <p>協助企業進行溫室氣體盤查，建立碳排放基線，制定減碳目標與行動計畫。</p>
-            </div>
-            <div class="service-card">
-                <h3>永續報告書撰寫</h3>
-                <p>專業團隊協助企業撰寫符合國際標準的永續報告書，提升企業永續形象。</p>
-            </div>
-            <div class="service-card">
-                <h3>綠色轉型策略</h3>
-                <p>量身打造企業綠色轉型方案，包含再生能源導入、循環經濟模式設計等。</p>
-            </div>
-            <div class="service-card">
-                <h3>永續供應鏈</h3>
-                <p>協助企業建立永續供應鏈管理體系，降低環境影響，提升供應鏈韌性。</p>
-            </div>
-            <div class="service-card">
-                <h3>氣候風險評估</h3>
-                <p>分析氣候變遷對企業的實體與轉型風險，並規劃應對策略，增強企業韌性。</p>
-            </div>
-            <div class="service-card">
-                <h3>永續教育訓練</h3>
-                <p>針對不同層級員工設計客製化課程，從永續趨勢到實務操作，全面提升永續競爭力。</p>
+            <div>
+                <img src="https://placehold.co/600x400/22c55e/ffffff?text=Ecoshane+Mission" alt="Ecoshane Mission" class="rounded-xl shadow-lg w-full h-auto">
             </div>
         </div>
     </section>
 
-    <section id="portfolio" class="section">
-        <h2 class="section-title">成功案例</h2>
-        <div class="portfolio-grid">
-            <div class="portfolio-card">
-                <div>
-                    <h3>範例客戶 A</h3>
-                    <p><strong>服務項目：</strong> 碳盤查與減碳策略規劃</p>
-                    <p><strong>專案成果：</strong> 協助企業建立碳排放基線，並成功將年度碳排量降低 15%。</p>
+    <!-- Services Section -->
+    <section id="services" class="bg-gray-50 py-20">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">
+                Ecoshane 綠色金融三大核心
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                <!-- Service 1: 智慧碳排評估 -->
+                <div class="bg-white rounded-xl shadow-lg p-8 transform transition duration-500 hover:scale-105">
+                    <i class="fas fa-chart-line text-green-500 text-5xl mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-800">智慧碳排評估</h3>
+                    <p class="text-gray-600">
+                        利用台灣電力排放係數與即時數據，精準計算您的碳排放量。這是您踏入綠色金融世界的第一步。
+                    </p>
                 </div>
-            </div>
-            <div class="portfolio-card">
-                <div>
-                    <h3>範例客戶 B</h3>
-                    <p><strong>服務項目：</strong> 永續報告書撰寫</p>
-                    <p><strong>專案成果：</strong> 協助撰寫符合 GRI 準則的永續報告書，提升品牌信賴度。</p>
+
+                <!-- Service 2: 開放式綠色貸款媒合 -->
+                <div class="bg-white rounded-xl shadow-lg p-8 transform transition duration-500 hover:scale-105">
+                    <i class="fas fa-bank text-green-500 text-5xl mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-800">開放式綠色貸款媒合</h3>
+                    <p class="text-gray-600">
+                        透過開放銀行技術，我們為您無縫媒合各種綠色金融產品，如低碳利率貸款或永續專案融資。
+                    </p>
                 </div>
-            </div>
-            <div class="portfolio-card">
-                <div>
-                    <h3>範例客戶 C</h3>
-                    <p><strong>服務項目：</strong> 永續供應鏈管理輔導</p>
-                    <p><strong>專案成果：</strong> 成功導入綠色供應鏈標準，使超過 80% 的供應商符合 ESG 要求。</p>
-                </div>
-            </div>
-            <div class="portfolio-card">
-                <div>
-                    <h3>範例客戶 D</h3>
-                    <p><strong>服務項目：</strong> 綠色轉型與再生能源評估</p>
-                    <p><strong>專案成果：</strong> 評估並導入太陽能發電系統，每年減少 50 噸碳排放。</p>
+
+                <!-- Service 3: AI 永續發展建議 -->
+                <div class="bg-white rounded-xl shadow-lg p-8 transform transition duration-500 hover:scale-105">
+                    <i class="fas fa-robot text-green-500 text-5xl mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2 text-gray-800">AI 永續發展建議</h3>
+                    <p class="text-gray-600">
+                        內建 AI Agent 會根據您的減碳成效，提供客製化的金融建議，助您實現環境與財務的雙贏目標。
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="contact" class="section contact">
-        <h2 class="section-title" style="color: white;">聯絡我們</h2>
-        <div class="contact-content">
-            <p>如果您對我們的服務有任何疑問或需求，歡迎隨時與我們聯繫。</p>
-
-            <div class="contact-info">
-                <div class="contact-item">
-                    <h3>電子郵件</h3>
-                    <p><a href="mailto:ecoshane.esg@gmail.com">ecoshane.esg@gmail.com</a></p>
-                </div>
-                <div class="contact-item">
-                    <h3>聯絡電話</h3>
-                    <p>+886-9xx-xxx-xxx</p>
-                </div>
-                <div class="contact-item">
-                    <h3>公司地址</h3>
-                    <p>[公司地址]</p>
-                </div>
-            </div>
-
-            <div style="margin-top: 3rem; padding: 2rem; background: rgba(255, 255, 255, 0.1); border-radius: 15px;">
-                <h3>智慧客服系統</h3>
-                <p>智慧客服系統正在建置中，敬請期待！</p>
-            </div>
-        </div>
+    <!-- Call to Action Section -->
+    <section class="bg-green-600 text-white text-center py-20">
+        <h2 class="text-3xl font-bold mb-4">
+            準備好為地球與您的未來投資了嗎？
+        </h2>
+        <p class="text-lg max-w-2xl mx-auto mb-8">
+            立即聯絡 Ecoshane Bank，讓我們為您的永續旅程提供最堅實的支援。
+        </p>
+        <a href="#contact" class="bg-white text-green-600 font-semibold py-3 px-8 rounded-full shadow-lg transition duration-300 hover:bg-gray-100">
+            聯絡我們的專家
+        </a>
     </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-400 py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2024 Ecoshane Bank. All Rights Reserved.</p>
+        </div>
+    </footer>
 
     <script>
-        // 平滑滾動增強效果
+        // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
+            anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    // 計算目標位置，考慮固定導航欄高度
-                    const navHeight = document.getElementById('navbar').offsetHeight;
-                    const targetPosition = target.offsetTop - navHeight;
-
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                }
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
             });
         });
 
-        // 導航欄背景透明度變化
-        window.addEventListener('scroll', function() {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 100) {
-                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-            } else {
-                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-            }
-        });
-
-        // 區塊進入視窗時的動畫效果
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // 監聽所有需要動畫的元素
-        document.querySelectorAll('.team-card, .service-card, .portfolio-card, .contact-item').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.6s ease';
-            observer.observe(el);
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
         });
     </script>
 </body>
