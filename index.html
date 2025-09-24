@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -501,8 +502,8 @@
                 <p>協助企業進行溫室氣體盤查，建立碳排放基線，制定減碳目標與行動計畫。</p>
             </div>
             <div class="service-card">
-                <h3>永續報告書撰寫</h3>
-                <p>專業團隊協助企業撰寫符合國際標準的永續報告書，提升企業永續形象。</p>
+                <h3>ESG 報告撰寫</h3>
+                <p>專業團隊協助企業撰寫符合國際標準的 ESG 報告，提升企業永續形象。</p>
             </div>
             <div class="service-card">
                 <h3>綠色轉型策略</h3>
@@ -636,5 +637,220 @@
             observer.observe(el);
         });
     </script>
+      <style>
+    /* --- 基本樣式 --- */
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #chat-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    }
+    #chat-window {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      width: 320px;
+      height: 420px;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      background: white;
+      display: none;
+      flex-direction: column;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease-in-out;
+    }
+    #chat-window.show {
+      display: flex;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    #chat-messages {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+    }
+    .message {
+      margin: 8px 0;
+      padding: 8px 12px;
+      border-radius: 8px;
+      max-width: 75%;
+      word-wrap: break-word;
+    }
+    .message.user {
+      background: #4caf50;
+      color: white;
+      align-self: flex-end;
+    }
+    .message.bot {
+      background: #f1f1f1;
+      color: black;
+      align-self: flex-start;
+    }
+    .time {
+      font-size: 10px;
+      color: gray;
+      margin-top: 2px;
+      text-align: right;
+    }
+    #chat-input-container {
+      display: flex;
+      border-top: 1px solid #ccc;
+    }
+    #chat-input {
+      flex: 1;
+      padding: 8px;
+      border: none;
+      outline: none;
+    }
+    #chat-send {
+      background: #4caf50;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- 聊天按鈕 -->
+  <button id="chat-toggle">🌱</button>
+
+  <!-- 聊天視窗 -->
+  <div id="chat-window">
+    <div id="chat-messages"></div>
+    <div id="chat-input-container">
+      <input type="text" id="chat-input" placeholder="輸入訊息..." />
+      <button id="chat-send">發送</button>
+    </div>
+  </div>
+
+  <!-- AWS SDK -->
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1691.0.min.js"></script>
+  <script>
+    class LexChatbot {
+      constructor() {
+        this.chatToggle = document.getElementById('chat-toggle');
+        this.chatWindow = document.getElementById('chat-window');
+        this.chatMessages = document.getElementById('chat-messages');
+        this.chatInput = document.getElementById('chat-input');
+        this.chatSend = document.getElementById('chat-send');
+
+        this.hasWelcomed = false; // 確保只顯示一次歡迎語
+
+        this.chatToggle.addEventListener('click', () => this.toggleChat());
+        this.chatSend.addEventListener('click', () => this.sendMessage());
+        this.chatInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') this.sendMessage();
+        });
+
+        this.initAWS();
+      }
+
+      initAWS() {
+        AWS.config.region = 'us-east-1'; // 改成你 Lex bot 的區域
+        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+          IdentityPoolId: 'us-east-1:05eec0e5-0c38-45a1-8a36-729ffb25c03d' // 換成同區 Cognito 身份池
+        });
+
+        this.lexRuntime = new AWS.LexRuntimeV2();
+        this.botId = 'BLNBE1X3XG';            // 從 AWS Console 複製
+        this.botAliasId = 'TSTALIASID';  // 從 AWS Console 複製
+        this.localeId = 'en_US';             
+        this.sessionId = Date.now().toString();
+      }
+
+      toggleChat() {
+        if (this.chatWindow.classList.contains('show')) {
+          this.chatWindow.classList.remove('show');
+          setTimeout(() => this.chatWindow.style.display = 'none', 300);
+        } else {
+          this.chatWindow.style.display = 'flex';
+          setTimeout(() => this.chatWindow.classList.add('show'), 10);
+
+          if (!this.hasWelcomed) {
+            this.addMessage("您好！我是 Ecoshane 永續客服 🌱 有什麼可以幫您？", 'bot');
+            this.hasWelcomed = true;
+          }
+        }
+      }
+
+      async sendMessage() {
+        const text = this.chatInput.value.trim();
+        if (!text) return;
+
+        this.addMessage(text, 'user');
+        this.chatInput.value = '';
+
+        try {
+          const params = {
+            botId: this.botId,
+            botAliasId: this.botAliasId,
+            localeId: this.localeId,
+            sessionId: this.sessionId,
+            text: text
+          };
+
+          const response = await this.lexRuntime.recognizeText(params).promise();
+
+          if (response.messages && response.messages.length > 0) {
+            response.messages.forEach(msg => {
+              this.addMessage(msg.content, 'bot');
+            });
+          } else {
+            this.addMessage("抱歉，我沒有理解你的問題。", 'bot');
+          }
+        } catch (err) {
+          console.error('Lex V2 Error:', err);
+          this.addMessage("系統暫時無法使用，請稍後再試或直接聯繫我們。", 'bot');
+        }
+      }
+
+      addMessage(text, type) {
+        const message = document.createElement('div');
+        message.className = `message ${type}`;
+        const time = new Date().toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' });
+
+        if (type === 'bot') {
+          let i = 0;
+          const contentDiv = document.createElement('div');
+          const timeDiv = document.createElement('div');
+          timeDiv.className = "time";
+          timeDiv.innerText = time;
+          message.appendChild(contentDiv);
+          message.appendChild(timeDiv);
+          this.chatMessages.appendChild(message);
+
+          const typing = setInterval(() => {
+            contentDiv.innerText = text.substring(0, i);
+            i++;
+            if (i > text.length) clearInterval(typing);
+            this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+          }, 40);
+        } else {
+          message.innerHTML = `<div>${text}</div><div class="time">${time}</div>`;
+          this.chatMessages.appendChild(message);
+        }
+
+        this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      new LexChatbot();
+    });
+  </script>
 </body>
 </html>
