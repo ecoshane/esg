@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ecoshane 永續家</title>
-    <!-- Font Awesome for icons -->
+    <title>Ecoshane 永續家 - ESG 策略與 SROI 價值顧問</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         /* 定義 CSS 變數 */
@@ -69,8 +68,8 @@
         }
 
         .logo-icon {
-            width: 30px;
-            height: 30px;
+            color: #11367D;
+            font-size: 1.5rem;
         }
 
         .nav-links {
@@ -111,6 +110,7 @@
             text-align: center;
             padding: 150px 2rem 100px;
             margin-top: 0;
+            position: relative;
         }
 
         .hero h1 {
@@ -125,7 +125,6 @@
             margin-bottom: 2rem;
             opacity: 0;
             animation: fadeInUp 1s ease 0.3s forwards;
-            /* 將段落文字靠左對齊 */
             text-align: center;
             max-width: 800px;
             margin: 0 auto 2rem;
@@ -177,39 +176,11 @@
             font-size: 1.2rem;
             line-height: 1.8;
             margin-bottom: 4rem;
-            color: #666;
+            color: #444;
         }
 
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .team-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            text-align: left;
-        }
-
-        .team-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .team-card h3 {
-            color: var(--primary-blue);
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .team-card p {
-            color: #666;
-            line-height: 1.6;
+        .about-content strong {
+            color: var(--secondary-blue);
         }
 
         /* 服務項目卡片 */
@@ -234,28 +205,8 @@
             overflow: hidden;
         }
 
-        .service-card h3 {
-            text-align: center;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            transform: scale(0);
-            transition: transform 0.6s ease;
-        }
-
-        .service-card:hover::before {
-            transform: scale(1);
-        }
-
         .service-card:hover {
-            transform: translateY(-10px) scale(1.05);
+            transform: translateY(-10px) scale(1.03);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
         }
 
@@ -265,13 +216,7 @@
             position: relative;
             z-index: 2;
         }
-
-        .service-card p {
-            line-height: 1.6;
-            position: relative;
-            z-index: 2;
-        }
-
+        
         /* 成功案例區塊和卡片樣式 */
         #portfolio {
             background: var(--background-dark);
@@ -296,9 +241,9 @@
                 grid-template-columns: 1fr;
             }
         }
-
+        
         .portfolio-card {
-            background: linear-gradient(135deg, var(--card-gradient-start) 0%, var(--card-gradient-end) 100%);
+            background: #364966;
             color: white;
             padding: 2.5rem 2rem;
             border-radius: 20px;
@@ -312,37 +257,38 @@
         }
 
         .portfolio-card:hover {
-            transform: translateY(-10px) scale(1.05);
+            transform: translateY(-10px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-        }
-
-        .portfolio-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            transform: scale(0);
-            transition: transform 0.6s ease;
-        }
-
-        .portfolio-card:hover::before {
-            transform: scale(1);
         }
 
         .portfolio-card h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            position: relative;
-            z-index: 2;
         }
 
-        .portfolio-card p {
-            line-height: 1.6;
-            position: relative;
-            z-index: 2;
+        .portfolio-card p strong {
+            color: #a0d4ff;
+        }
+        
+        /* 下載按鈕樣式 */
+        .download-button {
+            background: #2ecc71; /* 綠色，代表永續與環保 */
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            text-align: center;
+            flex-grow: 1; /* 讓按鈕平均佔滿空間 */
+        }
+
+        .download-button:hover {
+            background: #27ae60;
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
         /* 聯絡我們 */
@@ -351,43 +297,33 @@
             color: white;
             margin-top: 5rem;
         }
-
+        
         .contact-content {
             text-align: center;
+            font-size: 1.1rem;
         }
 
         .contact-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-            text-align: center;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 30px;
+            gap: 20px;
         }
-
-        .contact-item {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: 15px;
-            transition: all 0.3s ease;
-        }
-
-        .contact-item:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-5px);
-        }
-
+        
         .contact-item h3 {
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
+            color: #a0d4ff;
+            margin-bottom: 10px;
         }
 
-        .contact-item a {
+        .contact-item p a {
             color: white;
-            text-decoration: none;
+            text-decoration: underline;
+            transition: color 0.3s;
         }
 
-        .contact-item a:hover {
-            text-decoration: underline;
+        .contact-item p a:hover {
+            color: #d1d8e0;
         }
 
         /* 頁腳樣式 */
@@ -397,19 +333,6 @@
             text-align: center;
             padding: 2rem;
             margin-top: 2rem;
-        }
-
-        /* 動畫 */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         /* 響應式設計 */
@@ -438,15 +361,122 @@
             .section-title {
                 font-size: 2rem;
             }
-        }
-
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 2rem;
+            
+            .contact-info {
+                flex-direction: column;
             }
         }
+        
+        /* 聊天機器人相關 CSS */
+        #chat-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+        }
+        
+        #chat-window {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 320px;
+            height: 420px;
+            border: 1px solid #ccc;
+            border-radius: 12px;
+            background: white;
+            display: none;
+            flex-direction: column;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease-in-out;
+            z-index: 1001;
+        }
+        
+        #chat-window.show {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        #chat-messages {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+        }
+        
+        .message {
+            margin: 8px 0;
+            padding: 8px 12px;
+            border-radius: 8px;
+            max-width: 75%;
+            word-wrap: break-word;
+        }
+        
+        .message.user {
+            background: #3b82f6;
+            color: white;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+        
+        .message.bot {
+            background: #f1f1f1;
+            color: black;
+            align-self: flex-start;
+            margin-right: auto;
+        }
+        
+        .time {
+            font-size: 10px;
+            color: gray;
+            margin-top: 2px;
+            text-align: right;
+        }
+        
+        .message.user .time {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        #chat-input-container {
+            display: flex;
+            border-top: 1px solid #ccc;
+        }
+        
+        #chat-input {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            outline: none;
+        }
+        
+        #chat-send {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        #chat-send:hover {
+            background: var(--secondary-blue);
+        }
 
-        /* 滾動指示器 */
+        /* 動畫和滾動指示器 */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         .scroll-indicator {
             position: absolute;
             bottom: 30px;
@@ -454,29 +484,15 @@
             transform: translateX(-50%);
             animation: bounce 2s infinite;
         }
-
         .scroll-indicator::after {
             content: '↓';
             font-size: 2rem;
             color: rgba(255, 255, 255, 0.8);
         }
-
         @keyframes bounce {
-            0%,
-            20%,
-            50%,
-            80%,
-            100% {
-                transform: translateX(-50%) translateY(0);
-            }
-
-            40% {
-                transform: translateX(-50%) translateY(-10px);
-            }
-
-            60% {
-                transform: translateX(-50%) translateY(-5px);
-            }
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
         }
     </style>
 </head>
@@ -484,9 +500,8 @@
 <body>
     <nav id="navbar">
         <div class="nav-container">
-            <!-- 更新後的 Logo 標誌 -->
             <a href="#home" class="logo">
-                <i class="fas fa-leaf logo-icon"></i>
+                <i class="fas fa-chart-line logo-icon"></i> 
                 Ecoshane 永續家
             </a>
             <ul class="nav-links">
@@ -500,46 +515,51 @@
     </nav>
 
     <section id="home" class="hero">
-        <h1>Ecoshane 永續家</h1>
-        <p>讓永續成為日常，從企業開始。</p>
+        <h1>永續價值 X 金融科技</h1>
+        <p>
+            我們是 Ecoshane Bank 的官方顧問團隊，專注於 SROI 社會價值貨幣化，並透過 Open API 數據治理讓企業的永續績效直接連結低成本融資。
+        </p>
+        <a href="#contact" class="cta-button">預約免費諮詢</a>
         <div class="scroll-indicator"></div>
     </section>
 
     <section id="about" class="section">
-        <h2 class="section-title">關於我們</h2>
+        <h2 class="section-title">關於我們：顧問與金融的橋樑</h2>
         <div class="about-content">
-            <p>Ecoshane 永續家是一間致力於協助企業實現永續發展目標的專業顧問公司。我們相信，環境保護與商業成功可以並行，透過我們的專業知識與客製化服務，幫助客戶應對氣候變遷挑戰，提升企業形象與競爭力。</p>
+            <p>Ecoshane 永續家是 Ecoshane Bank 旗下的專業顧問部門。我們的使命是協助企業將環境（E）、社會（S）的投入，轉化為可審核、可量化的金融績效指標（SPT）。</p>
+            <br>
+            <p>我們結合資深 ESG 顧問的專業知識和創新金融科技能力，特別在以下兩個領域居於領先地位：</p>
+            <p>1. 社會價值貨幣化 (SROI)：將人力資本投入、公正轉型成本等社會效益，透過社會投資報酬率（SROI）模型精確評估，並作為永續連結貸款（SLL）的社會 SPT 依據，這是傳統金融顧問無法提供的服務。</p>
+            <p>2. 數據治理與確信：利用 Open API 和雲端技術（如 AWS），建立數據從企業到銀行的自動化驗證機制，為企業取得 國際會計師事務所有限確信 報告，確保最高的透明度與信賴度。</p>
         </div>
     </section>
 
     <section id="services" class="section services">
-        <h2 class="section-title">服務項目</h2>
+        <h2 class="section-title">核心服務：創造 ESG 的貨幣價值</h2>
         <div class="services-grid">
             <div class="service-card">
-                <h3>碳盤查服務</h3>
-                <!-- 已移除粗體符號 -->
-                <p>協助企業進行溫室氣體盤查，提供查證輔導，確保數據品質符合 ISO 標準，並制定減碳目標與行動計畫。</p>
+                <h3>永續連結貸款 (SLL) 輔導</h3>
+                <p>為企業量身設計 環境 與 社會 雙軌 SPT 目標，確保達成指標時，能自動觸發貸款利息減免，優化企業融資成本。</p>
+            </div>
+            <div class="service-card">
+                <h3>SROI 社會價值評估</h3>
+                <p>運用 SROI (Social Return on Investment) 框架，將員工培訓、社區投入等社會專案，量化為具體的貨幣效益，直接納入 SLL 績效評估。</p>
+            </div>
+            <div class="service-card">
+                <h3>ESG 數據治理與 API 串接</h3>
+                <p>輔導企業導入標準化數據介面（Open API），實現碳排、能耗、培訓數據的即時自動化採集與傳輸，大幅簡化年度審核流程。</p>
+            </div>
+            <div class="service-card">
+                <h3>碳盤查與減碳策略</h3>
+                <p>協助企業進行溫室氣體盤查，提供查證輔導，確保數據品質符合 ISO 標準，並制定符合科學基礎減量目標（SBTi）的減碳策略。</p>
             </div>
             <div class="service-card">
                 <h3>永續報告書撰寫</h3>
-                <!-- 已移除粗體符號 -->
-                <p>專業團隊協助企業撰寫符合主管機關規定的永續報告書，並進行內部查核與預審，確保報告順利通過第三方查證。</p>
+                <p>專業團隊協助企業撰寫符合主管機關規定的永續報告書（GRI/SASB），並進行內部查核與預審，確保報告順利通過第三方查證。</p>
             </div>
             <div class="service-card">
                 <h3>綠色轉型策略</h3>
-                <p>量身打造企業綠色轉型方案，包含再生能源導入、循環經濟模式設計等。</p>
-            </div>
-            <div class="service-card">
-                <h3>永續供應鏈</h3>
-                <p>協助企業建立永續供應鏈管理體系，降低環境影響，提升供應鏈韌性。</p>
-            </div>
-            <div class="service-card">
-                <h3>氣候風險評估</h3>
-                <p>分析氣候變遷對企業的實體與轉型風險，並規劃應對策略，增強企業韌性。</p>
-            </div>
-            <div class="service-card">
-                <h3>永續教育訓練</h3>
-                <p>針對不同層級員工設計客製化課程，從永續趨勢到實務操作，全面提升永續競爭力。</p>
+                <p>提供生產流程綠色轉型方案，協助導入再生能源、循環經濟模型，並進行氣候變遷相關財務揭露（TCFD）輔導。</p>
             </div>
         </div>
     </section>
@@ -549,30 +569,34 @@
         <div class="portfolio-grid">
             <div class="portfolio-card">
                 <div>
-                    <h3>範例客戶 A</h3>
-                    <p><strong>服務項目：</strong> 碳盤查與減碳策略規劃</p>
-                    <p><strong>專案成果：</strong> 協助企業建立碳排放基線，並成功將年度碳排量降低 15%。</p>
+                    <h3>盈盈水泥集團</h3>
+                    <p>服務項目： SLL 整合 SROI、Open API 數據治理</p>
+                    <p>專案成果： 達成碳排 SPT，獲得貸款優惠 25 bps；公正轉型 SROI 達 1:3.4。</p>
+                </div>
+                <div style="margin-top: 20px; display: flex; gap: 10px;">
+                    <a href="盈盈水泥SLL報告書.pdf" download class="download-button">下載 SLL 報告書</a>
+                    <a href="盈盈水泥輔導流程.pdf" download class="download-button">下載 輔導文件</a>
                 </div>
             </div>
             <div class="portfolio-card">
                 <div>
                     <h3>範例客戶 B</h3>
-                    <p><strong>服務項目：</strong> 永續報告書撰寫</p>
-                    <p><strong>專案成果：</strong> 協助撰寫符合 GRI 準則的永續報告書，提升品牌信賴度。</p>
+                    <p>服務項目： 永續報告書撰寫</p>
+                    <p>專案成果： 協助撰寫符合 GRI 準則的永續報告書，提升品牌信賴度。</p>
                 </div>
             </div>
             <div class="portfolio-card">
                 <div>
                     <h3>範例客戶 C</h3>
-                    <p><strong>服務項目：</strong> 永續供應鏈管理輔導</p>
-                    <p><strong>專案成果：</strong> 成功導入綠色供應鏈標準，使超過 80% 的供應商符合 ESG 要求。</p>
+                    <p>服務項目： 綠色轉型與再生能源評估</p>
+                    <p>專案成果： 評估並導入太陽能發電系統，每年減少 50 噸碳排放。</p>
                 </div>
             </div>
             <div class="portfolio-card">
                 <div>
                     <h3>範例客戶 D</h3>
-                    <p><strong>服務項目：</strong> 綠色轉型與再生能源評估</p>
-                    <p><strong>專案成果：</strong> 評估並導入太陽能發電系統，每年減少 50 噸碳排放。</p>
+                    <p>服務項目： 碳盤查與減碳策略規劃</p>
+                    <p>專案成果： 協助企業建立碳排放基線，並成功將年度碳排量降低 15%。</p>
                 </div>
             </div>
         </div>
@@ -600,22 +624,29 @@
         </div>
     </section>
 
-    <!-- 新增的頁腳區塊 -->
     <footer class="footer">
         <p>© 2025 Ecoshane 永續家. All Rights Reserved.</p>
     </footer>
 
+    <button id="chat-toggle">🌱</button>
+    <div id="chat-window">
+        <div id="chat-messages"></div>
+        <div id="chat-input-container">
+            <input type="text" id="chat-input" placeholder="輸入訊息..." />
+            <button id="chat-send">發送</button>
+        </div>
+    </div>
+
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1691.0.min.js"></script>
     <script>
-        // 平滑滾動增強效果
+        // 網站導航和平滑滾動 JS
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    // 計算目標位置，考慮固定導航欄高度
                     const navHeight = document.getElementById('navbar').offsetHeight;
                     const targetPosition = target.offsetTop - navHeight;
-
                     window.scrollTo({
                         top: targetPosition,
                         behavior: 'smooth'
@@ -624,7 +655,7 @@
             });
         });
 
-        // 導航欄背景透明度變化
+        // 導航欄背景透明度變化 JS
         window.addEventListener('scroll', function() {
             const navbar = document.getElementById('navbar');
             if (window.scrollY > 100) {
@@ -634,7 +665,7 @@
             }
         });
 
-        // 區塊進入視窗時的動畫效果
+        // 區塊進入視窗時的動畫效果 JS
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -649,129 +680,14 @@
             });
         }, observerOptions);
 
-        // 監聽所有需要動畫的元素
-        document.querySelectorAll('.team-card, .service-card, .portfolio-card, .contact-item').forEach(el => {
+        document.querySelectorAll('.portfolio-card, .service-card, .contact-item').forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(30px)';
             el.style.transition = 'all 0.6s ease';
             observer.observe(el);
         });
-    </script>
-    <style>
-        /* --- 基本樣式 --- */
-        body {
-            font-family: Arial, sans-serif;
-        }
 
-        #chat-toggle {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--primary-blue);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-        }
-
-        #chat-window {
-            position: fixed;
-            bottom: 90px;
-            right: 20px;
-            width: 320px;
-            height: 420px;
-            border: 1px solid #ccc;
-            border-radius: 12px;
-            background: white;
-            display: none;
-            flex-direction: column;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.3s ease-in-out;
-        }
-
-        #chat-window.show {
-            display: flex;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        #chat-messages {
-            flex: 1;
-            padding: 10px;
-            overflow-y: auto;
-        }
-
-        .message {
-            margin: 8px 0;
-            padding: 8px 12px;
-            border-radius: 8px;
-            max-width: 75%;
-            word-wrap: break-word;
-        }
-
-        .message.user {
-            background: #3b82f6;
-            color: white;
-            align-self: flex-end;
-        }
-
-        .message.bot {
-            background: #f1f1f1;
-            color: black;
-            align-self: flex-start;
-        }
-
-        .time {
-            font-size: 10px;
-            color: gray;
-            margin-top: 2px;
-            text-align: right;
-        }
-
-        #chat-input-container {
-            display: flex;
-            border-top: 1px solid #ccc;
-        }
-
-        #chat-input {
-            flex: 1;
-            padding: 8px;
-            border: none;
-            outline: none;
-        }
-
-        #chat-send {
-            background: var(--primary-blue);
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            cursor: pointer;
-        }
-    </style>
-</head>
-
-<body>
-    <!-- 聊天按鈕 -->
-    <button id="chat-toggle">🌱</button>
-
-    <!-- 聊天視窗 -->
-    <div id="chat-window">
-        <div id="chat-messages"></div>
-        <div id="chat-input-container">
-            <input type="text" id="chat-input" placeholder="輸入訊息..." />
-            <button id="chat-send">發送</button>
-        </div>
-    </div>
-
-    <!-- AWS SDK -->
-    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1691.0.min.js"></script>
-    <script>
+        // Lex Chatbot Class
         class LexChatbot {
             constructor() {
                 this.chatToggle = document.getElementById('chat-toggle');
@@ -780,7 +696,7 @@
                 this.chatInput = document.getElementById('chat-input');
                 this.chatSend = document.getElementById('chat-send');
 
-                this.hasWelcomed = false; // 確保只顯示一次歡迎語
+                this.hasWelcomed = false;
                 this.chatToggle.addEventListener('click', () => this.toggleChat());
                 this.chatSend.addEventListener('click', () => this.sendMessage());
                 this.chatInput.addEventListener('keypress', (e) => {
@@ -791,16 +707,15 @@
             }
 
             initAWS() {
-                AWS.config.region = 'us-east-1'; // 改成你 Lex bot 的區域
+                // *** 注意：此處的 AWS 配置參數僅為範例，實際使用需替換為您自己的 Lex V2/Cognito 資訊 ***
+                AWS.config.region = 'us-east-1'; 
                 AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                    IdentityPoolId: 'us-east-1:05eec0e5-0c38-45a1-8a36-729ffb25c03d' // 換成同區 Cognito 身份池
+                    IdentityPoolId: 'us-east-1:05eec0e5-0c38-45a1-8a36-729ffb25c03d' 
                 });
 
                 this.lexRuntime = new AWS.LexRuntimeV2();
                 this.botId = 'BLNBE1X3XG';
-                // 從 AWS Console 複製
                 this.botAliasId = 'TSTALIASID';
-                // 從 AWS Console 複製
                 this.localeId = 'en_US';
                 this.sessionId = Date.now().toString();
             }
@@ -814,7 +729,8 @@
                     setTimeout(() => this.chatWindow.classList.add('show'), 10);
 
                     if (!this.hasWelcomed) {
-                        this.addMessage("您好！我是 Ecoshane 永續客服 🌱 有什麼可以幫您？", 'bot');
+                        // 首次開啟的歡迎語
+                        this.addMessage("您好！我是 Ecoshane 永續客服 🌱 我可以回答關於 SLL 輔導、SROI 評估或碳盤查的問題。", 'bot');
                         this.hasWelcomed = true;
                     }
                 }
@@ -843,7 +759,7 @@
                             this.addMessage(msg.content, 'bot');
                         });
                     } else {
-                        this.addMessage("抱歉，我沒有理解你的問題。", 'bot');
+                        this.addMessage("抱歉，我沒有理解你的問題。你可以試試輸入: SROI是什麼?", 'bot');
                     }
                 } catch (err) {
                     console.error('Lex V2 Error:', err);
@@ -860,6 +776,7 @@
                 });
 
                 if (type === 'bot') {
+                    // 模擬打字效果 for bot message
                     let i = 0;
                     const contentDiv = document.createElement('div');
                     const timeDiv = document.createElement('div');
@@ -872,10 +789,14 @@
                     const typing = setInterval(() => {
                         contentDiv.innerText = text.substring(0, i);
                         i++;
-                        if (i > text.length) clearInterval(typing);
+                        if (i > text.length) {
+                            clearInterval(typing);
+                            contentDiv.innerText = text;
+                        }
                         this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
                     }, 40);
                 } else {
+                    // 一般用戶訊息
                     message.innerHTML = `<div>${text}</div><div class="time">${time}</div>`;
                     this.chatMessages.appendChild(message);
                 }
