@@ -222,8 +222,8 @@
         
         @media (max-width: 768px) {
              .mission-grid {
-                grid-template-columns: 1fr;
-            }
+                 grid-template-columns: 1fr;
+             }
         }
 
         /* 服務項目卡片 */
@@ -276,7 +276,7 @@
         .portfolio-grid {
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start; /* 確保內容在頂部對齊 */
             gap: 2rem;
         }
 
@@ -289,16 +289,39 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            max-width: 600px; /* 限制案例卡片寬度 */
+            
+            /* 新增：Flexbox 實現左右佈局 */
+            display: flex; 
+            flex-direction: row; 
+            gap: 40px; 
+            justify-content: space-between; 
+            align-items: stretch;
+            max-width: 900px; /* 增加案例卡片寬度以容納圖片 */
         }
 
         .portfolio-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
         }
+
+        /* 新增：用於左側文字內容的容器 */
+        .portfolio-content {
+            flex: 1; /* 讓文字內容區佔用可用空間 */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        /* 新增：用於圖片的樣式 */
+        .portfolio-image {
+            width: 40%; /* 圖片佔用 40% 寬度 */
+            min-width: 250px; /* 圖片最小寬度，防止手機版太小 */
+            height: auto;
+            border-radius: 15px;
+            object-fit: cover; /* 確保圖片填充容器並保持比例 */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
 
         .portfolio-card h3 {
             font-size: 1.5rem;
@@ -400,9 +423,19 @@
             .contact-info {
                 flex-direction: column;
             }
+            
+            /* RWD 調整：成功案例卡片變回上下排列 */
+            .portfolio-card {
+                flex-direction: column; 
+            }
+            .portfolio-image {
+                width: 100%; 
+                order: -1; /* 讓圖片回到頂部 */
+                margin-bottom: 20px;
+            }
         }
         
-        /* 聊天機器人相關 CSS (圖標修正為藍色系) */
+        /* 聊天機器人相關 CSS */
         #chat-toggle {
             position: fixed;
             bottom: 20px;
@@ -610,15 +643,23 @@
         <h2 class="section-title">成功案例</h2>
         <div class="portfolio-grid">
             <div class="portfolio-card">
-                <div>
-                    <h3>盈盈水泥集團</h3>
-                    <p>服務項目： SLL 整合 SROI、Open API 數據治理</p>
-                    <p>專案成果： 達成碳排 SPT，獲得貸款優惠 25 bps；公正轉型 SROI 達 1:3.4。</p>
+                <div class="portfolio-content">
+                    <div>
+                        <h3>盈盈水泥集團</h3>
+                        <p>服務項目： SLL 整合 SROI、Open API 數據治理</p>
+                        <p>專案成果： 達成碳排 SPT，獲得貸款優惠 25 bps；公正轉型 SROI 達 1:3.4。</p>
+                    </div>
+                    <div style="margin-top: 20px; display: flex; gap: 10px;">
+                        <a href="盈盈水泥SLL報告書.pdf" download class="download-button">下載 SLL 報告書</a>
+                        <a href="盈盈水泥輔導流程.pdf" download class="download-button">下載 輔導文件</a>
+                    </div>
                 </div>
-                <div style="margin-top: 20px; display: flex; gap: 10px;">
-                    <a href="盈盈水泥SLL報告書.pdf" download class="download-button">下載 SLL 報告書</a>
-                    <a href="盈盈水泥輔導流程.pdf" download class="download-button">下載 輔導文件</a>
-                </div>
+                
+                <img src="images/ying-ying-cement.jpg" 
+                     alt="盈盈水泥集團專案形象圖" 
+                     class="portfolio-image" 
+                     onerror="this.onerror=null; this.src='https://placehold.co/400x300/364966/ffffff?text=盈盈水泥集團案例圖';" />
+
             </div>
         </div>
     </section>
