@@ -15,6 +15,7 @@
             --background-dark: #182848;
             --card-gradient-start: #4b6cb7;
             --card-gradient-end: #182848;
+            --accent-green: #2ecc71;
         }
 
         * {
@@ -170,7 +171,7 @@
             border-radius: 2px;
         }
 
-        /* 關於我們 */
+        /* 關於我們 - 新增卡片佈局 */
         .about-content {
             text-align: left;
             font-size: 1.2rem;
@@ -178,9 +179,51 @@
             margin-bottom: 4rem;
             color: #444;
         }
+        
+        .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
 
-        .about-content strong {
+        .mission-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid var(--accent-green);
+            transition: transform 0.3s ease;
+        }
+        
+        .mission-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .mission-card h3 {
             color: var(--secondary-blue);
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .mission-card h3 i {
+            color: var(--accent-green);
+            font-size: 2rem;
+        }
+        
+        .mission-card p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        
+        @media (max-width: 768px) {
+             .mission-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* 服務項目卡片 */
@@ -231,17 +274,13 @@
         }
 
         .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            /* 調整為單欄佈局，讓盈盈案例居中 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
             gap: 2rem;
         }
 
-        @media (max-width: 768px) {
-            .portfolio-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
         .portfolio-card {
             background: #364966;
             color: white;
@@ -254,6 +293,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            max-width: 600px; /* 限制案例卡片寬度 */
         }
 
         .portfolio-card:hover {
@@ -266,13 +306,9 @@
             margin-bottom: 1rem;
         }
 
-        .portfolio-card p strong {
-            color: #a0d4ff;
-        }
-        
         /* 下載按鈕樣式 */
         .download-button {
-            background: #2ecc71; /* 綠色，代表永續與環保 */
+            background: var(--accent-green); /* 綠色，代表永續與環保 */
             color: white;
             padding: 8px 15px;
             border: none;
@@ -290,7 +326,7 @@
             transform: scale(1.05);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
-
+        
         /* 聯絡我們 */
         .contact {
             background: var(--primary-blue);
@@ -515,7 +551,7 @@
     </nav>
 
     <section id="home" class="hero">
-        <h1>永續價值 X 金融科技</h1>
+        <h1>永續 X 金融</h1>
         <p>
             我們是 Ecoshane Bank 的官方顧問團隊，專注於 SROI 社會價值貨幣化，並透過 Open API 數據治理讓企業的永續績效直接連結低成本融資。
         </p>
@@ -526,11 +562,18 @@
     <section id="about" class="section">
         <h2 class="section-title">關於我們：顧問與金融的橋樑</h2>
         <div class="about-content">
-            <p>Ecoshane 永續家是 Ecoshane Bank 旗下的專業顧問部門。我們的使命是協助企業將環境（E）、社會（S）的投入，轉化為可審核、可量化的金融績效指標（SPT）。</p>
-            <br>
-            <p>我們結合資深 ESG 顧問的專業知識和創新金融科技能力，特別在以下兩個領域居於領先地位：</p>
-            <p>1. 社會價值貨幣化 (SROI)：將人力資本投入、公正轉型成本等社會效益，透過社會投資報酬率（SROI）模型精確評估，並作為永續連結貸款（SLL）的社會 SPT 依據，這是傳統金融顧問無法提供的服務。</p>
-            <p>2. 數據治理與確信：利用 Open API 和雲端技術（如 AWS），建立數據從企業到銀行的自動化驗證機制，為企業取得 國際會計師事務所有限確信 報告，確保最高的透明度與信賴度。</p>
+            <p>Ecoshane 永續家是 Ecoshane Bank 旗下的專業顧問部門。我們的使命是協助企業將環境（E）、社會（S）的投入，轉化為可審核、可量化的金融績效指標（SPT）。我們致力於在永續策略與金融執行之間建立高效、透明的溝通橋樑。</p>
+        </div>
+        
+        <div class="mission-grid">
+            <div class="mission-card">
+                <h3><i class="fas fa-hand-holding-usd"></i> 社會價值貨幣化 (SROI)</h3>
+                <p>將人力資本投入、公正轉型成本等社會效益，透過社會投資報酬率（SROI）模型精確評估，並作為永續連結貸款（SLL）的社會 SPT 依據，這是傳統金融顧問無法提供的服務。</p>
+            </div>
+            <div class="mission-card">
+                <h3><i class="fas fa-database"></i> 數據治理與確信</h3>
+                <p>利用 Open API 和雲端技術（如 AWS），建立數據從企業到銀行的自動化驗證機制。為企業取得國際會計師事務所有限確信報告，確保最高的透明度與信賴度。</p>
+            </div>
         </div>
     </section>
 
@@ -578,28 +621,7 @@
                     <a href="盈盈水泥輔導流程.pdf" download class="download-button">下載 輔導文件</a>
                 </div>
             </div>
-            <div class="portfolio-card">
-                <div>
-                    <h3>範例客戶 B</h3>
-                    <p>服務項目： 永續報告書撰寫</p>
-                    <p>專案成果： 協助撰寫符合 GRI 準則的永續報告書，提升品牌信賴度。</p>
-                </div>
             </div>
-            <div class="portfolio-card">
-                <div>
-                    <h3>範例客戶 C</h3>
-                    <p>服務項目： 綠色轉型與再生能源評估</p>
-                    <p>專案成果： 評估並導入太陽能發電系統，每年減少 50 噸碳排放。</p>
-                </div>
-            </div>
-            <div class="portfolio-card">
-                <div>
-                    <h3>範例客戶 D</h3>
-                    <p>服務項目： 碳盤查與減碳策略規劃</p>
-                    <p>專案成果： 協助企業建立碳排放基線，並成功將年度碳排量降低 15%。</p>
-                </div>
-            </div>
-        </div>
     </section>
 
     <section id="contact" class="section contact">
@@ -680,7 +702,7 @@
             });
         }, observerOptions);
 
-        document.querySelectorAll('.portfolio-card, .service-card, .contact-item').forEach(el => {
+        document.querySelectorAll('.portfolio-card, .service-card, .mission-card, .contact-item').forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(30px)';
             el.style.transition = 'all 0.6s ease';
