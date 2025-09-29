@@ -8,14 +8,14 @@
     <style>
         /* 定義 CSS 變數 */
         :root {
-            --primary-blue: #0A1C3B;
-            --secondary-blue: #11367D;
+            --primary-blue: #0A1C3B;      /* 最深藍色 */
+            --secondary-blue: #11367D;    /* 次要深藍色 */
             --text-color: #333;
             --background-light: #f8f9fa;
             --background-dark: #182848;
             --card-gradient-start: #4b6cb7;
             --card-gradient-end: #182848;
-            --accent-green: #2ecc71;
+            --accent-blue-light: #5a83cc; /* 新增用於按鈕和強調的亮藍色 */
         }
 
         * {
@@ -69,7 +69,7 @@
         }
 
         .logo-icon {
-            color: #11367D;
+            color: var(--secondary-blue);
             font-size: 1.5rem;
         }
 
@@ -192,7 +192,7 @@
             padding: 2.5rem;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            border-left: 5px solid var(--accent-green);
+            border-left: 5px solid var(--secondary-blue); /* 修正為深藍色 */
             transition: transform 0.3s ease;
         }
         
@@ -211,7 +211,7 @@
         }
 
         .mission-card h3 i {
-            color: var(--accent-green);
+            color: var(--secondary-blue); /* 修正為深藍色 */
             font-size: 2rem;
         }
         
@@ -274,7 +274,6 @@
         }
 
         .portfolio-grid {
-            /* 調整為單欄佈局，讓盈盈案例居中 */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -306,9 +305,9 @@
             margin-bottom: 1rem;
         }
 
-        /* 下載按鈕樣式 */
+        /* 下載按鈕樣式 (修正為藍色系) */
         .download-button {
-            background: var(--accent-green); /* 綠色，代表永續與環保 */
+            background: var(--accent-blue-light); 
             color: white;
             padding: 8px 15px;
             border: none;
@@ -318,11 +317,11 @@
             transition: all 0.3s ease;
             font-size: 0.9rem;
             text-align: center;
-            flex-grow: 1; /* 讓按鈕平均佔滿空間 */
+            flex-grow: 1; 
         }
 
         .download-button:hover {
-            background: #27ae60;
+            background: var(--secondary-blue); /* Hover 時使用次要深藍色 */
             transform: scale(1.05);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
@@ -403,7 +402,7 @@
             }
         }
         
-        /* 聊天機器人相關 CSS */
+        /* 聊天機器人相關 CSS (圖標修正為藍色系) */
         #chat-toggle {
             position: fixed;
             bottom: 20px;
@@ -621,7 +620,7 @@
                     <a href="盈盈水泥輔導流程.pdf" download class="download-button">下載 輔導文件</a>
                 </div>
             </div>
-            </div>
+        </div>
     </section>
 
     <section id="contact" class="section contact">
@@ -650,7 +649,7 @@
         <p>© 2025 Ecoshane 永續家. All Rights Reserved.</p>
     </footer>
 
-    <button id="chat-toggle">🌱</button>
+    <button id="chat-toggle">💬</button> 
     <div id="chat-window">
         <div id="chat-messages"></div>
         <div id="chat-input-container">
@@ -752,7 +751,7 @@
 
                     if (!this.hasWelcomed) {
                         // 首次開啟的歡迎語
-                        this.addMessage("您好！我是 Ecoshane 永續客服 🌱 我可以回答關於 SLL 輔導、SROI 評估或碳盤查的問題。", 'bot');
+                        this.addMessage("您好！我是 Ecoshane 永續客服。我可以回答關於 SLL 輔導、SROI 評估或碳盤查的問題。", 'bot');
                         this.hasWelcomed = true;
                     }
                 }
