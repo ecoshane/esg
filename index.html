@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ecoshane 永續家 - ESG 策略與 SROI 價值顧問</title>
+    <title>Ecoshane 永續家 - ESG 策略、人權盡職調查與 SROI 顧問</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         /* 定義 CSS 變數 */
@@ -16,6 +16,8 @@
             --card-gradient-start: #4b6cb7;
             --card-gradient-end: #182848;
             --accent-blue-light: #5a83cc; /* 新增用於按鈕和強調的亮藍色 */
+            /* (新增) 風險卡片專用顏色，與母公司一致 */
+            --warning-red: #cc2a2a; 
         }
 
         * {
@@ -240,7 +242,16 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            /* 確保卡片等高 */
+            display: flex;
+            flex-direction: column;
         }
+
+        /* (新增) 風險導向的服務卡片 */
+        .service-card.risk-oriented {
+            background: linear-gradient(135deg, #d35a5a 0%, var(--warning-red) 100%);
+        }
+
 
         .service-card:hover {
             transform: translateY(-10px) scale(1.03);
@@ -252,6 +263,13 @@
             margin-bottom: 1rem;
             position: relative;
             z-index: 2;
+        }
+        
+        /* (新增) 服務卡片圖示 */
+        .service-card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            opacity: 0.8;
         }
         
         /* 成功案例區塊和卡片樣式 */
@@ -414,6 +432,11 @@
                 font-size: 2rem;
             }
             
+            /* (RWD) 關於我們卡片改為單行 */
+            .mission-grid {
+                grid-template-columns: 1fr;
+            }
+
             .contact-info {
                 flex-direction: column;
             }
@@ -576,20 +599,21 @@
         </div>
     </nav>
 
+    <!-- (已修改) -->
     <section id="home" class="hero">
-        <h1>永續 X 金融</h1>
+        <h1>實現可量化的永續價值</h1>
         <p>
-            我們是 Ecoshane Bank 的官方顧問團隊，專注於 SROI 社會價值貨幣化，並透過 Open API 數據治理讓企業的永續績效直接連結低成本融資。
+            我們協助企業導入 SROI、人權盡職調查 (HRDD) 與 E&S 數據治理，將永續績效轉化為可驗證的金融資產，無縫對接 Ecoshane Bank 的永續連結貸款。
         </p>
         <a href="#contact" class="cta-button">預約免費諮詢</a>
         <div class="scroll-indicator"></div>
     </section>
 
     <section id="about" class="section">
-        <!-- 標題已修改：移除「：顧問與金融的橋樑」 -->
         <h2 class="section-title">關於我們</h2>
+        <!-- (已修改) -->
         <div class="about-content">
-            <p>Ecoshane 永續家是 Ecoshane Bank 旗下的專業顧問部門。我們的使命是協助企業將環境（E）、社會（S）的投入，轉化為可審核、可量化的金融績效指標（SPT）。我們致力於在永續策略與金融執行之間建立高效、透明的溝通橋樑。</p>
+            <p>Ecoshane 永續家是 Ecoshane Bank 旗下的專業顧問部門。我們的使命是協助企業將環境（E）、社會（S）的投入與<strong style="color: var(--text-color); font-weight: bold;">風險管理</strong>，轉化為可審核、可量化的<strong style="color: var(--text-color); font-weight: bold;">環境與社會績效指標 (E&S SPTs)</strong>。我們致力於在永續策略（包含風險管理）與金融執行之間建立高效、透明的溝通橋樑。</p>
         </div>
         
         <div class="mission-grid">
@@ -598,9 +622,10 @@
                 <!-- SROI 卡片文字強調方式調整為只使用單一藍色 -->
                 <p>我們的 SROI 評估模型<strong style="color: var(--secondary-blue);">完全遵循英國 SVI (Social Value International) 的七大原則框架</strong>進行精確評估。確保將人力資本投入、公正轉型成本等社會效益，轉化為<strong style="color: var(--secondary-blue);">國際認可、可審核的貨幣價值</strong>，直接作為永續連結貸款（SLL）的社會 SPT 依據。</p>
             </div>
+            <!-- (已修改) -->
             <div class="mission-card">
-                <h3><i class="fas fa-database"></i> 數據治理與確信</h3>
-                <p>利用 Open API 和雲端技術（如 AWS），建立數據從企業到銀行的自動化驗證機制。為企業取得國際會計師事務所有限確信報告，確保最高的透明度與信賴度。</p>
+                <h3><i class="fas fa-database"></i> E&S 數據治理與確信</h3>
+                <p>利用 Open API 和雲端技術，建立<strong style="color: var(--secondary-blue);">環境績效（如碳排）</strong>與<strong style="color: var(--secondary-blue);">社會風險（如申訴案件）</strong>數據的自動化驗證機制。為企業取得國際會計師事務所有限確信報告，確保最高的透明度與信賴度。</p>
             </div>
         </div>
         
@@ -617,35 +642,69 @@
 
     <section id="services" class="section services">
         <h2 class="section-title">核心服務：創造 ESG 的貨幣價值</h2>
-        <div class="services-grid">
+        <!-- (已修改) 服務卡片由 6 張增加到 8 張，並重新排序 -->
+        <div class="services-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+            
+            <!-- 服務 1: SLL -->
             <div class="service-card">
+                <i class="fas fa-link service-card-icon"></i>
                 <h3>永續連結貸款 (SLL) 輔導</h3>
-                <p>為企業量身設計 環境 與 社會 雙軌 SPT 目標，確保達成指標時，能自動觸發貸款利息減免，優化企業融資成本。</p>
+                <p>為企業量身設計<strong style="color: #fff;">環境 (E)</strong> 與<strong style="color: #fff;">社會 (S)</strong> 雙軌 SPT 目標，確保達成指標時，能自動觸發貸款利息減免，優化企業融資成本。</p>
             </div>
+
+            <!-- 服務 2: SROI -->
             <div class="service-card">
+                <i class="fas fa-hand-holding-heart service-card-icon"></i>
                 <!-- SVI 強化點 2: 服務項目標題與內容強調 SVI -->
                 <h3>SROI 社會價值評估 (SVI 框架)</h3>
-                <p>我們採用<strong style="color: #fff;">英國 SVI (Social Value International) 的國際公認方法論</strong>，將員工培訓、社區投入等社會專案，量化為具體的貨幣效益。此評估結果具備高度公信力，可直接納入 SLL 績效評估，為企業取得競爭優勢。</p>
+                <p>我們採用<strong style="color: #fff;">英國 SVI 的國際公認方法論</strong>，將員工培訓、社區投入等社會專案，量化為具體的貨幣效益。此評估結果具備高度公信力，可直接納入 SLL 績效評估。</p>
             </div>
-            <div class="service-card">
-                <h3>ESG 數據治理與 API 串接</h3>
-                <p>輔導企業導入標準化數據介面（Open API），實現碳排、能耗、培訓數據的即時自動化採集與傳輸，大幅簡化年度審核流程。</p>
+
+            <!-- (新增) 服務 3: HRDD -->
+            <div class="service-card risk-oriented">
+                <i class="fas fa-shield-alt service-card-icon"></i>
+                <h3>人權盡職調查 (HRDD) 導入</h3>
+                <p>協助企業建構<strong style="color: #fff;">人權風險管理框架 (UNGP)</strong>，包括鑑別潛在風險、建立<strong style="color: #fff;">營運層級申訴機制</strong>，並輔導撰寫人權政策，滿足國際法規要求。</p>
             </div>
+
+            <!-- (新增) 服務 4: 供應鏈風險 -->
+            <div class="service-card risk-oriented">
+                <i class="fas fa-sitemap service-card-icon"></i>
+                <h3>供應鏈 E&S 風險管理</h3>
+                <p>輔導企業建立供應鏈稽核與<strong style="color: #fff;">風險分級</strong>制度，特別針對<strong style="color: #fff;">強迫勞動</strong>與<strong style="color: #fff;">童工</strong>等重大違規事項，建立即時預警與改善機制，確保供應鏈韌性。</p>
+            </div>
+
+            <!-- 服務 5: 數據治理 (已修改) -->
             <div class="service-card">
+                <i class="fas fa-database service-card-icon"></i>
+                <h3>E&S 數據治理與 API 串接</h3>
+                <p>輔導企業導入標準化數據介面 (Open API)，實現碳排、能耗數據，並整合<strong style_layout="color: #fff;">勞工申訴平台</strong>與<strong style_layout="color: #fff;">供應鏈稽核</strong>的風險數據，簡化審核流程。</p>
+            </div>
+
+            <!-- 服務 6: 碳盤查 -->
+            <div class="service-card">
+                <i class="fas fa-smog service-card-icon"></i>
                 <h3>碳盤查與減碳策略</h3>
-                <p>協助企業進行溫室氣體盤查，提供查證輔導，確保數據品質符合 ISO 標準，並制定符合科學基礎減量目標（SBTi）的減碳策略。</p>
+                <p>協助企業進行溫室氣體盤查 (ISO 14064-1)，提供查證輔導，並制定符合科學基礎減量目標 (SBTi) 的減碳策略。</p>
             </div>
+
+            <!-- 服務 7: 報告書 -->
             <div class="service-card">
-                <h3>永續報告書撰寫</h3>
-                <p>專業團隊協助企業撰寫符合主管機關規定的永續報告書（GRI/SASB），並進行內部查核與預審，確保報告順利通過第三方查證。</p>
+                <i class="fas fa-book-open service-card-icon"></i>
+                <h3>永續報告書撰寫 (GRI/SASB)</h3>
+                <p>專業團隊協助企業撰寫符合主管機關規定的永續報告書，並進行內部查核與預審，確保報告順利通過第三方查證。</p>
             </div>
+
+            <!-- 服務 8: 綠色轉型 -->
             <div class="service-card">
-                <h3>綠色轉型策略</h3>
-                <p>提供生產流程綠色轉型方案，協助導入再生能源、循環經濟模型，並進行氣候變遷相關財務揭露（TCFD）輔導。</p>
+                <i class="fas fa-recycle service-card-icon"></i>
+                <h3>綠色轉型策略 (TCFD)</h3>
+                <p>提供生產流程綠色轉型方案，協助導入再生能源、循環經濟模型，並進行氣候變遷相關財務揭露 (TCFD) 輔導。</p>
             </div>
         </div>
     </section>
 
+    <!-- (已修改) -->
     <section id="portfolio" class="section">
         <h2 class="section-title">成功案例</h2>
         <div class="portfolio-grid">
@@ -653,8 +712,8 @@
                 <div class="portfolio-content">
                     <div>
                         <h3>盈盈水泥集團</h3>
-                        <p>服務項目： SLL 整合 SROI、Open API 數據治理</p>
-                        <p>專案成果： 達成碳排 SPT，獲得貸款優惠 25 bps；公正轉型 SROI 達 1:3.4。</p>
+                        <p>服務項目： SLL 整合 SROI、<strong style="color: #fff;">HRDD 申訴機制建置</strong>、Open API 數據治理</p>
+                        <p>專案成果： 達成碳排 SPT，獲得貸款優惠 25 bps；公正轉型 SROI 達 1:3.4；並成功導入<strong style="color: #fff;">勞工申訴平台</strong>，達成社會風險 (S) 指標。</p>
                     </div>
                     <div style="margin-top: 20px; display: flex; gap: 10px;">
                         <a href="盈盈水泥SLL報告書.pdf" download class="download-button">下載 SLL 報告書</a>
@@ -674,7 +733,7 @@
     <section id="contact" class="section contact">
         <h2 class="section-title" style="color: white;">聯絡我們</h2>
         <div class="contact-content">
-            <p>如果您對我們的服務有任何疑問或需求，歡迎隨時與我們聯繫。</p>
+            <p>如果您對我們的 SROI、HRDD 或 E&S 數據治理服務有任何疑問或需求，歡迎隨時與我們聯繫。</p>
 
             <div class="contact-info">
                 <div class="contact-item">
@@ -757,7 +816,7 @@
             observer.observe(el);
         });
 
-        // Lex Chatbot Class (保持不變)
+        // Lex Chatbot Class
         class LexChatbot {
             constructor() {
                 this.chatToggle = document.getElementById('chat-toggle');
@@ -799,8 +858,8 @@
                     setTimeout(() => this.chatWindow.classList.add('show'), 10);
 
                     if (!this.hasWelcomed) {
-                        // 首次開啟的歡迎語
-                        this.addMessage("您好！我是 Ecoshane 永續客服。我可以回答關於 SLL 輔導、SROI 評估或碳盤查的問題。", 'bot');
+                        // (已修改) 首次開啟的歡迎語
+                        this.addMessage("您好！我是 Ecoshane 永續客服。我可以回答關於 SLL 輔導、SROI 評估、人權盡職調查 (HRDD) 或碳盤查的問題。", 'bot');
                         this.hasWelcomed = true;
                     }
                 }
@@ -829,11 +888,13 @@
                             this.addMessage(msg.content, 'bot');
                         });
                     } else {
-                        this.addMessage("抱歉，我沒有理解你的問題。你可以試試輸入: SROI是什麼?", 'bot');
+                        // (已修改) 備用回覆
+                        this.addMessage("抱歉，我沒有理解你的問題。您可以試試輸入：「SROI是什麼？」或「人權風險如何評估？」", 'bot');
                     }
                 } catch (err) {
                     console.error('Lex V2 Error:', err);
-                    this.addMessage("系統暫時無法使用，請稍後再試或直接聯繫我們。", 'bot');
+                    // (已修改) 錯誤回覆
+                    this.addMessage("系統暫時無法使用。如需 SROI 或 HRDD 盡職調查諮詢，請直接聯繫我們。", 'bot');
                 }
             }
 
@@ -856,12 +917,14 @@
                     message.appendChild(timeDiv);
                     this.chatMessages.appendChild(message);
 
+                    // (已修改) 機器人回覆的打字效果 (innerHTML 以支援粗體)
                     const typing = setInterval(() => {
-                        contentDiv.innerText = text.substring(0, i);
+                        const partialText = text.substring(0, i);
+                        contentDiv.innerHTML = partialText; // 使用 innerHTML
                         i++;
                         if (i > text.length) {
                             clearInterval(typing);
-                            contentDiv.innerText = text;
+                            contentDiv.innerHTML = text; // 確保最終顯示完整 HTML
                         }
                         this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
                     }, 40);
@@ -881,3 +944,6 @@
     </script>
 </body>
 </html>
+
+
+
