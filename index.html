@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ecoshane 永續家 - ESG 策略、人權盡職調查與 SROI 顧問</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Ecoshane 永續家 - ESG 策略與 SROI 價值顧問</title>
+    <!-- (已修改) 引用 Ecoshane Bank 的 Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         /* 定義 CSS 變數 */
         :root {
@@ -16,7 +17,7 @@
             --card-gradient-start: #4b6cb7;
             --card-gradient-end: #182848;
             --accent-blue-light: #5a83cc; /* 新增用於按鈕和強調的亮藍色 */
-            /* (新增) 風險卡片專用顏色，與母公司一致 */
+            /* (新增) 人權風險紅色 */
             --warning-red: #cc2a2a; 
         }
 
@@ -27,11 +28,15 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* (已修改) 統一字體 */
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
             line-height: 1.6;
             color: var(--text-color);
             background-color: var(--background-light);
         }
+
+        /* (新增) 載入 Inter 字體 */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
         /* 平滑滾動 */
         html {
@@ -62,7 +67,7 @@
 
         .logo {
             font-size: 1.8rem;
-            font-weight: bold;
+            font-weight: 900; /* (已修正) 加粗至 900 */
             color: var(--primary-blue);
             text-decoration: none;
             display: flex;
@@ -106,7 +111,7 @@
             padding-right: 2rem;
         }
 
-        /* 首頁區塊 */
+        /* 首頁區塊 (已修改) */
         .hero {
             background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 100%);
             color: white;
@@ -184,7 +189,8 @@
         
         .mission-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            /* (已修改) 關於我們區塊改為三欄 */
+            grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
             margin-top: 3rem;
         }
@@ -221,6 +227,17 @@
             font-size: 1.1rem;
             line-height: 1.7;
         }
+
+        /* (新增) HRDD 風險卡片樣式 */
+        .mission-card.risk {
+            border-left-color: var(--warning-red);
+        }
+        .mission-card.risk h3 {
+            color: var(--warning-red);
+        }
+         .mission-card.risk h3 i {
+            color: var(--warning-red);
+        }
         
         /* 服務項目卡片 */
         .services {
@@ -229,7 +246,8 @@
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            /* (已修改) 服務項目改為三欄 */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
         }
 
@@ -242,16 +260,10 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            /* 確保卡片等高 */
+            /* (新增) 確保卡片等高 */
             display: flex;
             flex-direction: column;
         }
-
-        /* (新增) 風險導向的服務卡片 */
-        .service-card.risk-oriented {
-            background: linear-gradient(135deg, #d35a5a 0%, var(--warning-red) 100%);
-        }
-
 
         .service-card:hover {
             transform: translateY(-10px) scale(1.03);
@@ -264,12 +276,15 @@
             position: relative;
             z-index: 2;
         }
-        
-        /* (新增) 服務卡片圖示 */
-        .service-card-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            opacity: 0.8;
+
+        /* (新增) 卡片內容佔滿剩餘空間 */
+        .service-card-content {
+            flex-grow: 1;
+        }
+
+        /* (新增) HRDD 風險服務卡片 */
+        .service-card.risk {
+             background: linear-gradient(135deg, #d35a5a 0%, var(--warning-red) 100%);
         }
         
         /* 成功案例區塊和卡片樣式 */
@@ -340,6 +355,13 @@
             margin-bottom: 1rem;
         }
 
+        /* (已修改) 案例說明文字 */
+        .portfolio-description {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
         /* 下載按鈕樣式 (修正為藍色系) */
         .download-button {
             background: var(--accent-blue-light); 
@@ -406,6 +428,13 @@
         }
 
         /* 響應式設計 */
+        @media (max-width: 992px) {
+            /* (新增) RWD: 關於我們三欄改為單欄 */
+            .mission-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -432,11 +461,6 @@
                 font-size: 2rem;
             }
             
-            /* (RWD) 關於我們卡片改為單行 */
-            .mission-grid {
-                grid-template-columns: 1fr;
-            }
-
             .contact-info {
                 flex-direction: column;
             }
@@ -467,6 +491,10 @@
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
             z-index: 1001;
+            /* (新增) icon 置中 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         #chat-window {
@@ -493,38 +521,79 @@
             transform: translateY(0);
         }
         
+        /* (新增) 聊天室標題列 */
+        #chat-header {
+            background: var(--primary-blue);
+            color: white;
+            padding: 0.75rem 1rem;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #chat-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        #chat-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+        #chat-close:hover {
+            opacity: 1;
+        }
+
+
         #chat-messages {
             flex: 1;
             padding: 10px;
             overflow-y: auto;
+            /* (新增) 訊息flexbox設定 */
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
         
         .message {
-            margin: 8px 0;
             padding: 8px 12px;
-            border-radius: 8px;
-            max-width: 75%;
+            border-radius: 12px;
+            max-width: 80%; /* 修改為 80% */
             word-wrap: break-word;
+            line-height: 1.4;
         }
         
         .message.user {
             background: #3b82f6;
             color: white;
             align-self: flex-end;
-            margin-left: auto;
+            border-bottom-right-radius: 4px; /* 營造對話框泡泡感 */
         }
         
         .message.bot {
             background: #f1f1f1;
             color: black;
             align-self: flex-start;
-            margin-right: auto;
+            border-bottom-left-radius: 4px; /* 營造對話框泡泡感 */
+        }
+
+        /* (新增) 聊天室風險警示文字 */
+        .chat-warning-red {
+            color: var(--warning-red);
+            font-weight: 600;
         }
         
         .time {
             font-size: 10px;
             color: gray;
-            margin-top: 2px;
+            margin-top: 4px; /* 修改間距 */
             text-align: right;
         }
         
@@ -539,18 +608,20 @@
         
         #chat-input {
             flex: 1;
-            padding: 8px;
+            padding: 12px; /* 修改 padding */
             border: none;
             outline: none;
+            font-size: 0.95rem;
         }
         
         #chat-send {
             background: var(--primary-blue);
             color: white;
             border: none;
-            padding: 8px 12px;
+            padding: 0 1rem; /* 修改 padding */
             cursor: pointer;
             transition: background 0.3s;
+            font-size: 1.1rem; /* 加大 icon */
         }
         
         #chat-send:hover {
@@ -603,36 +674,40 @@
     <section id="home" class="hero">
         <h1>實現可量化的永續價值</h1>
         <p>
-            我們協助企業導入 SROI、人權盡職調查 (HRDD) 與 E&S 數據治理，將永續績效轉化為可驗證的金融資產，無縫對接 Ecoshane Bank 的永續連結貸款。
+            我們協助企業導入 SROI、人權盡職調查 HRDD 與 E&S 數據治理，將永續績效轉化為可驗證的金融資產，無縫對接 Ecoshane Bank 的永續連結貸款。
         </p>
         <a href="#contact" class="cta-button">預約免費諮詢</a>
         <div class="scroll-indicator"></div>
     </section>
 
+    <!-- (已修改) -->
     <section id="about" class="section">
-        <h2 class="section-title">關於我們</h2>
-        <!-- (已修改) -->
+        <h2 class="section-title">我們的顧問使命</h2>
         <div class="about-content">
-            <p>Ecoshane 永續家是 Ecoshane Bank 旗下的專業顧問部門。我們的使命是協助企業將環境（E）、社會（S）的投入與<strong style="color: var(--text-color); font-weight: bold;">風險管理</strong>，轉化為可審核、可量化的<strong style="color: var(--text-color); font-weight: bold;">環境與社會績效指標 (E&S SPTs)</strong>。我們致力於在永續策略（包含風險管理）與金融執行之間建立高效、透明的溝通橋樑。</p>
+            <p>Ecoshane 永續家是 Ecoshane Bank 旗下的專業顧問部門。我們的使命是協助企業建立完整的 E&S（環境與社會）管理系統，將「環境績效」與「人權風險」轉化為可審核、可量化的金融指標 SPT，無縫對接銀行的永續連結貸款 SLL 機制。</p>
         </div>
         
+        <!-- (已修改) 關於我們區塊改為三欄 -->
         <div class="mission-grid">
             <div class="mission-card">
-                <h3><i class="fas fa-hand-holding-usd"></i> 社會價值貨幣化 (SROI)</h3>
-                <!-- SROI 卡片文字強調方式調整為只使用單一藍色 -->
-                <p>我們的 SROI 評估模型<strong style="color: var(--secondary-blue);">完全遵循英國 SVI (Social Value International) 的七大原則框架</strong>進行精確評估。確保將人力資本投入、公正轉型成本等社會效益，轉化為<strong style="color: var(--secondary-blue);">國際認可、可審核的貨幣價值</strong>，直接作為永續連結貸款（SLL）的社會 SPT 依據。</p>
+                <h3><i class="fas fa-leaf"></i> 環境績效 E</h3>
+                <p>我們輔導企業進行碳盤查、設定 SBTi 科學減量目標，並建立<strong style="color: var(--secondary-blue);">自動化數據 API</strong>，確保「環境 SPTs」的數據品質符合銀行與第三方確信要求。</p>
             </div>
-            <!-- (已修改) -->
             <div class="mission-card">
-                <h3><i class="fas fa-database"></i> E&S 數據治理與確信</h3>
-                <p>利用 Open API 和雲端技術，建立<strong style="color: var(--secondary-blue);">環境績效（如碳排）</strong>與<strong style="color: var(--secondary-blue);">社會風險（如申訴案件）</strong>數據的自動化驗證機制。為企業取得國際會計師事務所有限確信報告，確保最高的透明度與信賴度。</p>
+                <h3><i class="fas fa-hand-holding-usd"></i> 社會價值 S+</h3>
+                <p>我們的 SROI 評估模型<strong style="color: var(--secondary-blue);">遵循英國 SVI 框架</strong>，將「人力資本投入」、「公正轉型成本」等正面效益，轉化為<strong style="color: var(--secondary-blue);">國際認可的貨幣價值</strong>，作為 SLL 的社會績效指標。</p>
+            </div>
+            <!-- (新增) HRDD 風險卡片 -->
+            <div class="mission-card risk">
+                <h3><i class="fas fa-shield-alt"></i> 人權風險 S-</h3>
+                <p>我們協助客戶導入<strong style="color: var(--warning-red);">人權盡職調查 HRDD</strong> 框架，建立有效的<strong style="color: var(--warning-red);">勞工申訴機制</strong>與供應鏈管理系統，將「避免傷害」的風險管理成效，納入 SLL 風險評估。</p>
             </div>
         </div>
         
         <!-- SVI 認證區塊：強調文字已統一使用 Primary Blue -->
         <div class="certification-block" style="text-align: center; margin-top: 4rem; padding: 2rem; background: #fff; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: all 0.6s ease;" data-animate="true">
             <h3 style="color: var(--primary-blue); font-size: 1.8rem; margin-bottom: 1.5rem;"><i class="fas fa-certificate" style="margin-right: 10px; color: #f9a03f;"></i>國際公信力基礎：英國 SVI 框架</h3>
-            <p style="max-width: 800px; margin: 0 auto 1.5rem; font-size: 1.1rem; color: #555;">我們的社會投資報酬率 (SROI) 計算與報告方法，嚴格依循 <strong style="color: var(--primary-blue);">Social Value International (SVI)</strong> 所制定的<strong style="color: var(--primary-blue);">七大原則框架</strong>。確保所有評估結果在國際上具備最高度的<strong style="color: var(--primary-blue);">透明度、嚴謹性與公信力</strong>。</p>
+            <p style="max-width: 800px; margin: 0 auto 1.5rem; font-size: 1.1rem; color: #555;">我們的社會投資報酬率 SROI 計算與報告方法，嚴格依循 <strong style="color: var(--primary-blue);">Social Value International SVI</strong> 所制定的<strong style="color: var(--primary-blue);">七大原則框架</strong>。確保所有評估結果在國際上具備最高度的<strong style="color: var(--primary-blue);">透明度、嚴謹性與公信力</strong>。</p>
             <!-- 佔位圖用於模擬 SVI 合作夥伴/認證標誌 - 已將文字改為中文 -->
             <img src="https://placehold.co/180x60/f8f9fa/11367D?text=SVI+框架對齊" 
                  alt="Social Value International 框架認證標誌" 
@@ -640,66 +715,57 @@
         </div>
     </section>
 
+    <!-- (已修改) -->
     <section id="services" class="section services">
         <h2 class="section-title">核心服務：創造 ESG 的貨幣價值</h2>
-        <!-- (已修改) 服務卡片由 6 張增加到 8 張，並重新排序 -->
-        <div class="services-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
-            
-            <!-- 服務 1: SLL -->
+        <div class="services-grid">
+            <!-- 服務 1 (E) -->
             <div class="service-card">
-                <i class="fas fa-link service-card-icon"></i>
-                <h3>永續連結貸款 (SLL) 輔導</h3>
-                <p>為企業量身設計<strong style="color: #fff;">環境 (E)</strong> 與<strong style="color: #fff;">社會 (S)</strong> 雙軌 SPT 目標，確保達成指標時，能自動觸發貸款利息減免，優化企業融資成本。</p>
+                <i class="fas fa-smog text-4xl mb-4"></i>
+                <div class="service-card-content">
+                    <h3>SLL 環境績效 E 輔導</h3>
+                    <p>為企業量身設計<strong style="color: #fff;">環境 SPTs</strong> 如碳排、能耗，輔導數據收集與確信，確保 SLL 環境指標的達成，自動觸發貸款利率減免。</p>
+                </div>
             </div>
-
-            <!-- 服務 2: SROI -->
+            <!-- 服務 2 (S+) -->
             <div class="service-card">
-                <i class="fas fa-hand-holding-heart service-card-icon"></i>
-                <!-- SVI 強化點 2: 服務項目標題與內容強調 SVI -->
-                <h3>SROI 社會價值評估 (SVI 框架)</h3>
-                <p>我們採用<strong style="color: #fff;">英國 SVI 的國際公認方法論</strong>，將員工培訓、社區投入等社會專案，量化為具體的貨幣效益。此評估結果具備高度公信力，可直接納入 SLL 績效評估。</p>
+                <i class="fas fa-calculator text-4xl mb-4"></i>
+                <div class="service-card-content">
+                    <h3>SROI 社會價值 S+ 評估</h3>
+                    <p>採用<strong style="color: #fff;">英國 SVI 框架</strong>，將員工培訓、社區投入等專案，量化為具公信力的貨幣效益，納入 SLL 作為<strong style="color: #fff;">正面社會績效指標</strong>。</p>
+                </div>
             </div>
-
-            <!-- (新增) 服務 3: HRDD -->
-            <div class="service-card risk-oriented">
-                <i class="fas fa-shield-alt service-card-icon"></i>
-                <h3>人權盡職調查 (HRDD) 導入</h3>
-                <p>協助企業建構<strong style="color: #fff;">人權風險管理框架 (UNGP)</strong>，包括鑑別潛在風險、建立<strong style="color: #fff;">營運層級申訴機制</strong>，並輔導撰寫人權政策，滿足國際法規要求。</p>
+            <!-- 服務 3 (S-) -->
+            <div class="service-card risk">
+                <i class="fas fa-shield-alt text-4xl mb-4"></i>
+                <div class="service-card-content">
+                    <h3>人權盡職調查 S- 導入</h3>
+                    <p>協助企業導入<strong style="color: #fff;">人權盡職調查 HRDD</strong>，建立勞工申訴平台與供應鏈風險地圖，將「零重大違規」納入 SLL 的<strong style="color: #fff;">關鍵風險否決指標</strong>。</p>
+                </div>
             </div>
-
-            <!-- (新增) 服務 4: 供應鏈風險 -->
-            <div class="service-card risk-oriented">
-                <i class="fas fa-sitemap service-card-icon"></i>
-                <h3>供應鏈 E&S 風險管理</h3>
-                <p>輔導企業建立供應鏈稽核與<strong style="color: #fff;">風險分級</strong>制度，特別針對<strong style="color: #fff;">強迫勞動</strong>與<strong style="color: #fff;">童工</strong>等重大違規事項，建立即時預警與改善機制，確保供應鏈韌性。</p>
-            </div>
-
-            <!-- 服務 5: 數據治理 (已修改) -->
+            <!-- 服務 4 (G) -->
             <div class="service-card">
-                <i class="fas fa-database service-card-icon"></i>
-                <h3>E&S 數據治理與 API 串接</h3>
-                <p>輔導企業導入標準化數據介面 (Open API)，實現碳排、能耗數據，並整合<strong style_layout="color: #fff;">勞工申訴平台</strong>與<strong style_layout="color: #fff;">供應鏈稽核</strong>的風險數據，簡化審核流程。</p>
+                <i class="fas fa-code-branch text-4xl mb-4"></i>
+                <div class="service-card-content">
+                    <h3>E&S 數據治理與 API 串接</h3>
+                    <p>輔導企業建立標準化 ESG 數據介面 Open API，實現<strong style="color: #fff;">環境績效</strong>與<strong style="color: #fff;">社會風險</strong>數據的自動化採集，無縫對接銀行驗證系統。</p>
+                </div>
             </div>
-
-            <!-- 服務 6: 碳盤查 -->
+            <!-- 服務 5 (E) -->
             <div class="service-card">
-                <i class="fas fa-smog service-card-icon"></i>
-                <h3>碳盤查與減碳策略</h3>
-                <p>協助企業進行溫室氣體盤查 (ISO 14064-1)，提供查證輔導，並制定符合科學基礎減量目標 (SBTi) 的減碳策略。</p>
+                <i class="fas fa-wind text-4xl mb-4"></i>
+                <div class="service-card-content">
+                    <h3>碳盤查與減碳策略 SBTi</h3>
+                    <p>協助企業進行溫室氣體盤查 ISO 14064-1 與查證輔導，並制定符合科學基礎減量目標 SBTi 的具體減碳策略。</p>
+                </div>
             </div>
-
-            <!-- 服務 7: 報告書 -->
+            <!-- 服務 6 (G) -->
             <div class="service-card">
-                <i class="fas fa-book-open service-card-icon"></i>
-                <h3>永續報告書撰寫 (GRI/SASB)</h3>
-                <p>專業團隊協助企業撰寫符合主管機關規定的永續報告書，並進行內部查核與預審，確保報告順利通過第三方查證。</p>
-            </div>
-
-            <!-- 服務 8: 綠色轉型 -->
-            <div class="service-card">
-                <i class="fas fa-recycle service-card-icon"></i>
-                <h3>綠色轉型策略 (TCFD)</h3>
-                <p>提供生產流程綠色轉型方案，協助導入再生能源、循環經濟模型，並進行氣候變遷相關財務揭露 (TCFD) 輔導。</p>
+                <i class="fas fa-book-open text-4xl mb-4"></i>
+                <div class="service-card-content">
+                    <h3>永續報告書 GRI/SASB 撰寫</h3>
+                    <p>專業團隊協助企業撰寫符合主管機關與 GRI/SASB 準則的永續報告書，並進行內部查核與預審，確保報告順利通過第三方查證。</p>
+                </div>
             </div>
         </div>
     </section>
@@ -712,8 +778,11 @@
                 <div class="portfolio-content">
                     <div>
                         <h3>盈盈水泥集團</h3>
-                        <p>服務項目： SLL 整合 SROI、<strong style="color: #fff;">HRDD 申訴機制建置</strong>、Open API 數據治理</p>
-                        <p>專案成果： 達成碳排 SPT，獲得貸款優惠 25 bps；公正轉型 SROI 達 1:3.4；並成功導入<strong style="color: #fff;">勞工申訴平台</strong>，達成社會風險 (S) 指標。</p>
+                        <p class="portfolio-description">
+                            <strong style="color: #a0d4ff;">輔導項目：</strong> 協助整合永續連結貸款，導入社會投資報酬率 SROI 評估、人權申訴機制與自動化數據治理。
+                            <br><br>
+                            <strong style="color: #a0d4ff;">專案成果：</strong> 達成碳排績效目標，社會投資報酬率 SROI 驗證達 1:3.4，並實現零重大勞工申訴的風險控管。成功協助客戶獲得 Ecoshane Bank 全方位永續貸款優惠 0.25%。
+                        </p>
                     </div>
                     <div style="margin-top: 20px; display: flex; gap: 10px;">
                         <a href="盈盈水泥SLL報告書.pdf" download class="download-button">下載 SLL 報告書</a>
@@ -733,7 +802,7 @@
     <section id="contact" class="section contact">
         <h2 class="section-title" style="color: white;">聯絡我們</h2>
         <div class="contact-content">
-            <p>如果您對我們的 SROI、HRDD 或 E&S 數據治理服務有任何疑問或需求，歡迎隨時與我們聯繫。</p>
+            <p>如果您對我們的服務有任何疑問或需求，歡迎隨時與我們聯繫。</p>
 
             <div class="contact-info">
                 <div class="contact-item">
@@ -756,12 +825,18 @@
         <p>© 2025 Ecoshane 永續家. All Rights Reserved.</p>
     </footer>
 
-    <button id="chat-toggle">💬</button> 
+    <!-- (已修改) -->
+    <button id="chat-toggle"><i class="fas fa-robot"></i></button> 
     <div id="chat-window">
+        <!-- (新增) 聊天室標題列 -->
+        <div id="chat-header">
+            <h3>Ecoshane 永續客服</h3>
+            <button id="chat-close"><i class="fas fa-times"></i></button>
+        </div>
         <div id="chat-messages"></div>
         <div id="chat-input-container">
             <input type="text" id="chat-input" placeholder="輸入訊息..." />
-            <button id="chat-send">發送</button>
+            <button id="chat-send"><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
 
@@ -821,12 +896,14 @@
             constructor() {
                 this.chatToggle = document.getElementById('chat-toggle');
                 this.chatWindow = document.getElementById('chat-window');
+                this.chatClose = document.getElementById('chat-close'); // (新增) 關閉按鈕
                 this.chatMessages = document.getElementById('chat-messages');
                 this.chatInput = document.getElementById('chat-input');
                 this.chatSend = document.getElementById('chat-send');
 
                 this.hasWelcomed = false;
                 this.chatToggle.addEventListener('click', () => this.toggleChat());
+                this.chatClose.addEventListener('click', () => this.toggleChat(false)); // (新增) 關閉事件
                 this.chatSend.addEventListener('click', () => this.sendMessage());
                 this.chatInput.addEventListener('keypress', (e) => {
                     if (e.key === 'Enter') this.sendMessage();
@@ -849,19 +926,25 @@
                 this.sessionId = Date.now().toString();
             }
 
-            toggleChat() {
-                if (this.chatWindow.classList.contains('show')) {
-                    this.chatWindow.classList.remove('show');
-                    setTimeout(() => this.chatWindow.style.display = 'none', 300);
-                } else {
+            // (已修改) toggleChat 邏輯
+            toggleChat(forceShow = null) {
+                const isHidden = this.chatWindow.classList.contains('show');
+                
+                // 決定要顯示還是隱藏
+                const show = forceShow !== null ? forceShow : !isHidden;
+
+                if (show) {
                     this.chatWindow.style.display = 'flex';
                     setTimeout(() => this.chatWindow.classList.add('show'), 10);
 
                     if (!this.hasWelcomed) {
                         // (已修改) 首次開啟的歡迎語
-                        this.addMessage("您好！我是 Ecoshane 永續客服。我可以回答關於 SLL 輔導、SROI 評估、人權盡職調查 (HRDD) 或碳盤查的問題。", 'bot');
+                        this.addMessage("您好！我是 Ecoshane 永續客服。我可以回答關於 SLL 輔導、SROI 評估或人權盡職調查 HRDD 的問題。", 'bot');
                         this.hasWelcomed = true;
                     }
+                } else {
+                    this.chatWindow.classList.remove('show');
+                    setTimeout(() => this.chatWindow.style.display = 'none', 300);
                 }
             }
 
@@ -889,12 +972,11 @@
                         });
                     } else {
                         // (已修改) 備用回覆
-                        this.addMessage("抱歉，我沒有理解你的問題。您可以試試輸入：「SROI是什麼？」或「人權風險如何評估？」", 'bot');
+                        this.addMessage("抱歉，我沒有理解你的問題。你可以試試輸入: SROI是什麼? 或 HRDD是什麼?", 'bot');
                     }
                 } catch (err) {
                     console.error('Lex V2 Error:', err);
-                    // (已修改) 錯誤回覆
-                    this.addMessage("系統暫時無法使用。如需 SROI 或 HRDD 盡職調查諮詢，請直接聯繫我們。", 'bot');
+                    this.addMessage("系統暫時無法使用，請稍後再試或直接聯繫我們。", 'bot');
                 }
             }
 
@@ -905,6 +987,13 @@
                     hour: '2-digit',
                     minute: '2-digit'
                 });
+
+                // (已修改) 處理機器人風險回覆：移除括號
+                if (type === 'bot' && (text.includes("HRDD") || text.includes("人權"))) {
+                     text = text.replace(/人權盡職調查 HRDD/g, '<strong class="chat-warning-red">人權盡職調查 HRDD</strong>')
+                                .replace(/風險否決指標/g, '<strong class="chat-warning-red">風險否決指標</strong>');
+                }
+
 
                 if (type === 'bot') {
                     // 模擬打字效果 for bot message
@@ -917,17 +1006,21 @@
                     message.appendChild(timeDiv);
                     this.chatMessages.appendChild(message);
 
-                    // (已修改) 機器人回覆的打字效果 (innerHTML 以支援粗體)
                     const typing = setInterval(() => {
-                        const partialText = text.substring(0, i);
-                        contentDiv.innerHTML = partialText; // 使用 innerHTML
-                        i++;
-                        if (i > text.length) {
+                        // 打字效果 (簡易版，不處理 HTML 標籤)
+                        if (text.includes('<strong')) {
+                            contentDiv.innerHTML = text; // 如果有 HTML，直接顯示
                             clearInterval(typing);
-                            contentDiv.innerHTML = text; // 確保最終顯示完整 HTML
+                        } else {
+                            contentDiv.innerText = text.substring(0, i);
+                            i++;
+                            if (i > text.length) {
+                                clearInterval(typing);
+                                contentDiv.innerText = text;
+                            }
                         }
                         this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
-                    }, 40);
+                    }, 30); // 加快打字速度
                 } else {
                     // 一般用戶訊息
                     message.innerHTML = `<div>${text}</div><div class="time">${time}</div>`;
@@ -944,6 +1037,3 @@
     </script>
 </body>
 </html>
-
-
-
