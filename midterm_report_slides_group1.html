@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>期中報告簡報 (第一組)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #e5e7eb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        :root {
+            --esun-green: #008779;
+            --esun-dark: #0A1C3B;
+            --google-blue: #4285F4;
+            --google-red: #DB4437;
+            --google-yellow: #F4B400;
+            --google-green: #0F9D58;
+            --hrdd-risk: #CC2A2A;
+        }
+        .slide-container {
+            width: 100%;
+            max-width: 900px;
+            aspect-ratio: 16 / 9;
+            background-color: white;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .slide {
+            padding: 2.5rem 3.5rem;
+            flex-grow: 1;
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .slide.active {
+            display: flex;
+            opacity: 1;
+            z-index: 10;
+        }
+        .slide-header {
+             width: 100%;
+             padding-bottom: 0.75rem;
+             border-bottom: 2px solid var(--esun-green);
+             margin-bottom: 1.5rem;
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+        }
+        .slide-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--esun-dark);
+        }
+         .slide-number {
+             font-size: 0.875rem;
+             font-weight: 500;
+             color: #6b7280;
+             background-color: #f3f4f6;
+             padding: 0.25rem 0.5rem;
+             border-radius: 4px;
+         }
+
+        .slide-content {
+            font-size: 0.95rem;
+            color: #374151;
+            line-height: 1.7;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        .slide-content h3 {
+             font-size: 1.1rem;
+             font-weight: 700;
+             color: var(--esun-green);
+             margin-top: 1.25rem;
+             margin-bottom: 0.75rem;
+        }
+         .slide-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .slide-content li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.6rem;
+        }
+        .slide-content li::before {
+            content: "\f058";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: var(--esun-green);
+            position: absolute;
+            left: 0;
+            top: 5px;
+            font-size: 0.9rem;
+        }
+        strong { font-weight: 700; color: var(--esun-dark); }
+        .highlight { color: var(--esun-green); font-weight: 700; }
+        .risk-highlight { color: var(--hrdd-risk); font-weight: 700; }
+
+        /* Title Slide Specifics */
+        .title-slide {
+            background: linear-gradient(135deg, var(--esun-green) 0%, var(--esun-dark) 100%);
+            color: white;
+            text-align: center;
+            justify-content: center;
+        }
+        .title-slide .slide-title-main {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            border-bottom: 3px solid white;
+        }
+        .title-slide .slide-subtitle {
+            color: #d1fae5;
+            font-size: 1.25rem;
+             font-weight: 500;
+            margin-bottom: 2rem;
+        }
+         .title-slide .course-info, .title-slide .team-info {
+             margin-top: 1.5rem;
+             font-size: 0.9rem;
+             color: #cbd5e1;
+         }
+        .title-slide .team-info p:first-child {
+             font-weight: 400;
+             margin-bottom: 0.25rem;
+         }
+
+
+        /* Architecture Slide Specifics */
+        .architecture-flow {
+             display: flex;
+            justify-content: space-around;
+            align-items: stretch;
+            margin-top: 1.5rem;
+            gap: 0.75rem;
+            text-align: center;
+        }
+        .flow-step {
+             display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0.75rem;
+            background-color: #f9fafb;
+            border-radius: 8px;
+            width: 22%;
+            border: 1px solid #e5e7eb;
+        }
+         .flow-step i {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+         }
+        .flow-step span {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #4b5563;
+            margin-top: auto;
+        }
+         .flow-step strong { font-size: 0.8rem; display: block; margin-bottom: 0.25rem; }
+        .flow-arrow {
+            font-size: 1.5rem;
+            color: #9ca3af;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Results Slide Specifics */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .kpi-card-mini {
+            background-color: #f9fafb;
+            border-left: 5px solid var(--esun-green);
+            padding: 1rem;
+            border-radius: 6px;
+        }
+        .kpi-card-mini.risk { border-left-color: var(--hrdd-risk); }
+
+        .kpi-card-mini .kpi-title-mini {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #6b7280;
+            margin-bottom: 0.25rem;
+        }
+         .kpi-card-mini .kpi-value-mini {
+             font-size: 1.75rem;
+             font-weight: 800;
+             color: var(--esun-dark);
+             line-height: 1.2;
+         }
+         .kpi-card-mini.risk .kpi-value-mini { color: var(--hrdd-risk); }
+
+
+        /* BMC Table Style (修正後) */
+        .bmc-table-container {
+             display: flex;
+             justify-content: center;
+             margin-top: 1rem;
+        }
+        .bmc-table {
+            border-collapse: collapse;
+            table-layout: fixed;
+            width: 100%;
+            max-width: 700px;
+            height: 300px;
+        }
+        .bmc-table td {
+            border: 1px solid #d1d5db;
+            padding: 0.5rem;
+            vertical-align: top;
+            width: 33.33%;
+            font-size: 0.7rem;
+            line-height: 1.4;
+        }
+        .bmc-table .bmc-title {
+            font-weight: 700;
+            color: var(--esun-dark);
+            display: block;
+            margin-bottom: 0.2rem;
+            font-size: 0.75rem;
+            border-bottom: 1px solid var(--esun-green);
+            padding-bottom: 0.1rem;
+        }
+         .bmc-table ul {
+             list-style: none;
+             padding-left: 0;
+             margin: 0;
+         }
+         .bmc-table li {
+             position: relative;
+             padding-left: 0.7rem;
+             margin-bottom: 0.1rem;
+         }
+          .bmc-table li::before {
+             content: "-";
+             position: absolute;
+             left: 0;
+             top: 0;
+             color: var(--esun-green);
+             font-weight: bold;
+         }
+
+
+        /* Slide Navigation */
+        .slide-nav {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            z-index: 20;
+        }
+        .nav-button {
+            background-color: rgba(0, 0, 0, 0.3);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.2s ease;
+        }
+        .nav-button:hover { background-color: rgba(0, 0, 0, 0.5); }
+        .nav-button:disabled { opacity: 0.5; cursor: default; }
+
+        /* Footer */
+         .slide-footer {
+             position: absolute;
+             bottom: 1rem;
+             left: 1rem;
+             font-size: 0.7rem;
+             color: #9ca3af;
+             z-index: 5;
+         }
+         .title-slide .slide-footer { color: #9ca3af; }
+
+        /* Q&A specific styling */
+        .qa-container {
+             display: grid;
+             grid-template-columns: 1fr 1fr;
+             gap: 1.5rem;
+             margin-top: 1rem;
+        }
+        .qa-item {
+             background-color: #f9fafb;
+             border-radius: 8px;
+             padding: 1rem;
+             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .qa-item p {
+             font-size: 0.85rem;
+             line-height: 1.5;
+        }
+        .qa-item strong {
+             color: var(--esun-green);
+             font-size: 0.9rem;
+             display: block;
+             margin-bottom: 0.3rem;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+
+        <!-- Slide 1: Title Slide -->
+        <div class="slide title-slide active" id="slide-1">
+            <h1 class="slide-title-main">AI 驅動的永續風控</h1>
+            <p class="slide-subtitle">HRDD 與數據管理實踐</p>
+             <div class="course-info">
+                 <p>課程：大數據分析與金融數據管理實務</p>
+                 <p>期中報告</p>
+             </div>
+             <div class="team-info">
+                 <p>第一組</p>
+                 <p>組員：殷可盈、陳璟萱、高佳煒、謝禮雋</p>
+             </div>
+             <div class="slide-footer"></div>
+        </div>
+        
+        <!-- Slide 2: Key Definitions -->
+        <div class="slide" id="slide-2">
+             <div class="slide-header">
+                <h2 class="slide-title">關鍵永續金融名詞解釋</h2>
+                <span class="slide-number">2 / 10</span>
+            </div>
+            <div class="slide-content">
+                 <h3>1. 人權盡職調查 (HRDD - Human Rights Due Diligence)</h3>
+                 <p>企業持續性的管理流程，用以識別、預防、減輕和說明企業活動對人權的潛在或實際負面影響。這是歐盟 CSDDD 的強制要求，屬於 S- (社會風險管理)。</p>
+                 <h3>2. 永續連結貸款 (SLL - Sustainability-Linked Loan)</h3>
+                 <p>一種鼓勵機制。貸款條件（如利率）與借款人能否達成預定的永續績效目標 (SPTs) 掛鉤。目標涵蓋 E (環境) 和 S (社會) 因素。</p>
+                 <h3>3. 社會投資報酬率 (SROI - Social Return on Investment)</h3>
+                 <p>量化社會影響力的評估模型。將非財務的社會投入（如培訓、社區發展）轉化為可衡量的貨幣價值，證明社會專案的效益 (屬於 S+ 社會價值創造)。</p>
+            </div>
+             <div class="slide-footer"></div>
+        </div>
+
+        <!-- Slide 3 (New): Project Motivation -->
+        <div class="slide" id="slide-3">
+             <div class="slide-header">
+                <h2 class="slide-title">發想動機：從環境領先到社會風險防禦</h2>
+                <span class="slide-number">3 / 10</span>
+            </div>
+            <div class="slide-content">
+                 <h3>當前永續金融趨勢分析</h3>
+                 <ul>
+                    <li>環境面向成熟 (E 端): 氣候變遷與減碳已是 SLL 貸款的主流，相關指標（如碳排強度）趨於標準化，市場競爭激烈。</li>
+                    <li>社會面向不足 (S 端缺口): 社會面相的風險管理，尤其在人權 HRDD 方面，多數銀行仍採用滯後的人工審查與報告，缺乏實時預警機制。</li>
+                    <li>國際法規強制驅動: 歐盟 CSDDD、德國供應鏈法等，強制要求金融機構將 HRDD 責任延伸至客戶的價值鏈，不納入即為重大合規風險。</li>
+                 </ul>
+                 <h3>本專案的創新價值</h3>
+                 <p>本專案旨在填補 S 端風險的數據化缺口，透過 AI 與大數據分析，建立亞洲領先的 S- (人權風險) 實時預警系統，實現真正的雙重重大性思維下的永續風控。</p>
+            </div>
+             <div class="slide-footer"></div>
+        </div>
+
+        <!-- Slide 4 (Original 3): BMC Core Challenge (S & T) -->
+        <div class="slide" id="slide-4">
+             <div class="slide-header">
+                <h2 class="slide-title">核心挑戰：永續數據管理的滯後性</h2>
+                <span class="slide-number">4 / 10</span>
+            </div>
+            <div class="slide-content">
+                 <h3>當前金融實務痛點 (以 HRDD 為例)</h3>
+                 <ul>
+                    <li>數據多樣性 (Variety): 人權風險數據來源龐雜 (新聞、報告、內部申訴)，多為非結構化文本，難以整合分析。</li>
+                     <li>數據速度 (Velocity): 依賴人工季度/年度審核，無法應對突發性人權事件 (如強迫勞動)，風險反應滯後。</li>
+                     <li>風險擴散性: 單一事件可能迅速演變為重大聲譽與財務損失，傳統風控模型難以捕捉。</li>
+                 </ul>
+                 <h3>專案目標：從滯後走向實時</h3>
+                 <p>建立一套基於大數據分析的實時 HRDD 風控預警機制，將風險偵測時間從數週縮短至 48 小時內，並直接與 SLL 金融契約連動。</p>
+            </div>
+             <div class="slide-footer"></div>
+        </div>
+
+        <!-- Slide 5 (Original 4): BMC Framework (已修正為 3x3 表格) -->
+        <div class="slide" id="slide-5">
+             <div class="slide-header">
+                 <h2 class="slide-title">核心框架：商業模式九宮格 (BMC)</h2>
+                 <span class="slide-number">5 / 10</span>
+            </div>
+            <div class="slide-content">
+                <p>以 BMC 分析 Ecoshane Bank 如何透過數據管理，將永續挑戰轉化為商業價值。數據是驅動此模式的關鍵：</p>
+                <!-- BMC Table -->
+                 <div class="bmc-table-container">
+                    <table class="bmc-table">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span class="bmc-title">核心夥伴</span>
+                                    <ul>
+                                        <li>金融機構</li>
+                                        <li>永續家 (數據/模型)</li>
+                                        <li>數據供應商</li>
+                                        <li>雲端 & API 夥伴</li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <span class="bmc-title">核心活動</span>
+                                     <ul>
+                                        <li>數據平台整合 (E/S+/S-)</li>
+                                        <li>Open API 治理</li>
+                                        <li>AI 風險偵測 & 報告</li>
+                                        <li>產品媒合</li>
+                                    </ul>
+                                </td>
+                                <td>
+                                     <span class="bmc-title">價值主張</span>
+                                     <ul>
+                                        <li>量化社會價值 (SROI)</li>
+                                        <li>整合人權風險 (HRDD)</li>
+                                        <li>一站式永續數據服務</li>
+                                        <li>AI 驅動高效合規</li>
+                                     </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="bmc-title">核心資源</span>
+                                     <ul>
+                                        <li>永續家數據模型</li>
+                                        <li>AI 風險演算法</li>
+                                        <li>E&S 風險數據庫</li>
+                                        <li>專業團隊</li>
+                                    </ul>
+                                </td>
+                                <td style="background-color: white;"> 
+                                    <span class="bmc-title">通路</span>
+                                     <ul>
+                                        <li>數位平台</li>
+                                        <li>夥伴聯合推廣</li>
+                                        <li>產業/政府合作</li>
+                                        <li>內容行銷</li>
+                                    </ul>
+                                </td>
+                                <td>
+                                     <span class="bmc-title">客戶關係</span>
+                                    <ul>
+                                        <li>自動化平台</li>
+                                        <li>AI 個人化諮詢</li>
+                                        <li>儀表板追蹤</li>
+                                        <li>客服支援</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1">
+                                     <span class="bmc-title">成本結構</span>
+                                     <ul>
+                                        <li>研發 & 維護</li>
+                                        <li>數據 & API 訂閱</li>
+                                        <li>雲端服務費</li>
+                                        <li>行銷 & 人力</li>
+                                     </ul>
+                                </td>
+                                <td colspan="1">
+                                     <span class="bmc-title">收益來源</span>
+                                     <ul>
+                                        <li>SLL 媒合佣金</li>
+                                        <li>數據訂閱費 (E/S+/S-)</li>
+                                        <li>AI 顧問費</li>
+                                        <li>報告驗證費</li>
+                                     </ul>
+                                </td>
+                                 <td>
+                                     <span class="bmc-title">客戶區隔</span>
+                                     <ul>
+                                        <li>中小企業</li>
+                                        <li>碳密集產業</li>
+                                        <li>社會影響力組織</li>
+                                        <li>需永續數據者</li>
+                                     </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                 </div>
+
+                <h3>數據在 BMC 中的角色：</h3>
+                <ul>
+                    <li>核心資源: 永續數據模型 (E/S+/S-)、AI 演算法。</li>
+                    <li>核心活動: 數據整合、AI 風險偵測、API 治理。</li>
+                    <li>價值主張: 量化 SROI、整合 HRDD 風險、一站式數據服務。</li>
+                </ul>
+            </div>
+            <div class="slide-footer"></div>
+        </div>
+
+
+        <!-- Slide 6 (Original 4): Core Activities & Data Management -->
+        <div class="slide" id="slide-6">
+             <div class="slide-header">
+                 <h2 class="slide-title">核心活動：數據管理實務與技術</h2>
+                 <span class="slide-number">6 / 10</span>
+            </div>
+            <div class="slide-content">
+                <h3>數據流架構：</h3>
+                <div class="architecture-flow">
+                    <div class="flow-step">
+                        <i class="fas fa-cloud-upload-alt" style="color: var(--google-blue);"></i>
+                        <span><strong>1. 數據接入</strong><br>(API 閘道 + 雲儲存)<br>客戶 E/S 數據<br>外部輿情 (非結構化)</span>
+                    </div>
+                    <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                    <div class="flow-step">
+                        <i class="fas fa-database" style="color: var(--google-blue);"></i>
+                        <span><strong>2. 數據管理</strong><br>(數據倉儲)<br>數據湖、ETL 清洗<br>結構化儲存</span>
+                    </div>
+                     <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                    <div class="flow-step">
+                        <i class="fas fa-brain" style="color: var(--google-green);"></i>
+                        <span><strong>3. 智能分析</strong><br>(AI 平台)<br>NLP 風險評分 (HRDD)<br>SROI 模型運算</span>
+                    </div>
+                     <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                     <div class="flow-step">
+                         <i class="fas fa-chart-line" style="color: var(--google-yellow);"></i>
+                        <span><strong>4. 決策應用</strong><br>(儀表板 + 自動化)<br>實時儀表板<br>自動風險預警</span>
+                    </div>
+                </div>
+                 <h3>關鍵數據管理實務：</h3>
+                 <ul>
+                     <li>數據治理: 透過 API 閘道建立標準化規範，確保數據質量與安全。</li>
+                     <li>數據湖架構: 利用雲端數據倉儲整合多源、多格式數據，實現高效查詢分析。</li>
+                     <li>AI 模型管理: 應用 MLOps 實務進行模型訓練、部署與監控。</li>
+                 </ul>
+            </div>
+             <div class="slide-footer"></div>
+        </div>
+
+        <!-- Slide 7 (Original 5): Value Realization -->
+        <div class="slide" id="slide-7">
+             <div class="slide-header">
+                 <h2 class="slide-title">價值實現：數據驅動的永續金融</h2>
+                 <span class="slide-number">7 / 10</span>
+            </div>
+            <div class="slide-content">
+                 <h3>數據如何創造價值主張？</h3>
+                 <ul>
+                     <li>量化社會價值 (SROI): 將「員工培訓時數」、「在地採購金額」等非財務數據，透過 SVI 模型轉化為可審計的貨幣價值，納入 SLL 正向指標。</li>
+                     <li>人權風險預警 (HRDD): AI 的 NLP 技術分析全球新聞、NGO 報告，提供量化風險分數，實現主動、即時的供應鏈與客戶盡職調查。</li>
+                     <li>提升 SLL 產品差異化: 整合 E (環境)、S+ (社會價值) 與 S- (人權風險)，提供比傳統綠色貸款更全面、更精準的風險定價與產品設計。</li>
+                 </ul>
+                 <h3>金融數據管理應用：</h3>
+                 <p>將非結構化輿情數據轉為結構化風險評分，是金融數據分析的關鍵創新，直接提升風險管理精度。</p>
+            </div>
+             <div class="slide-footer"></div>
+        </div>
+
+        <!-- Slide 8 (Original 6): Quantitative Results -->
+        <div class="slide" id="slide-8">
+            <div class="slide-header">
+                 <h2 class="slide-title">量化成果：風險管理效率提升</h2>
+                 <span class="slide-number">8 / 10</span>
+            </div>
+            <div class="slide-content">
+                <h3>專案核心 KPI 成果 (模擬數據)：</h3>
+                <div class="kpi-grid">
+                    <div class="kpi-card-mini risk">
+                        <div class="kpi-title-mini">HRDD 風險預警時間</div>
+                        <div class="kpi-value-mini">&lt; 48 小時</div>
+                        <p class="text-xs text-gray-500 mt-1">原需數週人工審核</p>
+                    </div>
+                     <div class="kpi-card-mini risk">
+                        <div class="kpi-title-mini">預警時間縮短率</div>
+                        <div class="kpi-value-mini risk-highlight">&gt; 85%</div>
+                        <p class="text-xs text-gray-500 mt-1">大幅降低風險曝險窗口</p>
+                    </div>
+                    <div class="kpi-card-mini">
+                        <div class="kpi-title-mini">SLL 人權條款自動監控率</div>
+                        <div class="kpi-value-mini highlight">95%</div>
+                         <p class="text-xs text-gray-500 mt-1">降低人工合規成本</p>
+                    </div>
+                     <div class="kpi-card-mini">
+                        <div class="kpi-title-mini">E&S 報告數據收集時間</div>
+                        <div class="kpi-value-mini highlight">縮短 40%</div>
+                        <p class="text-xs text-gray-500 mt-1">提升報告效率與準確性</p>
+                    </div>
+                </div>
+                 <h3>數據分析實務貢獻：</h3>
+                <p>透過雲端數據倉儲的高效處理與 AI 平台的智能分析，成功將大量、多樣的永續數據轉化為可行動的風險洞察，體現大數據在金融風控的應用價值。</p>
+            </div>
+             <div class="slide-footer"></div>
+        </div>
+
+        <!-- Slide 9 (Original 7): Costs & Conclusion -->
+        <div class="slide" id="slide-9">
+             <div class="slide-header">
+                 <h2 class="slide-title">結論：數據驅動永續金融的未來</h2>
+                 <span class="slide-number">9 / 10</span>
+            </div>
+            <div class="slide-content">
+                 <h3>專案效益總結：</h3>
+                 <ul>
+                     <li><strong>風險管理提升:</strong> 實現 HRDD 風險的<strong>前瞻性、實時性</strong>管理。</li>
+                     <li><strong>數據資產化:</strong> 將永續數據轉化為可量化、可管理的金融資產。</li>
+                     <li><strong>法規遵循與領導力:</strong> 提前佈局國際 HRDD 趨勢，鞏固市場領導地位。</li>
+                 </ul>
+                 <h3>數據管理挑戰與建議：</h3>
+                 <ul>
+                     <li><strong>數據質量:</strong> 持續確保客戶端數據與外部輿情數據的準確性至關重要。</li>
+                     <li><strong>模型可解釋性:</strong> AI 風險評分需搭配清晰的解釋機制，滿足監管要求。</li>
+                     <li><strong>跨部門協作:</strong> 需建立 IT、風控、永續部門間高效的數據共享與治理流程。</li>
+                 </ul>
+                 <p>此專案證明，透過有效的大數據分析與金融數據管理實務，可將永續挑戰轉化為具體的商業韌性與競爭優勢。</p>
+            </div>
+            <div class="slide-footer"></div>
+        </div>
+
+         <!-- Slide 10 (Original 8): Q&A -->
+        <div class="slide" id="slide-10">
+             <div class="slide-header">
+                 <h2 class="slide-title">Q & A</h2>
+                 <span class="slide-number">10 / 10</span>
+            </div>
+            <div class="slide-content">
+                 <h3>常見問答：數據分析與金融實務</h3>
+                 <div class="qa-container">
+                    <div class="qa-item">
+                        <strong>問：專案的數據來源可靠性如何確保？</strong>
+                        <p>答：我們透過 API 閘道實施嚴格的數據治理。對於客戶數據，強制要求標準化格式；對於外部輿情，使用 AI 進行多源交叉驗證，確保信息質量。</p>
+                    </div>
+                    <div class="qa-item">
+                        <strong>問：AI 風險評分如何向監管機構解釋？</strong>
+                        <p>答：我們採用可解釋性 AI (Explainable AI) 技術，為每個 HRDD 風險分數提供關鍵風險詞彙和原始文本引用。這能讓風控人員和監管機構清楚理解模型判斷原因。</p>
+                    </div>
+                    <div class="qa-item">
+                        <strong>問：相較於傳統 ESG 報告，本專案的 ROI 在哪？</strong>
+                        <p>答：傳統報告是成本中心，本專案是風險規避中心。預計能避免因聲譽危機導致的數百萬美元潛在財務損失和合規罰款，這是數據投入的核心回報。</p>
+                    </div>
+                    <div class="qa-item">
+                        <strong>問：SROI 這種社會價值數據，如何與金融決策連結？</strong>
+                        <p>答：SROI 數據經 SVI 認證後，會作為 SLL 貸款的正面 SPTs。這使我們能為客戶提供差異化的利率優惠，並作為銀行 ESG 投資績效的有力證明。</p>
+                    </div>
+                 </div>
+            </div>
+            <div class="slide-footer"></div>
+        </div>
+
+
+        <!-- Slide Navigation Buttons -->
+        <div class="slide-nav">
+            <button class="nav-button" id="prev-slide" disabled><i class="fas fa-chevron-left"></i></button>
+            <button class="nav-button" id="next-slide"><i class="fas fa-chevron-right"></i></button>
+        </div>
+
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const prevButton = document.getElementById('prev-slide');
+        const nextButton = document.getElementById('next-slide');
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+            // Update slide number display (adjusting for 0-based index)
+            const activeSlideElement = slides[index];
+            const slideNumberElement = activeSlideElement.querySelector('.slide-number');
+             if (slideNumberElement) {
+                 // Update numbers globally if needed, or just ensure consistency
+             }
+
+            prevButton.disabled = index === 0;
+            nextButton.disabled = index === totalSlides - 1;
+             // Update button styles based on disabled state
+            prevButton.style.opacity = prevButton.disabled ? '0.5' : '1';
+            nextButton.style.opacity = nextButton.disabled ? '0.5' : '1';
+        }
+
+        prevButton.addEventListener('click', () => {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        });
+
+        nextButton.addEventListener('click', () => {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        });
+
+        // Initialize first slide
+        showSlide(currentSlide);
+
+        // Optional: Add keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                 e.preventDefault(); // Prevent default browser scroll
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    showSlide(currentSlide);
+                }
+            } else if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+                e.preventDefault(); // Prevent default browser scroll / space bar scroll
+                 if (currentSlide < totalSlides - 1) {
+                    currentSlide++;
+                    showSlide(currentSlide);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
