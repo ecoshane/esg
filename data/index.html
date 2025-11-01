@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>永續數據 AI 轉換平台 - Ecoshane</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --esun-green: #008779; 
+            --esun-dark: #0A1C3B; 
+            --hrdd-risk: #CC2A2A; 
+            --sll-reward: #008779; 
+            --warning-yellow: #f59e0b; 
+            --esun-blue: #2563eb; 
+        }
+        body { 
+            font-family: 'Inter', 'Noto Sans TC', sans-serif; 
+            background-color: #f3f4f6; 
+        }
+        
+        /* 平台標頭 */
+        .platform-header { 
+            background-color: var(--esun-dark); 
+            color: white; 
+            padding: 1.5rem 2rem; 
+            border-radius: 0.5rem; 
+            box-shadow: 0 6px 10px rgba(0,0,0,0.2); 
+            margin-bottom: 0; /* 移除 margin-bottom 以便和標籤貼合 */
+        }
+
+        /* 標籤頁樣式 (修復圓角問題) */
+        .tab-button {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #6b7280;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-bottom: 4px solid transparent;
+            background-color: #e5e7eb;
+            /* 預設圓角 */
+            border-radius: 0.5rem 0.5rem 0 0;
+        }
+        .tab-button.active {
+            background-color: white;
+            color: var(--esun-green);
+        }
+        /* 環境績效 (E) 標籤 */
+        .tab-button[data-tab="env"].active {
+            border-bottom-color: var(--esun-green);
+            color: var(--esun-green);
+        }
+        /* HRDD (S-) 標籤 */
+        .tab-button[data-tab="hrdd"].active {
+            border-bottom-color: var(--hrdd-risk);
+            color: var(--hrdd-risk);
+        }
+        /* SROI (S+) 標籤 */
+        .tab-button[data-tab="sroi"].active {
+            border-bottom-color: var(--esun-blue);
+            color: var(--esun-blue);
+        }
+
+        /* 內容卡片 (修復圓角問題) */
+        .content-card {
+            background-color: white;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            padding: 2rem;
+            /* 預設隱藏 */
+            display: none;
+        }
+        .content-card.active {
+            /* 作用中才顯示 */
+            display: block;
+        }
+        
+        /* 根據標籤頁動態調整卡片圓角 */
+        .content-card[data-content="env"] { border-radius: 0 0.75rem 0.75rem 0.75rem; }
+        .content-card[data-content="hrdd"] { border-radius: 0.75rem 0 0.75rem 0.75rem; }
+        .content-card[data-content="sroi"] { border-radius: 0.75rem 0.75rem 0.75rem 0.75rem; }
+
+
+        /* AI 風險驗證卡片樣式 */
+        .signal-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background-color: #f9fafb;
+            transition: all 0.3s ease;
+        }
+        .signal-card:hover {
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            border-color: #d1d5db;
+        }
+        .signal-source {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #6b7280;
+            margin-bottom: 0.25rem;
+        }
+        .signal-title {
+            font-weight: 700;
+            color: var(--esun-dark);
+            margin-bottom: 0.5rem;
+        }
+        .signal-snippet {
+            font-size: 0.875rem;
+            color: #4b5563;
+            margin-bottom: 1rem;
+            padding-left: 1rem;
+            border-left: 3px solid #d1d5db;
+        }
+        .ai-note {
+            font-size: 0.875rem;
+            font-weight: 700;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.375rem;
+            display: inline-block;
+        }
+        .ai-note-high { /* 高可信度 */
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        .ai-note-low { /* 低可信度 (疑似抹黑) */
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        /* 驗證按鈕樣式 */
+        .btn-verify {
+            background-color: #22c55e;
+            color: white;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+        .btn-verify:hover {
+            background-color: #16a34a;
+        }
+        .btn-dismiss {
+            background-color: #ef4444;
+            color: white;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+        .btn-dismiss:hover {
+            background-color: #dc2626;
+        }
+        
+        /* 檔案上傳區域 */
+        .drop-zone {
+            border: 2px dashed #d1d5db;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            text-align: center;
+            background-color: #f9fafb;
+            transition: background-color 0.3s ease;
+        }
+        .drop-zone:hover {
+            background-color: #f3f4f6;
+        }
+
+        /* 按鈕樣式 */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background-color: var(--esun-green);
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #006a5f;
+        }
+        .btn-danger {
+            background-color: var(--hrdd-risk);
+            color: white;
+        }
+        .btn-danger:hover {
+            background-color: #a52222;
+        }
+        .btn-blue {
+            background-color: var(--esun-blue);
+            color: white;
+        }
+        .btn-blue:hover {
+            background-color: #1e4ead;
+        }
+        
+        /* 表單輸入 */
+        .form-input {
+            width: 100%;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            padding: 0.75rem 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--esun-green);
+            box-shadow: 0 0 0 2px rgba(0, 135, 121, 0.2);
+        }
+        .form-label {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        /* 載入中動畫 */
+        .loader {
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <header class="platform-header flex justify-between items-center">
+        <div>
+            <h1 class="text-2xl font-bold">永續數據 AI 轉換平台</h1>
+            <p class="text-sm opacity-80">Ecoshane 永續家 - 數據分析師工作介面</p>
+        </div>
+        <div>
+            <label for="client-select" class="text-sm font-medium text-gray-300 mr-2">分析對象:</label>
+            <select id="client-select" class="bg-white/10 text-white font-semibold rounded-md py-2 px-4 pr-8 focus:outline-none focus:ring-2 focus:ring-white/50">
+                <option>盈盈水泥集團</option>
+                <option>客戶 A (紡織業)</option>
+                <option>客戶 E (電子業)</option>
+                <option>客戶 F (食品加工)</option>
+            </select>
+        </div>
+    </header>
+
+    <nav class="flex -mt-px">
+        <button class="tab-button active" data-tab="env">
+            <i class="fas fa-leaf mr-2"></i> 環境績效 (E)
+        </button>
+        <button class="tab-button" data-tab="hrdd">
+            <i class="fas fa-shield-alt mr-2"></i> HRDD 風險 (S-)
+        </button>
+        <button class="tab-button" data-tab="sroi">
+            <i class="fas fa-hand-holding-heart mr-2"></i> SROI 價值 (S+)
+        </button>
+    </nav>
+
+    <main>
+        <!-- 環境 (E) 內容 -->
+        <div id="env-content" class="content-card active" data-content="env">
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">1. 環境績效數據 (E)</h2>
+            <p class="text-gray-600 mb-6">請上傳或自動化介接客戶的環境數據 (如：碳盤查、用電量)，AI 將自動計算其 SPTs 達成率。</p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- 手動上傳 -->
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-700 mb-4 border-b pb-2">手動數據上傳 (確信報告)</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="form-label">ISO 14064-1 碳盤查報告 (.pdf)</label>
+                            <input type="file" class="form-input">
+                        </div>
+                        <div>
+                            <label class="form-label">台電電費單 (或綠電憑證) (.pdf, .xlsx)</label>
+                            <input type="file" class="form-input">
+                        </div>
+                        <div>
+                            <label class="form-label">用水/廢棄物清單 (.xlsx)</label>
+                            <input type="file" class="form-input">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- API 介接 -->
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-700 mb-4 border-b pb-2">自動化數據 API 介接</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border">
+                            <div>
+                                <div class="font-semibold text-gray-800">能源管理系統 (EMS) API</div>
+                                <div class="text-xs text-gray-500">上次同步：2025-11-01 23:30</div>
+                            </div>
+                            <div class="text-green-600 font-bold flex items-center">
+                                <i class="fas fa-check-circle mr-2"></i> 已連線
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border">
+                            <div>
+                                <div class="font-semibold text-gray-800">台電 API (企業e櫃檯)</div>
+                                <div class="text-xs text-gray-500">尚未設定</div>
+                            </div>
+                            <button class="text-blue-600 hover:text-blue-800 text-sm font-semibold">點此設定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 運算按鈕 -->
+            <div class="mt-10 pt-6 border-t text-center">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">2. SPTs 達成率運算</h2>
+                <button id="run-env-analysis" class="btn btn-primary btn-lg text-lg w-full md:w-1/2">
+                    <i class="fas fa-chart-line mr-3"></i>
+                    <span>運算環境績效 (E) 達成率</span>
+                </button>
+                
+                <!-- 結果顯示 -->
+                <div id="env-result" class="hidden mt-6 p-4 rounded-lg bg-green-50 border border-green-300 max-w-lg mx-auto">
+                    <h3 class="text-lg font-bold text-green-800"><i class="fas fa-check-circle mr-2"></i>分析完成！</h3>
+                    <p class="text-green-700">碳排強度 (SPT 1) 達成率：<strong class="text-green-900">98%</strong></p>
+                    <p class="text-green-700">再生能源使用率 (SPT 2) 達成率：<strong class="text-green-900">105% (超額)</strong></p>
+                    <a href="index.html" class="text-green-800 hover:underline font-semibold mt-2 inline-block">前往查看儀表板更新 &rarr;</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- HRDD (S-) 內容 -->
+        <div id="hrdd-content" class="content-card" data-content="hrdd">
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">1. 數據接入 (Data Ingestion)</h2>
+            <p class="text-gray-600 mb-6">請上傳客戶的內部風險文件 (申訴日誌、稽核報告)，AI 將自動化監測外部輿情，以啟動風險評分。</p>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- 內部數據 -->
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-700 mb-4 border-b pb-2">內部數據 (結構化/非結構化)</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="form-label">內部勞工申訴機制日誌 (.xlsx, .csv)</label>
+                            <input type="file" class="form-input">
+                        </div>
+                        <div>
+                            <label class="form-label">供應商稽核報告 (.pdf, .docx)</label>
+                            <input type="file" class="form-input">
+                        </div>
+                        <div>
+                            <label class="form-label">工安事件紀錄 (.pdf, .xlsx)</label>
+                            <input type="file" class="form-input">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 外部輿情 -->
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-700 mb-4 border-b pb-2">外部輿情 (AI 自動化監測)</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <span class="form-label">監測狀態</span>
+                            <div class="flex items-center text-green-600 font-semibold">
+                                <i class="fas fa-satellite-dish mr-2 animate-pulse"></i> 24/7 自動化監測中...
+                            </div>
+                        </div>
+                        <div>
+                            <span class="form-label">AI 監測實體</span>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">盈盈水泥</span>
+                                <span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">供應商：XX 紡織</span>
+                                <span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-sm font-medium">越南廠區</span>
+                            </div>
+                        </div>
+                        <div class="pt-2">
+                             <p class="text-xs text-gray-500">AI 已自動掃描 1,428 篇相關輿情，發現 3 個潛在風險訊號。請見下方驗證區。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI 風險訊號驗證 -->
+            <div class="mt-10 pt-6 border-t">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">2. AI 風險訊號驗證 (AI Signal Verification)</h2>
+                <p class="text-gray-600 mb-6">此為應對「假新聞」與「抹黑造謠」的關鍵步驟。AI 已自動抓取並預先評估可信度，請分析師進行最終確認。</p>
+                
+                <div class="space-y-4 max-h-64 overflow-y-auto pr-2">
+                    <!-- 訊號卡 1: 高可信度 -->
+                    <div class="signal-card">
+                        <div class="flex justify-between items-center mb-3">
+                            <div>
+                                <div class="signal-source">來源：國際 NGO 報告 (Human Rights Watch)</div>
+                                <div class="signal-title">關於 XX 紡織 (供應商) 越南廠區勞工條件之調查</div>
+                            </div>
+                            <span class="ai-note ai-note-high"><i class="fas fa-check-circle mr-2"></i>AI 註記：高可信度 (權威來源)</span>
+                        </div>
+                        <div class="signal-snippet">
+                            "...調查顯示，該廠區存在嚴重超時工作，違反當地法規..."
+                        </div>
+                        <div class="flex justify-end space-x-3">
+                            <button class="btn btn-dismiss"><i class="fas fa-times mr-2"></i>判定為假訊息</button>
+                            <button class="btn btn-verify"><i class="fas fa-check mr-2"></i>確認為風險</button>
+                        </div>
+                    </div>
+                    
+                    <!-- 訊號卡 2: 低可信度 -->
+                    <div class="signal-card">
+                        <div class="flex justify-between items-center mb-3">
+                            <div>
+                                <div class="signal-source">來源：匿名論壇 (XX Forum)</div>
+                                <div class="signal-title">盈盈水泥根本是黑心企業！</div>
+                            </div>
+                            <span class="ai-note ai-note-low"><i class="fas fa-exclamation-triangle mr-2"></i>AI 註記：低可信度 (疑似抹黑文章)</span>
+                        </div>
+                        <div class="signal-snippet">
+                            "...聽我朋友說他們都亂倒廢棄物，還壓榨員工..."
+                        </div>
+                        <div class="flex justify-end space-x-3">
+                            <button class="btn btn-dismiss"><i class="fas fa-times mr-2"></i>判定為假訊息</button>
+                            <button class="btn btn-verify"><i class="fas fa-check mr-2"></i>確認為風險</button>
+                        </div>
+                    </div>
+                    
+                    <!-- 訊號卡 3: 高可信度 -->
+                    <div class="signal-card">
+                        <div class="flex justify-between items-center mb-3">
+                            <div>
+                                <div class="signal-source">來源：XX 財經日報</div>
+                                <div class="signal-title">盈盈水泥工安意外，兩名工人受傷</div>
+                            </div>
+                            <span class="ai-note ai-note-high"><i class="fas fa-check-circle mr-2"></i>AI 註記：高可信度 (多家媒體交叉比對)</span>
+                        </div>
+                        <div class="signal-snippet">
+                            "...今日下午三點，其高雄廠區發生鷹架倒塌，造成兩名工人輕傷..."
+                        </div>
+                        <div class="flex justify-end space-x-3">
+                            <button class="btn btn-dismiss"><i class="fas fa-times mr-2"></i>判定為假訊息</button>
+                            <button class="btn btn-verify"><i class="fas fa-check mr-2"></i>確認為風險</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 最終評分運算 -->
+            <div class="mt-10 pt-6 border-t text-center">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">3. 最終評分運算 (Final Rating Calculation)</h2>
+                <div class="mb-4 text-gray-600">
+                    <p>已整合： 3 份內部文件 + 2 個已驗證外部風險訊號。</p>
+                </div>
+                <button id="run-hrdd-analysis" class="btn btn-danger btn-lg text-lg w-full md:w-1/2">
+                    <i class="fas fa-microchip mr-3"></i>
+                    <span>運算最終 HRDD 風險分數</span>
+                </button>
+                
+                <!-- 結果顯示 -->
+                <div id="hrdd-result" class="hidden mt-6 p-4 rounded-lg bg-green-50 border border-green-300">
+                    <h3 class="text-lg font-bold text-green-800"><i class="fas fa-check-circle mr-2"></i>分析完成！</h3>
+                    <p class="text-green-700">已成功處理 3 份內部文件並整合 2 個已驗證風險。風險分數已更新。</p>
+                    <a href="index.html" class="text-green-800 hover:underline font-semibold mt-2 inline-block">前往查看儀表板更新 &rarr;</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- SROI (S+) 內容 -->
+        <div id="sroi-content" class="content-card" data-content="sroi">
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">1. 社會價值數據 (S+)</h2>
+            <p class="text-gray-600 mb-6">請輸入 SROI 專案的各項財務與非財務投入數據，AI 將依據 SVI 框架運算社會價值。</p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- 專案投入 -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-2 border-b pb-2">社會專案投入 (Inputs)</h3>
+                    <div>
+                        <label for="sroi-project" class="form-label">專案名稱 (e.g., 盈才計畫)</label>
+                        <input type="text" id="sroi-project" class="form-input" value="盈才計畫 - 2025 年度">
+                    </div>
+                    <div>
+                        <label for="sroi-investment" class="form-label">總投入成本 (NT$)</label>
+                        <input type="number" id="sroi-investment" class="form-input" value="5000000">
+                    </div>
+                    <div>
+                        <label for="sroi-hours" class="form-label">員工轉崗培訓總時數</label>
+                        <input type="number" id="sroi-hours" class="form-input" value="800">
+                    </div>
+                    <div>
+                        <label for="sroi-procurement" class="form-label">在地採購總金額 (NT$)</label>
+                        <input type="number" id="sroi-procurement" class="form-input" value="12000000">
+                    </div>
+                </div>
+
+                <!-- 模型參數 -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-2 border-b pb-2">模型參數 (Parameters)</h3>
+                    <div>
+                        <label for="sroi-model" class="form-label">SROI 運算框架</label>
+                        <select id="sroi-model" class="form-input bg-gray-50">
+                            <option selected>英國 SVI 框架 (Social Value International)</option>
+                            <option>GRI 準則 (GRI Standards)</option>
+                            <option>內部客製化模型</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="sroi-discount" class="form-label">社會價值折現率 (%)</label>
+                        <input type="number" id="sroi-discount" class="form-input" value="3.5">
+                    </div>
+                    <div>
+                        <label for="sroi-period" class="form-label">價值評估年期 (Years)</label>
+                        <input type="number" id="sroi-period" class="form-input" value="5">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 運算按鈕 -->
+            <div class="mt-10 pt-6 border-t text-center">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">2. 智能分析 (Smart Analysis)</h2>
+                <button id="run-sroi-analysis" class="btn btn-blue btn-lg text-lg w-full md:w-1/2">
+                    <i class="fas fa-calculator mr-3"></i>
+                    <span>運算 SROI 淨社會價值</span>
+                </button>
+
+                <!-- 結果顯示 -->
+                <div id="sroi-result" class="hidden mt-6 p-6 rounded-lg bg-blue-50 border border-blue-300 max-w-lg mx-auto">
+                    <h3 class="text-lg font-bold text-blue-800"><i class="fas fa-chart-line mr-2"></i>SROI 運算結果</h3>
+                    <p class="text-blue-700 mb-4">根據 SVI 框架，本次投入 NT$ 5,000,000，預計可創造之淨社會價值比率為：</p>
+                    <div class="text-6xl font-extrabold text-blue-900">
+                        1 : 3.4
+                    </div>
+                    <button class="btn btn-primary mt-4">
+                        <i class="fas fa-save mr-2"></i> 儲存並更新至儀表板
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.querySelectorAll('.tab-button');
+            const contents = document.querySelectorAll('.content-card');
+            
+            // 模擬按鈕
+            const hrddAnalysisBtn = document.getElementById('run-hrdd-analysis');
+            const hrddResult = document.getElementById('hrdd-result');
+            const sroiAnalysisBtn = document.getElementById('run-sroi-analysis');
+            const sroiResult = document.getElementById('sroi-result');
+            const envAnalysisBtn = document.getElementById('run-env-analysis');
+            const envResult = document.getElementById('env-result');
+
+            // 標籤頁切換邏輯
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabName = tab.dataset.tab;
+
+                    // 1. 更新按鈕樣式
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    // 2. 隱藏所有內容卡片
+                    contents.forEach(c => {
+                        c.classList.remove('active');
+                        // 移除所有動態圓角
+                        c.style.borderRadius = ''; 
+                    });
+
+                    // 3. 顯示對應的內容卡片
+                    const activeContent = document.getElementById(`${tabName}-content`);
+                    if (activeContent) {
+                        activeContent.classList.add('active');
+                        
+                        // 4. (關鍵) 根據點擊的標籤頁，動態設定圓角
+                        if (tabName === 'env') {
+                            activeContent.style.borderRadius = '0 0.75rem 0.75rem 0.75rem';
+                        } else if (tabName === 'hrdd') {
+                            activeContent.style.borderRadius = '0.75rem 0 0.75rem 0.75rem';
+                        } else if (tabName === 'sroi') {
+                            // SROI 內容卡片在最右側，不需要特殊處理左上角
+                             activeContent.style.borderRadius = '0.75rem 0 0.75rem 0.75rem';
+                        }
+                    }
+                });
+            });
+            
+            // 手動觸發一次點擊，確保預設標籤 (E) 和內容卡片的圓角正確
+            document.querySelector('.tab-button[data-tab="env"]').click();
+
+
+            // 模擬分析的輔助函數
+            const simulateAnalysis = (button, resultElement, iconClass, loadingText, doneText) => {
+                const btnSpan = button.querySelector('span');
+                const btnIcon = button.querySelector('i');
+                
+                // 顯示載入中
+                btnSpan.textContent = loadingText;
+                btnIcon.className = 'loader mr-3';
+                button.disabled = true;
+                resultElement.classList.add('hidden');
+
+                // 模擬 1.5 秒分析時間
+                setTimeout(() => {
+                    // 恢復按鈕
+                    btnSpan.textContent = doneText;
+                    btnIcon.className = iconClass + ' mr-3';
+                    button.disabled = false;
+                    
+                    // 顯示成功訊息
+                    resultElement.classList.remove('hidden');
+                }, 1500);
+            };
+            
+            // 綁定三個分析按鈕
+            envAnalysisBtn.addEventListener('click', () => {
+                simulateAnalysis(envAnalysisBtn, envResult, 'fas fa-chart-line', '運算中...', '運算環境績效 (E) 達成率');
+            });
+            
+            hrddAnalysisBtn.addEventListener('click', () => {
+                simulateAnalysis(hrddAnalysisBtn, hrddResult, 'fas fa-microchip', 'AI 分析中...', '運算最終 HRDD 風險分數');
+            });
+
+            sroiAnalysisBtn.addEventListener('click', () => {
+                simulateAnalysis(sroiAnalysisBtn, sroiResult, 'fas fa-calculator', '模型運算中...', '運算 SROI 淨社會價值');
+            });
+
+            // 修正 HRDD 驗證按鈕的邏輯 (點擊後隱藏卡片)
+            document.querySelectorAll('.signal-card .btn-verify, .signal-card .btn-dismiss').forEach(button => {
+                button.addEventListener('click', () => {
+                    // 找到最近的 .signal-card 父元素並隱藏它
+                    const card = button.closest('.signal-card');
+                    if (card) {
+                        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                        card.style.opacity = '0';
+                        card.style.transform = 'scale(0.95)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 500); // 等待動畫完成後再徹底隱藏
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
