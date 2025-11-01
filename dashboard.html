@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>面試成果展示：永續風險儀表板</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* 與 internal_proposal_looker_deliverable.html 樣式相同 */
+        body { font-family: 'Inter', 'Noto Sans TC', sans-serif; background-color: #f3f4f6; padding: 2rem; }
+        :root { --esun-green: #008779; --esun-dark: #0A1C3B; --hrdd-risk: #CC2A2A; --sll-reward: #008779; --warning-yellow: #f59e0b; }
+        .dashboard-header { background-color: var(--esun-green); color: white; padding: 1rem; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+        .kpi-card { background-color: white; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); padding: 1.5rem; height: 100%; display: flex; flex-direction: column; border-top: 4px solid transparent; }
+        .kpi-title { font-size: 0.875rem; font-weight: 600; color: #6b7280; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center; }
+        .kpi-value { font-size: 2.25rem; font-weight: 800; color: var(--esun-dark); line-height: 1.1; }
+        .kpi-change { font-size: 0.875rem; font-weight: 600; margin-top: 0.25rem; display: flex; align-items: center; }
+        .text-positive { color: var(--sll-reward); } .text-negative { color: var(--hrdd-risk); } .text-warning { color: var(--warning-yellow); }
+        .chart-container { background-color: white; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); padding: 1.5rem; margin-top: 1.5rem; height: 300px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+        .line-chart-mockup { width: 90%; height: 80%; position: relative; border-left: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; }
+        .line-chart-line { position: absolute; height: 2px; background-color: var(--hrdd-risk); transform-origin: left center; }
+        .data-point { position: absolute; width: 10px; height: 10px; background-color: var(--hrdd-risk); border: 2px solid white; border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; }
+        .data-label { position: absolute; font-size: 0.75rem; color: #4b5563; transform: translateX(-50%); top: -20px; white-space: nowrap; }
+        .x-axis-label { position: absolute; bottom: -25px; font-size: 0.75rem; color: #6b7280; transform: translateX(-50%); }
+        .y-axis-label { position: absolute; left: -30px; font-size: 0.75rem; color: #6b7280; transform: translateY(-50%) rotate(-90deg); width: 50px; }
+        .grid-line-y { position: absolute; left: 0; width: 100%; height: 1px; background-color: #e5e7eb; }
+        .grid-line-x { position: absolute; top: 0; height: 100%; width: 1px; background-color: #e5e7eb; }
+        .alert-list li { border-left: 4px solid var(--hrdd-risk); padding: 0.75rem 1rem; background-color: #fef2f2; margin-bottom: 0.75rem; border-radius: 0.375rem; }
+        .alert-list li strong { color: var(--hrdd-risk); }
+        .table-header { background-color: #f9fafb; font-weight: 600; color: #4b5563; }
+        .table td, .table th { padding: 0.75rem 1rem; border-bottom: 1px solid #e5e7eb; }
+        .risk-score { padding: 0.25rem 0.5rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 700; display: inline-block; }
+        .risk-low { background-color: #d1fae5; color: #065f46; } .risk-medium { background-color: #fef3c7; color: #92400e; } .risk-high { background-color: #fee2e2; color: #991b1b; }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <header class="dashboard-header">
+        <div class="flex items-center space-x-3">
+            <i class="fas fa-tachometer-alt text-2xl"></i>
+            <h1 class="text-xl md:text-2xl font-bold">永續風險儀表板 (專案成果)</h1>
+        </div>
+        <div class="text-sm font-semibold">
+            數據更新時間：[專案完成日期]
+        </div>
+    </header>
+
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+        <div class="kpi-card border-t-4 border-red-600">
+             <div class="kpi-title"><span>整體 HRDD 風險分數 (S-)</span><i class="fas fa-shield-alt text-red-600"></i></div>
+             <div class="kpi-value text-red-600">45<span class="text-lg font-semibold"> / 100</span></div>
+             <div class="kpi-change text-positive"><i class="fas fa-arrow-down mr-1"></i> -33.8% (較專案前)</div>
+             <p class="text-xs text-gray-500 mt-auto pt-2">註：分數成功降低，風險改善。</p>
+        </div>
+        <div class="kpi-card border-t-4 border-amber-500">
+             <div class="kpi-title"><span>HRDD 紅燈客戶數</span><i class="fas fa-flag text-amber-500"></i></div>
+             <div class="kpi-value text-amber-600">2 <span class="text-lg font-semibold">家</span></div>
+             <div class="kpi-change text-positive"><i class="fas fa-arrow-down mr-1"></i> -83% (較專案前估算)</div>
+             <p class="text-xs text-gray-500 mt-auto pt-2">風險集中度顯著下降。</p>
+        </div>
+        <div class="kpi-card border-t-4 border-green-600">
+             <div class="kpi-title"><span>SLL 環境績效達標率 (E)</span><i class="fas fa-leaf text-green-600"></i></div>
+             <div class="kpi-value text-green-700">92<span class="text-lg font-semibold"> %</span></div>
+             <div class="kpi-change text-positive"><i class="fas fa-arrow-up mr-1"></i> +1.5% (較上季)</div>
+             <p class="text-xs text-gray-500 mt-auto pt-2">維持穩定增長。</p>
+        </div>
+        <div class="kpi-card border-t-4 border-blue-600">
+             <div class="kpi-title"><span>SROI 加權平均回報 (S+)</span><i class="fas fa-hand-holding-heart text-blue-600"></i></div>
+             <div class="kpi-value text-blue-700">1 : 2.8</div>
+             <div class="kpi-change text-positive"><i class="fas fa-arrow-up mr-1"></i> +0.3 (較上季)</div>
+             <p class="text-xs text-gray-500 mt-auto pt-2">社會價值創造持續增長。</p>
+        </div>
+    </section>
+
+    <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        <div class="lg:col-span-2">
+             <h2 class="text-lg font-semibold text-gray-700 mb-3">HRDD 風險分數趨勢 (專案期間)</h2>
+             <div class="chart-container">
+                 <div class="line-chart-mockup">
+                    <div class="grid-line-y" style="bottom: 0%;"></div><div class="grid-line-y" style="bottom: 25%;"></div><div class="grid-line-y" style="bottom: 50%;"></div><div class="grid-line-y" style="bottom: 75%;"></div><div class="grid-line-y" style="bottom: 100%;"></div>
+                    <div class="grid-line-x" style="left: 0%;"></div><div class="grid-line-x" style="left: 20%;"></div><div class="grid-line-x" style="left: 40%;"></div><div class="grid-line-x" style="left: 60%;"></div><div class="grid-line-x" style="left: 80%;"></div><div class="grid-line-x" style="left: 100%;"></div>
+                    <span class="y-axis-label" style="top: 100%;">0</span><span class="y-axis-label" style="top: 75%;">25</span><span class="y-axis-label" style="top: 50%;">50</span><span class="y-axis-label" style="top: 25%;">75</span><span class="y-axis-label" style="top: 0%;">100 (風險)</span>
+
+                    <!-- Data points showing a downward trend after implementation -->
+                    <div class="data-point" style="left: 0%; bottom: 68%;" title="基線: 68"></div><span class="data-label" style="left: 0%; bottom: 68px;">68</span><span class="x-axis-label" style="left: 0%;">M0</span>
+                    <div class="data-point" style="left: 20%; bottom: 70%; background-color: var(--warning-yellow);" title="M1: 70 - 導入初期"></div><span class="data-label" style="left: 20%; bottom: 70px; color: var(--warning-yellow);">70</span><span class="x-axis-label" style="left: 20%;">M1</span>
+                    <div class="data-point" style="left: 40%; bottom: 60%;" title="M2: 60"></div><span class="data-label" style="left: 40%; bottom: 60px;">60</span><span class="x-axis-label" style="left: 40%;">M2</span>
+                    <div class="data-point" style="left: 60%; bottom: 50%;" title="M3: 50"></div><span class="data-label" style="left: 60%; bottom: 50px;">50</span><span class="x-axis-label" style="left: 60%;">M3</span>
+                    <div class="data-point" style="left: 80%; bottom: 48%;" title="M4: 48"></div><span class="data-label" style="left: 80%; bottom: 48px;">48</span><span class="x-axis-label" style="left: 80%;">M4</span>
+                    <div class="data-point" style="left: 100%; bottom: 45%; background-color: var(--sll-reward);" title="專案結束: 45"></div><span class="data-label" style="left: 100%; bottom: 45px; color: var(--sll-reward);">45</span><span class="x-axis-label" style="left: 100%;">M5</span>
+
+                    <!-- Lines connecting the points -->
+                    <div class="line-chart-line" style="left: 0%; bottom: 68%; width: 20.01%; transform: rotate(2.86deg);"></div>
+                    <div class="line-chart-line" style="left: 20%; bottom: 70%; width: 22.36%; transform: rotate(-26.56deg);"></div>
+                    <div class="line-chart-line" style="left: 40%; bottom: 60%; width: 22.36%; transform: rotate(-26.56deg);"></div>
+                    <div class="line-chart-line" style="left: 60%; bottom: 50%; width: 20.01%; transform: rotate(-2.86deg);"></div>
+                    <div class="line-chart-line" style="left: 80%; bottom: 48%; width: 20.02%; transform: rotate(-4.29deg);"></div>
+                 </div>
+             </div>
+        </div>
+        <div class="lg:col-span-1">
+             <h2 class="text-lg font-semibold text-gray-700 mb-3 flex items-center"><i class="fas fa-bell text-red-600 mr-2"></i> 即時風險警報 (HRDD 紅燈)</h2>
+             <div class="bg-white p-4 rounded-lg shadow h-full max-h-[340px] overflow-y-auto">
+                 <ul class="alert-list space-y-3">
+                     <li><p class="text-sm font-semibold">客戶 E (電子業)</p><p class="text-xs text-gray-600">偵測到其越南供應商涉及<strong>超時工作</strong>問題 (來源：內部稽核 + 公開報告)。分數：<strong>82</strong>。</p></li>
+                     <li><p class="text-sm font-semibold">客戶 F (食品加工)</p><p class="text-xs text-gray-600">申訴平台顯示多起關於<strong>職場安全疑慮</strong>的匿名舉報待處理。分數：<strong>78</strong>。</p></li>
+                     <li class="bg-gray-100 border-l-4 border-gray-400"><p class="text-sm font-semibold text-gray-500">[舊警報 - 已處理] 客戶 A (紡織業)</p><p class="text-xs text-gray-500">先前強迫勞動指控，經查核與改善計畫後，風險分數已降至 65 (黃燈)。</p></li>
+                 </ul>
+            </div>
+        </div>
+    </section>
+
+     <section>
+         <h2 class="text-lg font-semibold text-gray-700 mb-3">客戶永續風險概覽 (專案後狀態)</h2>
+         <div class="bg-white rounded-lg shadow overflow-x-auto">
+             <table class="table w-full text-sm text-left">
+                 <thead class="table-header"><tr><th>客戶名稱</th><th>產業別</th><th>HRDD 風險分數 (S-)</th><th>環境績效 (E)</th><th>SROI 價值 (S+)</th><th>SLL 狀態</th></tr></thead>
+                 <tbody>
+                     <tr class="hover:bg-gray-50">
+                         <td class="font-medium text-gray-900">客戶 E</td><td>電子代工</td><td><span class="risk-score risk-high">82 (高)</span></td><td class="text-green-600">達標</td><td class="text-gray-500">1:1.8</td><td class="text-red-600 font-semibold">待處置 (紅燈)</td>
+                     </tr>
+                      <tr class="hover:bg-gray-50">
+                         <td class="font-medium text-gray-900">客戶 F</td><td>食品加工</td><td><span class="risk-score risk-medium">78 (中)</span></td><td class="text-green-600">達標</td><td class="text-green-600">1:2.5</td><td class="text-amber-600 font-semibold">觀察中 (黃燈)</td>
+                     </tr>
+                     <tr class="hover:bg-gray-50">
+                         <td class="font-medium text-gray-900">盈盈水泥集團</td><td>建材製造</td><td><span class="risk-score risk-low">25 (低)</span></td><td class="text-green-600">超額達標</td><td class="text-green-600">1:3.4</td><td class="text-green-600 font-semibold">正常履約 (綠燈)</td>
+                     </tr>
+                      <tr class="hover:bg-gray-50">
+                         <td class="font-medium text-gray-900">客戶 A</td><td>紡織製造</td><td><span class="risk-score risk-medium">65 (中)</span></td><td class="text-green-600">達標</td><td class="text-gray-500">1:1.5</td><td class="text-amber-600 font-semibold">觀察中 (黃燈)</td>
+                     </tr>
+                 </tbody>
+             </table>
+         </div>
+    </section>
+
+</body>
+</html>
