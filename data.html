@@ -65,6 +65,7 @@
             color: var(--brand-primary);
         }
         /* 個別模組顏色 */
+        .tab-button[data-tab="dashboard"].active { border-bottom-color: var(--brand-secondary); color: var(--brand-secondary); }
         .tab-button[data-tab="env"].active { border-bottom-color: var(--semantic-env); color: var(--semantic-env); }
         .tab-button[data-tab="hrdd"].active { border-bottom-color: var(--semantic-risk); color: var(--semantic-risk); }
         .tab-button[data-tab="sroi"].active { border-bottom-color: var(--semantic-sroi); color: var(--semantic-sroi); }
@@ -83,6 +84,142 @@
             display: block;
             opacity: 1;
         }
+
+        /* 儀表板組件樣式 (已統一顏色) */
+        .kpi-card { 
+            background-color: white; 
+            border-radius: 0.75rem; 
+            border: 1px solid #e5e7eb; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+            padding: 1.5rem; 
+            height: 100%; 
+            display: flex; 
+            flex-direction: column; 
+            transition: transform 0.3s ease; 
+            position: relative;
+            overflow: hidden;
+        }
+        /* 統一使用品牌次要色作為側邊裝飾條 */
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: var(--brand-secondary); 
+        }
+
+        .kpi-card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        
+        .kpi-title { font-size: 0.875rem; font-weight: 600; color: #6b7280; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center; padding-left: 0.5rem; }
+        .kpi-value { font-size: 2.25rem; font-weight: 800; color: #1f2937; line-height: 1.1; padding-left: 0.5rem; } 
+        .kpi-change { font-size: 0.875rem; font-weight: 600; margin-top: 0.25rem; display: flex; align-items: center; padding-left: 0.5rem; }
+        
+        /* 文字顏色保留功能語意 */
+        .text-positive { color: var(--semantic-env); } 
+        .text-negative { color: var(--semantic-risk); } 
+        .text-warning { color: var(--warning-yellow); }
+
+        /* SVG 圖表樣式 */
+        .chart-container { 
+            background-color: #ffffff; 
+            border-radius: 0.75rem; 
+            padding: 1.5rem; 
+            height: 300px; 
+            position: relative; 
+            overflow: hidden; 
+            border: 1px solid #e5e7eb; 
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.02);
+        }
+        .chart-svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+        .chart-line-path {
+            fill: none;
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+            transition: d 1s ease;
+        }
+        .chart-area-path {
+            stroke: none;
+            opacity: 0.2;
+            transition: d 1s ease;
+        }
+        .chart-dot {
+            fill: white;
+            stroke-width: 3;
+            r: 6;
+            transition: cy 1s ease, cx 1s ease;
+            cursor: pointer;
+        }
+        .chart-dot:hover {
+            r: 9;
+        }
+        /* 網格線 */
+        .chart-grid line {
+            stroke: #f3f4f6;
+            stroke-width: 1;
+        }
+        .chart-axis-text {
+            font-size: 12px;
+            fill: #9ca3af;
+        }
+
+        /* 優化版警示列表 */
+        .alert-card {
+            display: flex;
+            align-items: start;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            background: white;
+            border-radius: 0.5rem;
+            border-left: 4px solid transparent;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .alert-card:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        .alert-card.high-risk {
+            border-left-color: var(--semantic-risk);
+            background: #fff5f5;
+        }
+        .alert-card.medium-risk {
+            border-left-color: var(--warning-yellow);
+            background: #fffbeb;
+        }
+        .alert-card.low-risk {
+            border-left-color: var(--semantic-env);
+            background: #f0fdf4;
+        }
+        .alert-icon {
+            flex-shrink: 0;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+        .alert-content h4 { font-weight: 700; color: #374151; font-size: 0.95rem; margin-bottom: 0.25rem; }
+        .alert-content p { font-size: 0.8rem; color: #6b7280; line-height: 1.4; }
+        .alert-meta { font-size: 0.75rem; color: #9ca3af; margin-top: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+
+        /* 表格 */
+        .table-header { background-color: #f3f4f6; font-weight: 700; color: #374151; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; }
+        .table td, .table th { padding: 0.75rem 1rem; border-bottom: 1px solid #e5e7eb; }
+        .risk-badge { padding: 0.25rem 0.5rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 700; display: inline-block; }
+        .risk-badge.high { background-color: #fee2e2; color: #991b1b; }
+        .risk-badge.med { background-color: #fef3c7; color: #92400e; }
+        .risk-badge.low { background-color: #d1fae5; color: #065f46; }
         
         /* 進度條樣式 */
         .progress-container {
@@ -132,24 +269,28 @@
             text-decoration: line-through;
         }
 
-        /* 檔案上傳回饋 */
+        /* 檔案上傳回饋 (已上傳狀態) */
+        .file-input-group.uploaded .form-input {
+            border-color: var(--semantic-env);
+            background-color: #f0fdf4;
+            color: #166534;
+            pointer-events: none; /* 模擬已鎖定 */
+        }
         .file-feedback {
             font-size: 0.875rem;
             color: var(--semantic-env);
             margin-top: 0.5rem;
-            display: none;
+            display: none; /* JS控制 */
             align-items: center;
+            font-weight: 600;
         }
 
-        /* 按鈕樣式 - 對應各模組顏色 */
+        /* 按鈕樣式 */
         .btn { padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 700; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
-        
         .btn-env { background-color: var(--semantic-env); color: white; }
         .btn-env:hover { background-color: #047857; }
-        
         .btn-danger { background-color: var(--semantic-risk); color: white; }
         .btn-danger:hover { background-color: #991b1b; }
-        
         .btn-blue { background-color: var(--semantic-sroi); color: white; }
         .btn-blue:hover { background-color: #1e40af; }
         
@@ -195,10 +336,6 @@
             border: 1px solid #eee;
         }
         #chat-window.show { display: flex; animation: slideUp 0.3s ease; }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
         
         #chat-header {
             background: var(--brand-primary);
@@ -293,7 +430,7 @@
 
     <!-- 頂部免責聲明 -->
     <div class="bg-gray-800 text-gray-400 text-xs text-center py-2 rounded-t-md mb-0">
-        免責聲明：本平台為 Ecoshane 永續家之虛擬專案演示介面，所有數據與客戶名稱（如盈盈水泥、宏輪集團）均為虛構，僅供教育用途。
+        免責聲明：本平台為 Ecoshane 永續家之虛擬專案演示介面，所有數據與客戶名稱均為虛構，僅供教育用途。
     </div>
 
     <header class="platform-header flex flex-col md:flex-row justify-between items-center mt-0 rounded-t-none">
@@ -317,7 +454,10 @@
     <div class="bg-white rounded-lg shadow-lg overflow-hidden flex-1">
         <!-- 標籤導航 -->
         <nav class="tabs-container px-4 pt-4 bg-gray-50">
-            <button class="tab-button active" data-tab="env">
+            <button class="tab-button active" data-tab="dashboard">
+                <i class="fas fa-tachometer-alt mr-2"></i> 總覽儀表板
+            </button>
+            <button class="tab-button" data-tab="env">
                 <i class="fas fa-leaf mr-2"></i> 環境績效 (E)
             </button>
             <button class="tab-button" data-tab="hrdd">
@@ -329,8 +469,98 @@
         </nav>
 
         <main>
-            <!-- ================= 環境 (E) 內容 ================= -->
-            <div id="env-content" class="content-card active" data-content="env">
+            <!-- ================= 1. 總覽儀表板 (Dashboard) ================= -->
+            <div id="dashboard-content" class="content-card active" data-content="dashboard">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">客戶風險概況總覽</h2>
+                    <span class="text-sm text-gray-500"><i class="fas fa-sync-alt mr-1"></i> 數據實時更新</span>
+                </div>
+
+                <!-- KPI 卡片 -->
+                <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="kpi-card risk">
+                        <div class="kpi-title"><span>HRDD 風險分數</span><i class="fas fa-shield-alt text-gray-400"></i></div>
+                        <div class="kpi-value" id="dash-risk-score">45<span class="text-lg font-semibold text-gray-400">/100</span></div>
+                        <div class="kpi-change" id="dash-risk-change"><i class="fas fa-arrow-down mr-1"></i> -33.8%</div>
+                        <p class="text-xs text-gray-500 mt-auto pt-2" id="dash-risk-desc">風險改善顯著，持續監測中。</p>
+                    </div>
+                    <div class="kpi-card warning">
+                        <div class="kpi-title"><span>待處理紅燈警示</span><i class="fas fa-flag text-gray-400"></i></div>
+                        <div class="kpi-value" id="dash-red-flags">0 <span class="text-lg font-semibold text-gray-400">件</span></div>
+                        <div class="kpi-change" id="dash-flags-change"><i class="fas fa-minus mr-1"></i> 持平</div>
+                        <p class="text-xs text-gray-500 mt-auto pt-2">目前無重大違規事件。</p>
+                    </div>
+                    <div class="kpi-card success">
+                        <div class="kpi-title"><span>SLL 環境績效 (E)</span><i class="fas fa-leaf text-gray-400"></i></div>
+                        <div class="kpi-value" id="dash-env-score">92<span class="text-lg font-semibold text-gray-400">%</span></div>
+                        <div class="kpi-change" id="dash-env-change"><i class="fas fa-arrow-up mr-1"></i> +1.5%</div>
+                        <p class="text-xs text-gray-500 mt-auto pt-2">環境承諾穩定兌現。</p>
+                    </div>
+                    <div class="kpi-card value">
+                        <div class="kpi-title"><span>SROI 社會回報 (S+)</span><i class="fas fa-hand-holding-heart text-gray-400"></i></div>
+                        <div class="kpi-value" id="dash-sroi-ratio">1:3.4</div>
+                        <div class="kpi-change" id="dash-sroi-change"><i class="fas fa-arrow-up mr-1"></i> +0.3</div>
+                        <p class="text-xs text-gray-500 mt-auto pt-2">社會價值創造優於預期。</p>
+                    </div>
+                </section>
+
+                <!-- 圖表與警示 -->
+                <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                    <div class="lg:col-span-2">
+                        <h3 class="text-lg font-bold text-gray-800 mb-3">風險分數趨勢</h3>
+                        <div class="chart-container">
+                            <svg class="chart-svg" viewBox="0 0 600 250" preserveAspectRatio="none">
+                                <!-- 網格 -->
+                                <g class="chart-grid">
+                                    <line x1="0" y1="50" x2="600" y2="50" />
+                                    <line x1="0" y1="100" x2="600" y2="100" />
+                                    <line x1="0" y1="150" x2="600" y2="150" />
+                                    <line x1="0" y1="200" x2="600" y2="200" />
+                                </g>
+                                <!-- Y軸標籤 -->
+                                <text x="10" y="20" class="chart-axis-text">100</text>
+                                <text x="10" y="240" class="chart-axis-text">0</text>
+                                <!-- 動態路徑 (Area & Line) -->
+                                <path id="chart-area" class="chart-area-path" />
+                                <path id="chart-line" class="chart-line-path" />
+                                <!-- 互動點 (由 JS 生成) -->
+                                <g id="chart-dots"></g>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-1">
+                        <h3 class="text-lg font-bold text-gray-800 mb-3 flex items-center"><i class="fas fa-bell text-red-600 mr-2"></i> 即時風險警報</h3>
+                        <div class="bg-gray-50 p-3 rounded-lg border border-gray-200 h-[300px] overflow-y-auto" id="dashboard-alerts">
+                            <!-- 警示項目由 JS 生成 -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 客戶列表表格 (Portfolio View) -->
+                <section>
+                    <h3 class="text-lg font-bold text-gray-800 mb-3">投資組合概覽</h3>
+                    <div class="overflow-x-auto rounded-lg border border-gray-200">
+                        <table class="table w-full text-sm text-left">
+                            <thead class="table-header">
+                                <tr>
+                                    <th>客戶名稱</th>
+                                    <th>產業</th>
+                                    <th>風險 (S-)</th>
+                                    <th>環境 (E)</th>
+                                    <th>SROI (S+)</th>
+                                    <th>SLL 狀態</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white" id="portfolio-table">
+                                <!-- 表格內容由 JS 生成 -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+            <!-- ================= 2. 環境 (E) 內容 ================= -->
+            <div id="env-content" class="content-card" data-content="env">
                 <h2 class="text-2xl font-bold text-gray-800 mb-2">環境數據自動化介接</h2>
                 <p class="text-gray-600 mb-6">系統將自動比對上傳之確信報告與 API 實時數據，計算 SPTs (永續績效目標) 達成率。</p>
                 
@@ -341,18 +571,31 @@
                             <i class="fas fa-file-upload mr-2 text-green-600"></i> ISO 14064-1 查證報告上傳
                         </h3>
                         <div class="space-y-6">
-                            <div class="file-input-group">
+                            <!-- ISO 文件 -->
+                            <div class="file-input-group" id="file-group-iso">
                                 <label class="form-label">選擇年度溫室氣體盤查報告書 (.pdf)</label>
-                                <input type="file" class="form-input bg-white file-trigger" accept=".pdf">
+                                <div class="relative">
+                                    <input type="text" class="form-input bg-white cursor-pointer" readonly placeholder="點擊選擇檔案..." value="">
+                                    <div class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 pointer-events-none">
+                                        <i class="fas fa-folder-open"></i>
+                                    </div>
+                                </div>
                                 <div class="file-feedback">
-                                    <i class="fas fa-check-circle mr-1"></i> <span class="filename">filename.pdf</span> - 解析成功
+                                    <i class="fas fa-check-circle mr-1"></i> <span class="filename"></span> - 解析成功
                                 </div>
                             </div>
-                            <div class="file-input-group">
+                            
+                            <!-- 電費單 -->
+                            <div class="file-input-group" id="file-group-power">
                                 <label class="form-label">選擇台電/綠電憑證 (.csv, .xlsx)</label>
-                                <input type="file" class="form-input bg-white file-trigger" accept=".csv, .xlsx">
+                                <div class="relative">
+                                    <input type="text" class="form-input bg-white cursor-pointer" readonly placeholder="點擊選擇檔案..." value="">
+                                    <div class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500 pointer-events-none">
+                                        <i class="fas fa-folder-open"></i>
+                                    </div>
+                                </div>
                                 <div class="file-feedback">
-                                    <i class="fas fa-check-circle mr-1"></i> <span class="filename">filename.csv</span> - 解析成功
+                                    <i class="fas fa-check-circle mr-1"></i> <span class="filename"></span> - 解析成功
                                 </div>
                             </div>
                         </div>
@@ -404,33 +647,14 @@
                     </div>
                     <p class="text-sm text-gray-500 mt-2 hidden log-text" id="env-log">正在初始化環境數據模型...</p>
 
-                    <!-- 結果 -->
-                    <div id="env-result" class="hidden mt-6 p-6 bg-green-50 border border-green-200 rounded-lg animate-fade-in">
-                        <div class="flex items-center mb-4">
-                            <i class="fas fa-check-circle text-3xl text-green-600 mr-3"></i>
-                            <h3 class="text-xl font-bold text-green-800">運算完成：符合 SLL 利率減碼標準</h3>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                            <div class="bg-white p-4 rounded shadow-sm">
-                                <div class="text-sm text-gray-500">碳排強度降幅</div>
-                                <div class="text-2xl font-bold text-green-600">-6.2%</div>
-                                <div class="text-xs text-green-700 bg-green-100 px-2 py-1 rounded inline-block mt-1">目標: -5.0%</div>
-                            </div>
-                            <div class="bg-white p-4 rounded shadow-sm">
-                                <div class="text-sm text-gray-500">再生能源佔比</div>
-                                <div class="text-2xl font-bold text-green-600">12.5%</div>
-                                <div class="text-xs text-green-700 bg-green-100 px-2 py-1 rounded inline-block mt-1">目標: 10.0%</div>
-                            </div>
-                            <div class="bg-white p-4 rounded shadow-sm border-2 border-green-500">
-                                <div class="text-sm text-gray-500">預計利率減碼</div>
-                                <div class="text-3xl font-bold text-green-700">-15 <span class="text-sm">bps</span></div>
-                            </div>
-                        </div>
+                    <!-- 結果 (由 JS 動態生成) -->
+                    <div id="env-result" class="hidden mt-6 p-6 rounded-lg animate-fade-in border">
+                        <!-- Content injected by JS -->
                     </div>
                 </div>
             </div>
 
-            <!-- ================= HRDD (S-) 內容 ================= -->
+            <!-- ================= 3. HRDD (S-) 內容 ================= -->
             <div id="hrdd-content" class="content-card" data-content="hrdd">
                 <div class="flex justify-between items-end mb-4">
                     <div>
@@ -450,7 +674,7 @@
                     </div>
                     
                     <div class="p-4 space-y-4" id="risk-list">
-                        <!-- 這裡會由 JS 動態插入風險新聞 -->
+                        <!-- JS 動態插入 -->
                     </div>
                 </div>
 
@@ -476,7 +700,7 @@
                 </div>
             </div>
 
-            <!-- ================= SROI (S+) 內容 ================= -->
+            <!-- ================= 4. SROI (S+) 內容 ================= -->
             <div id="sroi-content" class="content-card" data-content="sroi">
                 <h2 class="text-2xl font-bold text-gray-800 mb-2">SROI 社會價值試算</h2>
                 <p class="text-gray-600 mb-6">輸入專案財務與非財務投入，即時預估社會投資報酬率 (SROI)。</p>
@@ -513,7 +737,6 @@
                     </div>
                 </div>
 
-                <!-- SROI 過程與結果 -->
                 <div class="mt-6">
                     <div class="progress-container" id="sroi-progress">
                         <div class="progress-bar bg-blue-600" style="width: 0%"></div>
@@ -567,50 +790,328 @@
 
     <script>
         // --- 核心邏輯 ---
-        
-        // 1. 全局變數宣告 (修正 Scope 問題)
-        let riskCount = 0;
+        let riskCount = 0; // 全局變數
+        let currentClientId = 'yingying'; // 追蹤當前客戶
+
+        // 1. 完整的客戶數據 (新增 SLL 運算結果設定)
         const clientData = {
             'yingying': { 
                 name: '盈盈水泥集團', 
+                industry: '建材製造',
                 cost: 5000000, 
                 benefit: 17000000, 
                 project: '盈才計畫 - 2025',
+                // Dashboard Metrics
+                riskScore: 25, 
+                riskLevel: 'low',
+                riskChange: '-33.8%',
+                riskDesc: '風險改善顯著，持續監測中。',
+                redFlags: 0,
+                envScore: 92,
+                envChange: '+1.5%',
+                sroiRatio: '1:3.4',
+                sroiChange: '+0.3',
+                // SLL Result (Environment Section)
+                sll: {
+                    status: 'success',
+                    title: '✅ 符合標準：利率減碼 -15bps',
+                    icon: 'fas fa-check-circle',
+                    color: 'green',
+                    reduction: '-15',
+                    msg: '環境承諾穩定兌現，且無重大 HRDD 風險。'
+                },
+                // Files (Simulation)
+                files: {
+                    iso: '盈盈水泥_2024_ISO14064_查證報告.pdf',
+                    power: '台電_2024_年度用電明細.csv'
+                },
+                // HRDD Risks
                 risks: [
-                    { id: 'risk-y1', title: '據傳工廠排放廢水導致農田污染', source: '匿名論壇 • 5小時前', desc: '網友爆料指出，某水泥廠區夜間偷排廢水。無具體證據。', cred: '中低 (30%)', type: 'low' },
+                    { id: 'risk-y1', title: '據傳工廠排放廢水導致農田污染', source: '匿名論壇 • 5小時前', desc: '網友爆料指出，某水泥廠區夜間偷排廢水。無具體證據。', cred: '低 (30%)', type: 'low' },
                     { id: 'risk-y2', title: '高雄廠區鷹架倒塌意外', source: 'XX 日報 • 1天前', desc: '昨日下午發生工安意外，造成兩名工人輕傷。', cred: '高 (90%)', type: 'high' }
-                ]
+                ],
+                chartData: [100, 120, 140, 160, 175] // Low Risk trend
             },
             'grandwheel': { 
                 name: '宏輪自行車集團', 
+                industry: '製造業',
                 cost: 8500000, 
                 benefit: 21000000, 
                 project: '零招聘費返還計畫',
+                // Dashboard Metrics
+                riskScore: 78,
+                riskLevel: 'high',
+                riskChange: '+15.2%',
+                riskDesc: '受 WRO 影響，風險指數飆升。',
+                redFlags: 2,
+                envScore: 88,
+                envChange: '-0.5%',
+                sroiRatio: '1:2.5',
+                sroiChange: '+0.1',
+                // SLL Result (Environment Section) - FAILURE
+                sll: {
+                    status: 'fail',
+                    title: '❌ 未符合標準：HRDD 風險過高',
+                    icon: 'fas fa-times-circle',
+                    color: 'red',
+                    reduction: '0',
+                    msg: '雖環境績效達標，但因 WRO 暫扣令風險，SLL 優惠暫停核發。'
+                },
+                files: {
+                    iso: '宏輪集團_2024_GHG_Inventory.pdf',
+                    power: 'GrandWheel_Power_Usage_2024.xlsx'
+                },
+                // HRDD Risks
                 risks: [
                     { id: 'risk-g1', title: '美國 CBP 發布暫扣令 (WRO)', source: '路透社 (Reuters) • 3小時前', desc: '指控供應鏈涉及移工「債務束縛」，要求宏輪說明招聘費結構。', cred: '極高 (99%)', type: 'high' },
                     { id: 'risk-g2', title: '移工宿舍環境遭投訴', source: '當地 NGO • 1週前', desc: '指稱宿舍擁擠且限制出入，不符合 RBA 標準。', cred: '中高 (75%)', type: 'high' }
-                ]
+                ],
+                chartData: [120, 100, 80, 60, 44] // High Risk trend
             },
             'tech_a': { 
                 name: '光華電子 (Tech A)', 
+                industry: '電子業',
                 cost: 12000000, 
                 benefit: 30000000, 
                 project: '供應鏈綠能轉型',
+                // Dashboard Metrics
+                riskScore: 65,
+                riskLevel: 'med',
+                riskChange: '-5.0%',
+                riskDesc: '旺季工時偏高，需注意過勞風險。',
+                redFlags: 1,
+                envScore: 95,
+                envChange: '+2.0%',
+                sroiRatio: '1:2.8',
+                sroiChange: '+0.2',
+                // SLL Result (Environment Section) - WARNING
+                sll: {
+                    status: 'warning',
+                    title: '⚠️ 觀察名單：利率維持不變',
+                    icon: 'fas fa-exclamation-circle',
+                    color: 'yellow',
+                    reduction: '0',
+                    msg: '環境績效優異，但需先改善勞工工時問題始能啟用優惠。'
+                },
+                files: {
+                    iso: 'TechA_ISO14064_Verification.pdf',
+                    power: 'TechA_GreenPower_Cert.pdf'
+                },
+                // HRDD Risks
                 risks: [
                     { id: 'risk-t1', title: '供應鏈疑似使用衝突礦產', source: '國際特赦組織 • 2天前', desc: '報告指出部分原料可能來自剛果衝突區域。', cred: '高 (80%)', type: 'high' },
                     { id: 'risk-t2', title: '旺季嚴重超時加班', source: '員工爆料 • 3小時前', desc: '產線員工指控連續上班 14 天未休假。', cred: '中 (60%)', type: 'medium' }
-                ]
+                ],
+                chartData: [60, 60, 64, 68, 70] // Medium Risk trend
             }
         };
 
-        // 2. 風險新聞渲染函數
+        // 2. 初始化與事件監聽
+        document.addEventListener('DOMContentLoaded', () => {
+            const clientSelect = document.getElementById('client-select');
+            
+            // 初始化載入
+            currentClientId = clientSelect.value;
+            updateAllData(currentClientId);
+
+            // 客戶切換事件
+            clientSelect.addEventListener('change', function() {
+                currentClientId = this.value;
+                updateAllData(currentClientId);
+            });
+        });
+
+        // 3. 核心更新函數 (Dashboard + Modules)
+        function updateAllData(clientId) {
+            const data = clientData[clientId];
+            if (!data) return;
+
+            // --- A. 更新儀表板 (Dashboard) ---
+            document.getElementById('dash-risk-score').innerHTML = `${data.riskScore}<span class="text-lg font-semibold text-gray-400">/100</span>`;
+            
+            // 風險顏色動態變化
+            const riskValue = document.getElementById('dash-risk-score');
+            const riskChange = document.getElementById('dash-risk-change');
+            
+            if (data.riskLevel === 'high') {
+                riskValue.className = 'kpi-value text-red-600';
+                riskChange.className = 'kpi-change text-negative';
+            } else if (data.riskLevel === 'med') {
+                riskValue.className = 'kpi-value text-yellow-600';
+                riskChange.className = 'kpi-change text-warning';
+            } else {
+                riskValue.className = 'kpi-value text-green-600'; // 低風險用綠色表示安全
+                riskChange.className = 'kpi-change text-positive';
+            }
+
+            document.getElementById('dash-risk-change').innerText = data.riskChange;
+            document.getElementById('dash-risk-desc').innerText = data.riskDesc;
+            document.getElementById('dash-red-flags').innerHTML = `${data.redFlags} <span class="text-lg font-semibold text-gray-400">件</span>`;
+            document.getElementById('dash-env-score').innerHTML = `${data.envScore}<span class="text-lg font-semibold text-gray-400">%</span>`;
+            document.getElementById('dash-env-change').innerText = data.envChange;
+            document.getElementById('dash-sroi-ratio').innerText = data.sroiRatio;
+            document.getElementById('dash-sroi-change').innerText = data.sroiChange;
+
+            // 繪製 SVG 圖表
+            renderChart(data.chartData, data.riskLevel);
+
+            // 更新儀表板警示列表 (前 2 條)
+            const alertList = document.getElementById('dashboard-alerts');
+            alertList.innerHTML = '';
+            data.risks.forEach(risk => {
+                const riskClass = risk.type === 'high' ? 'high-risk' : risk.type === 'medium' ? 'medium-risk' : 'low-risk';
+                const icon = risk.type === 'high' ? '<i class="fas fa-exclamation-triangle text-red-600"></i>' : 
+                             risk.type === 'medium' ? '<i class="fas fa-exclamation-circle text-amber-600"></i>' : '<i class="fas fa-info-circle text-green-600"></i>';
+                
+                const div = document.createElement('div');
+                div.className = `alert-card ${riskClass}`;
+                div.innerHTML = `
+                    <div class="alert-icon bg-white shadow-sm">${icon}</div>
+                    <div class="alert-content">
+                        <h4>${risk.title}</h4>
+                        <p>${risk.desc}</p>
+                        <div class="alert-meta">
+                            <span><i class="far fa-clock"></i> ${risk.source}</span>
+                        </div>
+                    </div>
+                `;
+                div.onclick = () => switchToHRDD(); // 點擊跳轉
+                alertList.appendChild(div);
+            });
+
+            // 更新投資組合表格 (Highlight 當前客戶)
+            renderPortfolioTable(clientId);
+
+            // --- B. 更新各模組數據 ---
+            
+            // 1. 環境 (E): 自動模擬上傳
+            simulateFileUpload('file-group-iso', data.files.iso);
+            simulateFileUpload('file-group-power', data.files.power);
+            
+            // 隱藏之前的運算結果，強迫使用者重新點擊運算
+            document.getElementById('env-result').className = 'hidden mt-6 p-6 rounded-lg animate-fade-in border';
+
+            // 2. SROI
+            document.getElementById('sroi-project-name').value = data.project;
+            const costInput = document.getElementById('sroi-cost');
+            const benefitInput = document.getElementById('sroi-benefit');
+            costInput.value = data.cost;
+            benefitInput.value = data.benefit;
+            updateSroi(); // 觸發計算
+
+            // 3. HRDD 新聞
+            renderRisks(clientId);
+        }
+
+        // 4. SVG Chart Renderer
+        function renderChart(dataPoints, riskLevel) {
+            const svgWidth = 600;
+            const svgHeight = 200; // Plot area height
+            const stepX = svgWidth / (dataPoints.length - 1);
+            
+            // 顏色設定
+            let color = riskLevel === 'high' ? '#b91c1c' : riskLevel === 'med' ? '#f59e0b' : '#059669';
+
+            // 生成 Path D
+            let pathD = `M 0 ${dataPoints[0]}`;
+            let areaD = `M 0 250 L 0 ${dataPoints[0]}`; // Start from bottom left
+
+            dataPoints.forEach((y, index) => {
+                if (index === 0) return;
+                const x = index * stepX;
+                pathD += ` L ${x} ${y}`;
+                areaD += ` L ${x} ${y}`;
+            });
+
+            areaD += ` L ${svgWidth} 250 Z`; // Close area at bottom right
+
+            // 更新 DOM
+            const linePath = document.getElementById('chart-line');
+            const areaPath = document.getElementById('chart-area');
+            const dotsGroup = document.getElementById('chart-dots');
+
+            linePath.setAttribute('d', pathD);
+            linePath.style.stroke = color;
+
+            areaPath.setAttribute('d', areaD);
+            areaPath.style.fill = color; 
+
+            // 更新點
+            dotsGroup.innerHTML = '';
+            dataPoints.forEach((y, index) => {
+                const x = index * stepX;
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('cx', x);
+                circle.setAttribute('cy', y);
+                circle.setAttribute('class', 'chart-dot');
+                circle.style.stroke = color;
+                const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+                title.textContent = `Score: ${Math.round(100 - (y/2))}`; 
+                circle.appendChild(title);
+                dotsGroup.appendChild(circle);
+            });
+        }
+
+        // 5. 檔案上傳模擬
+        function simulateFileUpload(elementId, filename) {
+            const group = document.getElementById(elementId);
+            const input = group.querySelector('input');
+            const feedback = group.querySelector('.file-feedback');
+            const nameSpan = feedback.querySelector('.filename');
+
+            // Reset first
+            group.classList.remove('uploaded');
+            feedback.style.display = 'none';
+            input.value = '';
+
+            // Simulate "Typing/Uploading" delay
+            setTimeout(() => {
+                input.value = filename;
+                group.classList.add('uploaded');
+                nameSpan.textContent = filename;
+                feedback.style.display = 'flex';
+            }, 500);
+        }
+
+        // 6. 渲染表格
+        function renderPortfolioTable(activeId) {
+            const tbody = document.getElementById('portfolio-table');
+            tbody.innerHTML = '';
+            
+            Object.keys(clientData).forEach(key => {
+                const c = clientData[key];
+                const isActive = key === activeId;
+                const riskBadgeClass = c.riskLevel === 'high' ? 'high' : c.riskLevel === 'med' ? 'med' : 'low';
+                const riskText = c.riskLevel === 'high' ? '高' : c.riskLevel === 'med' ? '中' : '低';
+                
+                const tr = document.createElement('tr');
+                if (isActive) tr.className = "bg-blue-50 border-l-4 border-l-blue-600";
+                
+                tr.innerHTML = `
+                    <td class="font-bold text-gray-900">${c.name}</td>
+                    <td>${c.industry}</td>
+                    <td><span class="risk-badge ${riskBadgeClass}">${c.riskScore} (${riskText})</span></td>
+                    <td class="text-green-600 font-semibold">${c.envScore}%</td>
+                    <td>${c.sroiRatio}</td>
+                    <td class="text-xs font-bold text-gray-500">正常履約</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // 7. 頁面跳轉邏輯
+        function switchToHRDD() {
+            const hrddBtn = document.querySelector('.tab-button[data-tab="hrdd"]');
+            if(hrddBtn) hrddBtn.click();
+        }
+
+        // 8. 風險新聞渲染 (HRDD Tab)
         function renderRisks(clientId) {
             const list = document.getElementById('risk-list');
             const data = clientData[clientId].risks;
-            list.innerHTML = ''; // 清空舊內容
+            list.innerHTML = ''; 
 
             data.forEach(risk => {
-                // 根據可信度設定顏色
                 let badgeClass = risk.type === 'high' ? 'text-red-600 bg-red-50' : 
                                  risk.type === 'medium' ? 'text-yellow-600 bg-yellow-50' : 'text-gray-600 bg-gray-100';
                 
@@ -637,14 +1138,14 @@
                 list.innerHTML += html;
             });
             
-            // 重置風險計分
-            riskCount = 0;
+            // 重置 HRDD 分數顯示
             const scoreDisplay = document.getElementById('risk-score-display');
-            scoreDisplay.textContent = "低風險";
-            scoreDisplay.className = "text-3xl font-bold text-green-600";
+            scoreDisplay.textContent = "待驗證";
+            scoreDisplay.className = "text-3xl font-bold text-gray-400";
+            riskCount = 0;
         }
 
-        // 3. Tab 切換邏輯
+        // 9. Tab 切換邏輯
         const tabs = document.querySelectorAll('.tab-button');
         const contents = document.querySelectorAll('.content-card');
 
@@ -664,56 +1165,22 @@
             });
         });
 
-        // 4. 檔案上傳回饋
-        document.querySelectorAll('.file-trigger').forEach(input => {
-            input.addEventListener('change', function() {
-                if (this.files && this.files[0]) {
-                    const feedback = this.nextElementSibling;
-                    const filenameSpan = feedback.querySelector('.filename');
-                    filenameSpan.textContent = this.files[0].name;
-                    feedback.style.display = 'flex';
-                    this.style.borderColor = 'var(--semantic-env)';
-                    this.style.backgroundColor = '#f0fdf4';
-                }
-            });
-        });
-
-        // 5. SROI 動態試算
-        const costInput = document.getElementById('sroi-cost');
-        const benefitInput = document.getElementById('sroi-benefit');
-        const sroiDisplay = document.getElementById('sroi-display');
-
+        // 10. SROI 計算
         function updateSroi() {
+            const costInput = document.getElementById('sroi-cost');
+            const benefitInput = document.getElementById('sroi-benefit');
+            const sroiDisplay = document.getElementById('sroi-display');
+            
             const c = parseFloat(costInput.value) || 1;
             const b = parseFloat(benefitInput.value) || 0;
             const ratio = (b / c).toFixed(2);
             sroiDisplay.textContent = `1 : ${ratio}`;
         }
+        
+        document.getElementById('sroi-cost').addEventListener('input', updateSroi);
+        document.getElementById('sroi-benefit').addEventListener('input', updateSroi);
 
-        costInput.addEventListener('input', updateSroi);
-        benefitInput.addEventListener('input', updateSroi);
-
-        // 6. 客戶選單切換 (整合所有連動)
-        const clientSelect = document.getElementById('client-select');
-        clientSelect.addEventListener('change', function() {
-            const data = clientData[this.value];
-            if (data) {
-                // 更新 SROI
-                document.getElementById('sroi-project-name').value = data.project;
-                costInput.value = data.cost;
-                benefitInput.value = data.benefit;
-                updateSroi();
-                
-                // 更新 HRDD 新聞
-                renderRisks(this.value);
-            }
-        });
-
-        // 初始化：預設載入第一個客戶的新聞
-        renderRisks(clientSelect.value);
-
-        // 7. HRDD 風險計分
-        // let riskCount = 0; // Moved to top
+        // 11. HRDD 驗證按鈕
         window.verifyRisk = function(elementId, isTrue) {
             const card = document.getElementById(elementId);
             const scoreDisplay = document.getElementById('risk-score-display');
@@ -725,7 +1192,7 @@
             } else {
                 card.classList.add('dismissed');
                 card.classList.remove('verified');
-                if (riskCount > 0 && card.classList.contains('verified')) riskCount--; // 簡單修正邏輯
+                if (riskCount > 0 && card.classList.contains('verified')) riskCount--;
             }
             
             if (riskCount > 0) {
@@ -740,7 +1207,7 @@
             btns.forEach(b => b.disabled = true);
         };
 
-        // 8. 模擬運算流程
+        // 12. 模擬運算流程 (包含差異化 SLL 結果)
         document.querySelectorAll('.process-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const type = this.dataset.type;
@@ -782,14 +1249,54 @@
                                              type === 'hrdd' ? '<i class="fas fa-file-contract mr-2"></i> 重新生成報告' :
                                              '<i class="fas fa-sync-alt mr-2"></i> 重新驗證';
                             resultDiv.classList.remove('hidden');
+                            
                             if (type === 'hrdd') document.getElementById('verified-count').textContent = riskCount;
+                            
+                            // *** 關鍵修改：差異化 SLL 結果 ***
+                            if (type === 'env') {
+                                const sllData = clientData[currentClientId].sll;
+                                const borderColor = sllData.color === 'green' ? 'border-green-200' : sllData.color === 'red' ? 'border-red-200' : 'border-yellow-200';
+                                const bgColor = sllData.color === 'green' ? 'bg-green-50' : sllData.color === 'red' ? 'bg-red-50' : 'bg-yellow-50';
+                                const textColor = sllData.color === 'green' ? 'text-green-800' : sllData.color === 'red' ? 'text-red-800' : 'text-yellow-800';
+                                const iconColor = sllData.color === 'green' ? 'text-green-600' : sllData.color === 'red' ? 'text-red-600' : 'text-yellow-600';
+                                
+                                resultDiv.className = `hidden mt-6 p-6 ${bgColor} border ${borderColor} rounded-lg animate-fade-in`;
+                                resultDiv.innerHTML = `
+                                    <div class="flex items-center mb-4">
+                                        <i class="${sllData.icon} text-3xl ${iconColor} mr-3"></i>
+                                        <h3 class="text-xl font-bold ${textColor}">${sllData.title}</h3>
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                                        <div class="bg-white p-4 rounded shadow-sm">
+                                            <div class="text-sm text-gray-500">碳排強度降幅</div>
+                                            <div class="text-2xl font-bold text-green-600">-6.2%</div>
+                                            <div class="text-xs text-green-700 bg-green-100 px-2 py-1 rounded inline-block mt-1">目標: -5.0%</div>
+                                        </div>
+                                        <div class="bg-white p-4 rounded shadow-sm">
+                                            <div class="text-sm text-gray-500">再生能源佔比</div>
+                                            <div class="text-2xl font-bold text-green-600">12.5%</div>
+                                            <div class="text-xs text-green-700 bg-green-100 px-2 py-1 rounded inline-block mt-1">目標: 10.0%</div>
+                                        </div>
+                                        <div class="bg-white p-4 rounded shadow-sm border-2 ${sllData.color === 'green' ? 'border-green-500' : 'border-gray-200'}">
+                                            <div class="text-sm text-gray-500">核定利率減碼</div>
+                                            <div class="text-3xl font-bold ${iconColor}">${sllData.reduction} <span class="text-sm">bps</span></div>
+                                        </div>
+                                    </div>
+                                    <p class="text-sm text-gray-600 mt-4 text-center border-t border-gray-200 pt-3">
+                                        <i class="fas fa-info-circle mr-1"></i> AI 審核意見：${sllData.msg}
+                                    </p>
+                                `;
+                                
+                                // 移除 hidden 類別以顯示
+                                resultDiv.classList.remove('hidden');
+                            }
                         }, 500);
                     }
                 }, 150);
             });
         });
 
-        // 9. 智慧客服邏輯
+        // 13. 智慧客服
         const chatToggle = document.getElementById('chat-toggle');
         const chatWindow = document.getElementById('chat-window');
         const chatMessages = document.getElementById('chat-messages');
