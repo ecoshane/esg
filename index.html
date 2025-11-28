@@ -3,22 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ecoshane 永續家 - ESG 策略與 SROI 價值顧問</title>
-    <!-- (已修改) 引用 Ecoshane Bank 的 Font Awesome -->
+    <title>Ecoshane 永續家 - ESG 策略與 SROI 價值顧問 (虛擬專案)</title>
+    <!-- 引用 Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
+        /* CSS Import 必須在最上方 */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
         /* 定義 CSS 變數 */
         :root {
-            --primary-blue: #0A1C3B;      /* 最深藍色 */
-            --secondary-blue: #11367D;    /* 次要深藍色 */
+            --primary-blue: #0A1C3B;       /* 最深藍色 */
+            --secondary-blue: #11367D;     /* 次要深藍色 */
             --text-color: #333;
             --background-light: #f8f9fa;
             --background-dark: #182848;
             --card-gradient-start: #4b6cb7;
             --card-gradient-end: #182848;
-            --accent-blue-light: #5a83cc; /* 新增用於按鈕和強調的亮藍色 */
-            /* (新增) 人權風險紅色 */
-            --warning-red: #cc2a2a; 
+            --accent-blue-light: #5a83cc; 
+            
+            /* 風險案例專用色系 */
+            --warning-red: #b91c1c; 
+            --risk-gradient-start: #b91c1c;
+            --risk-gradient-end: #7f1d1d;
         }
 
         * {
@@ -28,26 +34,21 @@
         }
 
         body {
-            /* (已修改) 統一字體 */
             font-family: 'Inter', 'Noto Sans TC', sans-serif;
             line-height: 1.6;
             color: var(--text-color);
             background-color: var(--background-light);
+            overflow-x: hidden;
         }
 
-        /* (新增) 載入 Inter 字體 */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-
-        /* 平滑滾動 */
         html {
             scroll-behavior: smooth;
         }
 
         /* 導航欄 */
         nav {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(10px);
-            padding: 1rem 0;
             position: fixed;
             width: 100%;
             top: 0;
@@ -56,18 +57,27 @@
             transition: all 0.3s ease;
         }
 
+        /* 頂部免責聲明條 */
+        .disclaimer-bar {
+            background-color: #1f2937;
+            color: #9ca3af;
+            text-align: center;
+            font-size: 0.75rem;
+            padding: 0.25rem;
+        }
+
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
-            font-size: 1.8rem;
-            font-weight: 900; /* (已修正) 加粗至 900 */
+            font-size: 1.5rem;
+            font-weight: 900; 
             color: var(--primary-blue);
             text-decoration: none;
             display: flex;
@@ -93,13 +103,11 @@
             transition: all 0.3s ease;
             padding: 0.5rem 1rem;
             border-radius: 25px;
-            position: relative;
         }
 
         .nav-links a:hover {
             color: var(--primary-blue);
             background: rgba(30, 58, 138, 0.1);
-            transform: translateY(-2px);
         }
 
         /* 主要內容區域 */
@@ -109,14 +117,22 @@
             margin: 0 auto;
             padding-left: 2rem;
             padding-right: 2rem;
+            opacity: 0; /* 預設隱藏，供 JS 觸發 */
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        /* 首頁區塊 (已修改) */
+        /* 首頁區塊 */
         .hero {
             background: linear-gradient(135deg, var(--secondary-blue) 0%, var(--primary-blue) 100%);
             color: white;
             text-align: center;
-            padding: 150px 2rem 100px;
+            padding: 180px 2rem 120px;
             margin-top: 0;
             position: relative;
         }
@@ -124,18 +140,18 @@
         .hero h1 {
             font-size: 3.5rem;
             margin-bottom: 1rem;
-            opacity: 0;
-            animation: fadeInUp 1s ease forwards;
+            /* 移除 opacity: 0 和 animation 以確保文字直接顯示 */
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
         .hero p {
             font-size: 1.3rem;
             margin-bottom: 2rem;
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.3s forwards;
+            /* 移除 opacity: 0 和 animation */
             text-align: center;
             max-width: 800px;
             margin: 0 auto 2rem;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
 
         .cta-button {
@@ -148,8 +164,7 @@
             font-weight: bold;
             transition: all 0.3s ease;
             display: inline-block;
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.6s forwards;
+            /* 移除 opacity: 0 和 animation */
         }
 
         .cta-button:hover {
@@ -178,18 +193,17 @@
             border-radius: 2px;
         }
 
-        /* 關於我們 - 新增卡片佈局 */
+        /* 關於我們 */
         .about-content {
             text-align: left;
             font-size: 1.2rem;
             line-height: 1.8;
-            margin-bottom: 2rem; /* 為了給下方的新區塊留空間 */
+            margin-bottom: 2rem; 
             color: #444;
         }
         
         .mission-grid {
             display: grid;
-            /* (已修改) 關於我們區塊改為三欄 */
             grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
             margin-top: 3rem;
@@ -200,7 +214,7 @@
             padding: 2.5rem;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            border-left: 5px solid var(--secondary-blue); /* 修正為深藍色 */
+            border-left: 5px solid var(--secondary-blue);
             transition: transform 0.3s ease;
         }
         
@@ -219,7 +233,7 @@
         }
 
         .mission-card h3 i {
-            color: var(--secondary-blue); /* 修正為深藍色 */
+            color: var(--secondary-blue);
             font-size: 2rem;
         }
         
@@ -228,14 +242,11 @@
             line-height: 1.7;
         }
 
-        /* (新增) HRDD 風險卡片樣式 */
+        /* HRDD 風險卡片樣式 */
         .mission-card.risk {
             border-left-color: var(--warning-red);
         }
-        .mission-card.risk h3 {
-            color: var(--warning-red);
-        }
-         .mission-card.risk h3 i {
+        .mission-card.risk h3, .mission-card.risk h3 i {
             color: var(--warning-red);
         }
         
@@ -246,7 +257,6 @@
 
         .services-grid {
             display: grid;
-            /* (已修改) 服務項目改為三欄 */
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
         }
@@ -258,9 +268,6 @@
             border-radius: 20px;
             text-align: left;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            /* (新增) 確保卡片等高 */
             display: flex;
             flex-direction: column;
         }
@@ -273,21 +280,17 @@
         .service-card h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            position: relative;
-            z-index: 2;
         }
 
-        /* (新增) 卡片內容佔滿剩餘空間 */
         .service-card-content {
             flex-grow: 1;
         }
 
-        /* (新增) HRDD 風險服務卡片 */
         .service-card.risk {
              background: linear-gradient(135deg, #d35a5a 0%, var(--warning-red) 100%);
         }
         
-        /* 成功案例區塊和卡片樣式 */
+        /* 成功案例區塊 */
         #portfolio {
             background: var(--background-dark);
         }
@@ -302,85 +305,111 @@
 
         .portfolio-grid {
             display: flex;
-            justify-content: center;
-            align-items: flex-start; /* 確保內容在頂部對齊 */
-            gap: 2rem;
+            flex-direction: column; /* 改為垂直排列 */
+            align-items: center;
+            gap: 3rem;
         }
 
         .portfolio-card {
-            background: #364966;
+            background: #364966; /* 預設背景 */
             color: white;
-            padding: 2.5rem 2rem;
+            padding: 3rem;
             border-radius: 20px;
             text-align: left;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            
-            /* 新增：Flexbox 實現左右佈局 */
             display: flex; 
             flex-direction: row; 
             gap: 40px; 
             justify-content: space-between; 
             align-items: stretch;
-            max-width: 900px; /* 增加案例卡片寬度以容納圖片 */
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        /* 風險案例卡片樣式 */
+        .portfolio-card.risk-case {
+            background: linear-gradient(135deg, var(--risk-gradient-start) 0%, var(--risk-gradient-end) 100%);
         }
 
         .portfolio-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
-        /* 新增：用於左側文字內容的容器 */
         .portfolio-content {
-            flex: 1; /* 讓文字內容區佔用可用空間 */
+            flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
         
-        /* 新增：用於圖片的樣式 */
         .portfolio-image {
-            width: 40%; /* 圖片佔用 40% 寬度 */
-            min-width: 250px; /* 圖片最小寬度，防止手機版太小 */
-            height: auto;
+            width: 40%;
+            min-width: 300px;
             border-radius: 15px;
-            object-fit: cover; /* 確保圖片填充容器並保持比例 */
+            object-fit: cover;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
 
-
         .portfolio-card h3 {
-            font-size: 1.5rem;
+            font-size: 2rem;
             margin-bottom: 1rem;
+            font-weight: 800;
         }
 
-        /* (已修改) 案例說明文字 */
+        .portfolio-tag {
+            display: inline-block;
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .tag-success { background: rgba(255,255,255,0.2); color: #a0d4ff; }
+        .tag-risk { background: rgba(255,255,255,0.2); color: #fca5a5; }
+
         .portfolio-description {
             margin-bottom: 1.5rem;
             font-size: 1.1rem;
-            line-height: 1.7;
+            line-height: 1.8;
+            opacity: 0.9;
         }
 
-        /* 下載按鈕樣式 (修正為藍色系) */
+        /* 按鈕群組 */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: auto;
+        }
+
         .download-button {
-            background: var(--accent-blue-light); 
+            background: rgba(255,255,255,0.15); 
             color: white;
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
+            padding: 10px 20px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 600;
             transition: all 0.3s ease;
-            font-size: 0.9rem;
-            text-align: center;
-            flex-grow: 1; 
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .download-button:hover {
-            background: var(--secondary-blue); /* Hover 時使用次要深藍色 */
-            transform: scale(1.05);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            background: white;
+            color: var(--primary-blue);
+            transform: translateY(-2px);
+        }
+        
+        /* 風險案例的按鈕 hover 效果 */
+        .portfolio-card.risk-case .download-button:hover {
+            color: var(--warning-red);
         }
         
         /* 聯絡我們 */
@@ -411,250 +440,176 @@
         .contact-item p a {
             color: white;
             text-decoration: underline;
-            transition: color 0.3s;
-        }
-
-        .contact-item p a:hover {
-            color: #d1d8e0;
         }
 
         /* 頁腳樣式 */
         .footer {
             background: var(--background-dark);
-            color: white;
+            color: #9ca3af;
             text-align: center;
-            padding: 2rem;
-            margin-top: 2rem;
+            padding: 3rem 2rem;
+            font-size: 0.9rem;
         }
 
-        /* 響應式設計 */
-        @media (max-width: 992px) {
-            /* (新增) RWD: 關於我們三欄改為單欄 */
-            .mission-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .nav-container {
-                padding: 0 1rem;
-            }
-
-            .logo {
-                font-size: 1.5rem;
-            }
-
-            .hero h1 {
-                font-size: 2.2rem;
-                white-space: pre-wrap;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-            
-            .contact-info {
-                flex-direction: column;
-            }
-            
-            /* RWD 調整：成功案例卡片變回上下排列 */
-            .portfolio-card {
-                flex-direction: column; 
-            }
-            .portfolio-image {
-                width: 100%; 
-                order: -1; /* 讓圖片回到頂部 */
-                margin-bottom: 20px;
-            }
-        }
-        
-        /* 聊天機器人相關 CSS */
+        /* 聊天機器人 */
         #chat-toggle {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 25px;
+            right: 25px;
             background: var(--primary-blue);
             color: white;
             border: none;
             border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            font-size: 24px;
+            width: 65px;
+            height: 65px;
+            font-size: 26px;
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             z-index: 1001;
-            /* (新增) icon 置中 */
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: transform 0.3s;
         }
+        #chat-toggle:hover { transform: scale(1.1); }
         
         #chat-window {
             position: fixed;
-            bottom: 90px;
-            right: 20px;
-            width: 320px;
-            height: 420px;
-            border: 1px solid #ccc;
-            border-radius: 12px;
+            bottom: 100px;
+            right: 25px;
+            width: 340px;
+            height: 480px;
+            border-radius: 16px;
             background: white;
             display: none;
             flex-direction: column;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.3s ease-in-out;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
             z-index: 1001;
+            overflow: hidden;
+            border: 1px solid #eee;
         }
         
-        #chat-window.show {
-            display: flex;
-            opacity: 1;
-            transform: translateY(0);
+        #chat-window.show { display: flex; animation: slideUp 0.3s ease; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        /* (新增) 聊天室標題列 */
         #chat-header {
             background: var(--primary-blue);
             color: white;
-            padding: 0.75rem 1rem;
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
+            padding: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        #chat-header h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        #chat-close {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.2rem;
-            cursor: pointer;
-            opacity: 0.8;
-            transition: opacity 0.2s;
-        }
-        #chat-close:hover {
-            opacity: 1;
-        }
-
-
         #chat-messages {
             flex: 1;
-            padding: 10px;
+            padding: 15px;
             overflow-y: auto;
-            /* (新增) 訊息flexbox設定 */
+            background: #f9fafb;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 12px;
         }
         
         .message {
-            padding: 8px 12px;
+            padding: 10px 14px;
             border-radius: 12px;
-            max-width: 80%; /* 修改為 80% */
-            word-wrap: break-word;
-            line-height: 1.4;
+            max-width: 85%;
+            font-size: 0.95rem;
+            line-height: 1.5;
         }
         
         .message.user {
-            background: #3b82f6;
+            background: var(--secondary-blue);
             color: white;
             align-self: flex-end;
-            border-bottom-right-radius: 4px; /* 營造對話框泡泡感 */
+            border-bottom-right-radius: 2px;
         }
         
         .message.bot {
-            background: #f1f1f1;
-            color: black;
+            background: white;
+            color: #333;
             align-self: flex-start;
-            border-bottom-left-radius: 4px; /* 營造對話框泡泡感 */
+            border-bottom-left-radius: 2px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
-        /* (新增) 聊天室風險警示文字 */
-        .chat-warning-red {
-            color: var(--warning-red);
-            font-weight: 600;
-        }
-        
-        .time {
-            font-size: 10px;
-            color: gray;
-            margin-top: 4px; /* 修改間距 */
-            text-align: right;
-        }
-        
-        .message.user .time {
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
-        #chat-input-container {
+        /* 快速回覆按鈕 */
+        .quick-replies {
             display: flex;
-            border-top: 1px solid #ccc;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 5px;
+        }
+        .quick-btn {
+            background: #eef2ff;
+            color: var(--secondary-blue);
+            border: 1px solid #c7d2fe;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .quick-btn:hover {
+            background: var(--secondary-blue);
+            color: white;
+        }
+
+        #chat-input-container {
+            padding: 15px;
+            border-top: 1px solid #eee;
+            display: flex;
+            background: white;
+            gap: 10px;
         }
         
         #chat-input {
             flex: 1;
-            padding: 12px; /* 修改 padding */
-            border: none;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
             outline: none;
-            font-size: 0.95rem;
         }
         
         #chat-send {
             background: var(--primary-blue);
             color: white;
             border: none;
-            padding: 0 1rem; /* 修改 padding */
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             cursor: pointer;
-            transition: background 0.3s;
-            font-size: 1.1rem; /* 加大 icon */
-        }
-        
-        #chat-send:hover {
-            background: var(--secondary-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* 動畫和滾動指示器 */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* RWD */
+        @media (max-width: 992px) {
+            .mission-grid { grid-template-columns: 1fr; }
+            .portfolio-card { flex-direction: column; }
+            .portfolio-image { width: 100%; height: 250px; order: -1; }
         }
-        .scroll-indicator {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: bounce 2s infinite;
-        }
-        .scroll-indicator::after {
-            content: '↓';
-            font-size: 2rem;
-            color: rgba(255, 255, 255, 0.8);
-        }
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-10px); }
-            60% { transform: translateX(-50%) translateY(-5px); }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.2rem; }
+            #chat-window { width: 90%; right: 5%; bottom: 100px; height: 60vh; }
         }
     </style>
 </head>
 
 <body>
     <nav id="navbar">
+        <!-- 免責聲明 -->
+        <div class="disclaimer-bar">
+            本網站內容純屬虛構，僅供永續金融教學演示使用。
+        </div>
         <div class="nav-container">
             <a href="#home" class="logo">
                 <i class="fas fa-chart-line logo-icon"></i> 
@@ -670,24 +625,20 @@
         </div>
     </nav>
 
-    <!-- (已修改) -->
     <section id="home" class="hero">
         <h1>實現可量化的永續價值</h1>
         <p>
             我們協助企業導入 SROI、人權盡職調查 HRDD 與 E&S 數據治理，將永續績效轉化為可驗證的金融資產，無縫對接 Ecoshane Bank 的永續連結貸款。
         </p>
         <a href="#contact" class="cta-button">預約免費諮詢</a>
-        <div class="scroll-indicator"></div>
     </section>
 
-    <!-- (已修改) -->
     <section id="about" class="section">
         <h2 class="section-title">我們的顧問使命</h2>
         <div class="about-content">
             <p>Ecoshane 永續家是 Ecoshane Bank 旗下的專業顧問部門。我們的使命是協助企業建立完整的 E&S（環境與社會）管理系統，將「環境績效」與「人權風險」轉化為可審核、可量化的金融指標 SPT，無縫對接銀行的永續連結貸款 SLL 機制。</p>
         </div>
         
-        <!-- (已修改) 關於我們區塊改為三欄 -->
         <div class="mission-grid">
             <div class="mission-card">
                 <h3><i class="fas fa-leaf"></i> 環境績效 E</h3>
@@ -695,123 +646,104 @@
             </div>
             <div class="mission-card">
                 <h3><i class="fas fa-hand-holding-usd"></i> 社會價值 S+</h3>
-                <p>我們的 SROI 評估模型<strong style="color: var(--secondary-blue);">遵循英國 SVI 框架</strong>，將「人力資本投入」、「公正轉型成本」等正面效益，轉化為<strong style="color: var(--secondary-blue);">國際認可的貨幣價值</strong>，作為 SLL 的社會績效指標。</p>
+                <p>我們的 SROI 評估模型<strong style="color: var(--secondary-blue);">遵循英國 SVI 框架</strong>，將「人力資本投入」、「公正轉型成本」等正面效益，轉化為<strong style="color: var(--secondary-blue);">國際認可的貨幣價值</strong>。</p>
             </div>
-            <!-- (新增) HRDD 風險卡片 -->
+            <!-- HRDD 風險卡片 -->
             <div class="mission-card risk">
                 <h3><i class="fas fa-shield-alt"></i> 人權風險 S-</h3>
-                <p>我們協助客戶導入<strong style="color: var(--warning-red);">人權盡職調查 HRDD</strong> 框架，建立有效的<strong style="color: var(--warning-red);">勞工申訴機制</strong>與供應鏈管理系統，將「避免傷害」的風險管理成效，納入 SLL 風險評估。</p>
+                <p>我們協助客戶導入<strong style="color: var(--warning-red);">人權盡職調查 HRDD</strong> 框架，建立有效的<strong style="color: var(--warning-red);">勞工申訴機制</strong>，將「避免傷害」的風險管理成效，納入 SLL 風險評估。</p>
             </div>
         </div>
         
-        <!-- SVI 認證區塊：強調文字已統一使用 Primary Blue -->
-        <div class="certification-block" style="text-align: center; margin-top: 4rem; padding: 2rem; background: #fff; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: all 0.6s ease;" data-animate="true">
+        <div class="certification-block" style="text-align: center; margin-top: 4rem; padding: 2rem; background: #fff; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
             <h3 style="color: var(--primary-blue); font-size: 1.8rem; margin-bottom: 1.5rem;"><i class="fas fa-certificate" style="margin-right: 10px; color: #f9a03f;"></i>國際公信力基礎：英國 SVI 框架</h3>
-            <p style="max-width: 800px; margin: 0 auto 1.5rem; font-size: 1.1rem; color: #555;">我們的社會投資報酬率 SROI 計算與報告方法，嚴格依循 <strong style="color: var(--primary-blue);">Social Value International SVI</strong> 所制定的<strong style="color: var(--primary-blue);">七大原則框架</strong>。確保所有評估結果在國際上具備最高度的<strong style="color: var(--primary-blue);">透明度、嚴謹性與公信力</strong>。</p>
-            <!-- 佔位圖用於模擬 SVI 合作夥伴/認證標誌 - 已將文字改為中文 -->
-            <img src="images/SVI.png" 
-                 alt="Social Value International Logo" 
-                 style="max-width: 180px; height: auto;">
+            <p style="max-width: 800px; margin: 0 auto; font-size: 1.1rem; color: #555;">我們的社會投資報酬率 SROI 計算與報告方法，嚴格依循 <strong style="color: var(--primary-blue);">Social Value International SVI</strong> 所制定的七大原則框架。確保所有評估結果在國際上具備最高度的透明度與公信力。</p>
         </div>
     </section>
 
-    <!-- (已修改) -->
     <section id="services" class="section services">
         <h2 class="section-title">核心服務：創造 ESG 的貨幣價值</h2>
         <div class="services-grid">
-            <!-- 服務 1 (E) -->
             <div class="service-card">
                 <i class="fas fa-smog text-4xl mb-4"></i>
                 <div class="service-card-content">
                     <h3>SLL 環境績效 E 輔導</h3>
-                    <p>為企業量身設計<strong style="color: #fff;">環境 SPTs</strong> 如碳排、能耗，輔導數據收集與確信，確保 SLL 環境指標的達成，自動觸發貸款利率減免。</p>
+                    <p>為企業量身設計環境 SPTs 如碳排、能耗，輔導數據收集與確信，確保 SLL 環境指標的達成。</p>
                 </div>
             </div>
-            <!-- 服務 2 (S+) -->
             <div class="service-card">
                 <i class="fas fa-calculator text-4xl mb-4"></i>
                 <div class="service-card-content">
                     <h3>SROI 社會價值 S+ 評估</h3>
-                    <p>採用<strong style="color: #fff;">英國 SVI 框架</strong>，將員工培訓、社區投入等專案，量化為具公信力的貨幣效益，納入 SLL 作為<strong style="color: #fff;">正面社會績效指標</strong>。</p>
+                    <p>採用英國 SVI 框架，將員工培訓等投入，量化為具公信力的貨幣效益，作為正面社會績效指標。</p>
                 </div>
             </div>
-            <!-- 服務 3 (S-) -->
             <div class="service-card risk">
                 <i class="fas fa-shield-alt text-4xl mb-4"></i>
                 <div class="service-card-content">
                     <h3>人權盡職調查 S- 導入</h3>
-                    <p>協助企業導入<strong style="color: #fff;">人權盡職調查 HRDD</strong>，建立勞工申訴平台與供應鏈風險地圖，將「零重大違規」納入 SLL 的<strong style="color: #fff;">關鍵風險否決指標</strong>。</p>
-                </div>
-            </div>
-            <!-- 服務 4 (G) -->
-            <div class="service-card">
-                <i class="fas fa-code-branch text-4xl mb-4"></i>
-                <div class="service-card-content">
-                    <h3>E&S 數據治理與 API 串接</h3>
-                    <p>輔導企業建立標準化 ESG 數據介面 Open API，實現<strong style="color: #fff;">環境績效</strong>與<strong style="color: #fff;">社會風險</strong>數據的自動化採集，無縫對接銀行驗證系統。</p>
-                </div>
-            </div>
-            <!-- 服務 5 (E) -->
-            <div class="service-card">
-                <i class="fas fa-wind text-4xl mb-4"></i>
-                <div class="service-card-content">
-                    <h3>碳盤查與減碳策略 SBTi</h3>
-                    <p>協助企業進行溫室氣體盤查 ISO 14064-1 與查證輔導，並制定符合科學基礎減量目標 SBTi 的具體減碳策略。</p>
-                </div>
-            </div>
-            <!-- 服務 6 (G) -->
-            <div class="service-card">
-                <i class="fas fa-book-open text-4xl mb-4"></i>
-                <div class="service-card-content">
-                    <h3>永續報告書 GRI/SASB 撰寫</h3>
-                    <p>專業團隊協助企業撰寫符合主管機關與 GRI/SASB 準則的永續報告書，並進行內部查核與預審，確保報告順利通過第三方查證。</p>
+                    <p>建立 HRDD 框架與勞工申訴平台，將「零重大違規」納入 SLL 的關鍵風險否決指標。</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- (已修改) -->
     <section id="portfolio" class="section">
-        <h2 class="section-title">成功案例</h2>
+        <h2 class="section-title">顧問輔導案例</h2>
         <div class="portfolio-grid">
+            
+            <!-- 案例 1: 盈盈水泥 (成功轉型) -->
             <div class="portfolio-card">
                 <div class="portfolio-content">
                     <div>
+                        <div class="portfolio-tag tag-success">公正轉型 SROI 輔導</div>
                         <h3>盈盈水泥集團</h3>
                         <p class="portfolio-description">
-                            <strong style="color: #a0d4ff;">輔導項目：</strong> 協助整合永續連結貸款，導入社會投資報酬率 SROI 評估、人權申訴機制與自動化數據治理。
-                            <br><br>
-                            <strong style="color: #a0d4ff;">專案成果：</strong> 達成碳排績效目標，社會投資報酬率 SROI 驗證達 1:3.4，並實現零重大勞工申訴的風險控管。成功協助客戶獲得 Ecoshane Bank 全方位永續貸款優惠 0.25%。
+                            <strong>挑戰：</strong> 高碳排產業面臨轉型壓力，且大量員工培訓成本無法被資本市場認可。<br>
+                            <strong>解方：</strong> 顧問團隊導入 SROI 評估，證明「盈才計畫」每投入 1 元創造 3.4 元社會價值。並建立自動化碳排數據 API。<br>
+                            <strong>成果：</strong> 成功獲得銀行 0.25% 利率減碼，並建立公正轉型典範。
                         </p>
                     </div>
-                    <div style="margin-top: 20px; display: flex; gap: 10px;">
-                        <a href="盈盈水泥SLL報告書.pdf" download class="download-button">下載 SLL 報告書</a>
-                        <a href="盈盈水泥輔導流程.pdf" download class="download-button">下載 輔導文件</a>
+                    <div class="button-group">
+                        <a href="#" class="download-button"><i class="fas fa-file-pdf"></i> SROI 評估報告</a>
+                        <a href="#" class="download-button"><i class="fas fa-chart-line"></i> 減碳成效表</a>
                     </div>
                 </div>
-                
-                <img src="images/ying-ying-cement.png" 
-                     alt="盈盈水泥集團專案形象圖" 
-                     class="portfolio-image" 
-                     onerror="this.onerror=null; this.src='https://placehold.co/400x300/364966/ffffff?text=盈盈水泥集團案例圖';" />
-
+                <img src="[Image of 水泥工廠]" alt="水泥工廠" class="portfolio-image" onerror="this.onerror=null; this.src='https://placehold.co/400x300/364966/ffffff?text=Cement+Factory';"/>
             </div>
+
+            <!-- 案例 2: 宏輪自行車 (風險防禦) -->
+            <div class="portfolio-card risk-case">
+                <div class="portfolio-content">
+                    <div>
+                        <div class="portfolio-tag tag-risk">HRDD 貿易合規救援</div>
+                        <!-- 修改標題：移除英文 -->
+                        <h3>宏輪自行車集團</h3>
+                        <p class="portfolio-description">
+                            <strong>挑戰：</strong> 遭美國海關 (CBP) 發布暫扣令 (WRO)，指控供應鏈涉及移工強迫勞動（債務束縛）。<br>
+                            <strong>解方：</strong> 顧問團隊緊急進駐，輔導建立「零招聘費政策」，執行第三方人權稽核 (Social Audit)，並協助撰寫 CBP 申訴報告。<br>
+                            <strong>成果：</strong> 成功建立合規防線，協助客戶爭取解除 WRO，保住數十億台幣的美國訂單。
+                        </p>
+                    </div>
+                    <div class="button-group">
+                        <a href="#" class="download-button"><i class="fas fa-balance-scale"></i> 零招聘費政策書</a>
+                        <a href="#" class="download-button"><i class="fas fa-file-contract"></i> HRDD 稽核摘要</a>
+                    </div>
+                </div>
+                <img src="" alt="自行車工廠" class="portfolio-image" onerror="this.onerror=null; this.src='https://placehold.co/400x300/b91c1c/ffffff?text=Bike+Factory';"/>
+            </div>
+
         </div>
     </section>
 
     <section id="contact" class="section contact">
         <h2 class="section-title" style="color: white;">聯絡我們</h2>
         <div class="contact-content">
-            <p>如果您對我們的服務有任何疑問或需求，歡迎隨時與我們聯繫。</p>
-
+            <p>如果您需要 SROI 評估或 HRDD 風險諮詢，歡迎聯繫。</p>
             <div class="contact-info">
                 <div class="contact-item">
                     <h3>電子郵件</h3>
                     <p><a href="mailto:ecoshane.esg@gmail.com">ecoshane.esg@gmail.com</a></p>
-                </div>
-                <div class="contact-item">
-                    <h3>聯絡電話</h3>
-                    <p>+886-2-1234-5678</p>
                 </div>
                 <div class="contact-item">
                     <h3>公司地址</h3>
@@ -823,217 +755,120 @@
 
     <footer class="footer">
         <p>© 2025 Ecoshane 永續家. All Rights Reserved.</p>
+        <p style="margin-top: 10px; font-size: 0.8rem; color: #6b7280;">
+            免責聲明：本網站為虛擬專案，文中提及之公司名稱（如宏輪自行車集團、盈盈水泥集團）與案例情境均為虛構，僅作為永續金融與人權盡職調查 (HRDD) 的教育用途演示。
+        </p>
     </footer>
 
-    <!-- (已修改) -->
+    <!-- 聊天機器人 (模擬版) -->
     <button id="chat-toggle"><i class="fas fa-robot"></i></button> 
     <div id="chat-window">
-        <!-- (新增) 聊天室標題列 -->
         <div id="chat-header">
             <h3>Ecoshane 永續客服</h3>
-            <button id="chat-close"><i class="fas fa-times"></i></button>
+            <button id="chat-close" style="background:none; border:none; color:white; cursor:pointer;"><i class="fas fa-times"></i></button>
         </div>
-        <div id="chat-messages"></div>
+        <div id="chat-messages">
+            <div class="message bot">
+                您好！我是 Ecoshane 顧問小幫手。請問您想了解哪方面的服務？
+                <div class="quick-replies">
+                    <button class="quick-btn" onclick="sendQuickMsg('如何解決 WRO 暫扣令？')">🛡️ WRO 解決方案</button>
+                    <button class="quick-btn" onclick="sendQuickMsg('SROI 是什麼？')">💰 SROI 介紹</button>
+                    <button class="quick-btn" onclick="sendQuickMsg('HRDD 輔導流程')">⚖️ HRDD 輔導</button>
+                </div>
+            </div>
+        </div>
         <div id="chat-input-container">
             <input type="text" id="chat-input" placeholder="輸入訊息..." />
             <button id="chat-send"><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
 
-    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1691.0.min.js"></script>
     <script>
-        // 網站導航和平滑滾動 JS
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const navHeight = document.getElementById('navbar').offsetHeight;
-                    const targetPosition = target.offsetTop - navHeight;
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // 導航欄背景透明度變化 JS
-        window.addEventListener('scroll', function() {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 100) {
-                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-            } else {
-                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-            }
-        });
-
-        // 區塊進入視窗時的動畫效果 JS
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
+        // 頁面滾動動畫與基本互動 JS
+        
+        // 1. 滾動淡入效果
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+                    entry.target.classList.add('visible');
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
 
-        // 將動畫效果應用於所有卡片和新的認證區塊
-        document.querySelectorAll('.portfolio-card, .service-card, .mission-card, .contact-item, .certification-block[data-animate="true"]').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.6s ease';
-            observer.observe(el);
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
         });
 
-        // Lex Chatbot Class
-        class LexChatbot {
-            constructor() {
-                this.chatToggle = document.getElementById('chat-toggle');
-                this.chatWindow = document.getElementById('chat-window');
-                this.chatClose = document.getElementById('chat-close'); // (新增) 關閉按鈕
-                this.chatMessages = document.getElementById('chat-messages');
-                this.chatInput = document.getElementById('chat-input');
-                this.chatSend = document.getElementById('chat-send');
-
-                this.hasWelcomed = false;
-                this.chatToggle.addEventListener('click', () => this.toggleChat());
-                this.chatClose.addEventListener('click', () => this.toggleChat(false)); // (新增) 關閉事件
-                this.chatSend.addEventListener('click', () => this.sendMessage());
-                this.chatInput.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') this.sendMessage();
-                });
-
-                this.initAWS();
+        // 2. 導航欄透明度
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.style.boxShadow = "0 4px 20px rgba(0,0,0,0.1)";
+            } else {
+                nav.style.boxShadow = "none";
             }
+        });
 
-            initAWS() {
-                // *** 注意：此處的 AWS 配置參數僅為範例，實際使用需替換為您自己的 Lex V2/Cognito 資訊 ***
-                AWS.config.region = 'us-east-1'; 
-                AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                    IdentityPoolId: 'us-east-1:05eec0e5-0c38-45a1-8a36-729ffb25c03d' 
-                });
+        // 3. 聊天機器人邏輯 (模擬版，不需 API Key)
+        const chatToggle = document.getElementById('chat-toggle');
+        const chatWindow = document.getElementById('chat-window');
+        const chatClose = document.getElementById('chat-close');
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const chatSend = document.getElementById('chat-send');
 
-                this.lexRuntime = new AWS.LexRuntimeV2();
-                this.botId = 'BLNBE1X3XG';
-                this.botAliasId = 'TSTALIASID';
-                this.localeId = 'en_US';
-                this.sessionId = Date.now().toString();
-            }
+        chatToggle.addEventListener('click', () => {
+            chatWindow.classList.add('show');
+        });
+        
+        chatClose.addEventListener('click', () => {
+            chatWindow.classList.remove('show');
+        });
 
-            // (已修改) toggleChat 邏輯
-            toggleChat(forceShow = null) {
-                const isHidden = this.chatWindow.classList.contains('show');
-                
-                // 決定要顯示還是隱藏
-                const show = forceShow !== null ? forceShow : !isHidden;
-
-                if (show) {
-                    this.chatWindow.style.display = 'flex';
-                    setTimeout(() => this.chatWindow.classList.add('show'), 10);
-
-                    if (!this.hasWelcomed) {
-                        // (已修改) 首次開啟的歡迎語
-                        this.addMessage("您好！我是 Ecoshane 永續客服。我可以回答關於 SLL 輔導、SROI 評估或人權盡職調查 HRDD 的問題。", 'bot');
-                        this.hasWelcomed = true;
-                    }
-                } else {
-                    this.chatWindow.classList.remove('show');
-                    setTimeout(() => this.chatWindow.style.display = 'none', 300);
-                }
-            }
-
-            async sendMessage() {
-                const text = this.chatInput.value.trim();
-                if (!text) return;
-
-                this.addMessage(text, 'user');
-                this.chatInput.value = '';
-
-                try {
-                    const params = {
-                        botId: this.botId,
-                        botAliasId: this.botAliasId,
-                        localeId: this.localeId,
-                        sessionId: this.sessionId,
-                        text: text
-                    };
-
-                    const response = await this.lexRuntime.recognizeText(params).promise();
-
-                    if (response.messages && response.messages.length > 0) {
-                        response.messages.forEach(msg => {
-                            this.addMessage(msg.content, 'bot');
-                        });
-                    } else {
-                        // (已修改) 備用回覆
-                        this.addMessage("抱歉，我沒有理解你的問題。你可以試試輸入: SROI是什麼? 或 HRDD是什麼?", 'bot');
-                    }
-                } catch (err) {
-                    console.error('Lex V2 Error:', err);
-                    this.addMessage("系統暫時無法使用，請稍後再試或直接聯繫我們。", 'bot');
-                }
-            }
-
-            addMessage(text, type) {
-                const message = document.createElement('div');
-                message.className = `message ${type}`;
-                const time = new Date().toLocaleTimeString('zh-TW', {
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-
-                // (已修改) 處理機器人風險回覆：移除括號
-                if (type === 'bot' && (text.includes("HRDD") || text.includes("人權"))) {
-                     text = text.replace(/人權盡職調查 HRDD/g, '<strong class="chat-warning-red">人權盡職調查 HRDD</strong>')
-                                .replace(/風險否決指標/g, '<strong class="chat-warning-red">風險否決指標</strong>');
-                }
-
-
-                if (type === 'bot') {
-                    // 模擬打字效果 for bot message
-                    let i = 0;
-                    const contentDiv = document.createElement('div');
-                    const timeDiv = document.createElement('div');
-                    timeDiv.className = "time";
-                    timeDiv.innerText = time;
-                    message.appendChild(contentDiv);
-                    message.appendChild(timeDiv);
-                    this.chatMessages.appendChild(message);
-
-                    const typing = setInterval(() => {
-                        // 打字效果 (簡易版，不處理 HTML 標籤)
-                        if (text.includes('<strong')) {
-                            contentDiv.innerHTML = text; // 如果有 HTML，直接顯示
-                            clearInterval(typing);
-                        } else {
-                            contentDiv.innerText = text.substring(0, i);
-                            i++;
-                            if (i > text.length) {
-                                clearInterval(typing);
-                                contentDiv.innerText = text;
-                            }
-                        }
-                        this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
-                    }, 30); // 加快打字速度
-                } else {
-                    // 一般用戶訊息
-                    message.innerHTML = `<div>${text}</div><div class="time">${time}</div>`;
-                    this.chatMessages.appendChild(message);
-                }
-
-                this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
-            }
+        function addMessage(text, sender) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `message ${sender}`;
+            msgDiv.innerHTML = text; // 允許 HTML
+            chatMessages.appendChild(msgDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            new LexChatbot();
+        function botReply(userText) {
+            let reply = "抱歉，我不太理解。您可以詢問關於 SROI、HRDD 或 WRO 的問題。";
+            const text = userText.toLowerCase();
+
+            if (text.includes('wro') || text.includes('暫扣') || text.includes('宏輪')) {
+                reply = "針對 WRO 暫扣令，我們建議立即啟動<strong style='color:#b91c1c'>第三方人權稽核</strong>，並實施「零招聘費」政策。我們的顧問曾協助宏輪集團撰寫申訴報告，成功爭取解除暫扣。";
+            } else if (text.includes('sroi') || text.includes('社會價值')) {
+                reply = "SROI (社會投資報酬率) 能將無形的社會影響力（如員工福祉）貨幣化。我們採用英國 SVI 標準，數據具備國際公信力。";
+            } else if (text.includes('hrdd') || text.includes('人權')) {
+                reply = "HRDD (人權盡職調查) 是識別供應鏈風險的關鍵。我們會協助您建立勞工申訴管道，符合國際供應鏈法規。";
+            }
+
+            setTimeout(() => {
+                addMessage(reply, 'bot');
+            }, 800);
+        }
+
+        function handleSend() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+            addMessage(text, 'user');
+            chatInput.value = '';
+            botReply(text);
+        }
+
+        // 全局函數供快速按鈕使用
+        window.sendQuickMsg = function(text) {
+            addMessage(text, 'user');
+            botReply(text);
+        }
+
+        chatSend.addEventListener('click', handleSend);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleSend();
         });
+
     </script>
 </body>
 </html>
