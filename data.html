@@ -85,7 +85,7 @@
             opacity: 1;
         }
 
-        /* 儀表板組件樣式 (已統一顏色) */
+        /* 儀表板組件樣式 */
         .kpi-card { 
             background-color: white; 
             border-radius: 0.75rem; 
@@ -99,7 +99,6 @@
             position: relative;
             overflow: hidden;
         }
-        /* 統一使用品牌次要色作為側邊裝飾條 */
         .kpi-card::before {
             content: '';
             position: absolute;
@@ -109,14 +108,12 @@
             height: 100%;
             background-color: var(--brand-secondary); 
         }
-
         .kpi-card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
         
         .kpi-title { font-size: 0.875rem; font-weight: 600; color: #6b7280; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center; padding-left: 0.5rem; }
         .kpi-value { font-size: 2.25rem; font-weight: 800; color: #1f2937; line-height: 1.1; padding-left: 0.5rem; } 
         .kpi-change { font-size: 0.875rem; font-weight: 600; margin-top: 0.25rem; display: flex; align-items: center; padding-left: 0.5rem; }
         
-        /* 文字顏色保留功能語意 */
         .text-positive { color: var(--semantic-env); } 
         .text-negative { color: var(--semantic-risk); } 
         .text-warning { color: var(--warning-yellow); }
@@ -160,7 +157,6 @@
         .chart-dot:hover {
             r: 9;
         }
-        /* 網格線 */
         .chart-grid line {
             stroke: #f3f4f6;
             stroke-width: 1;
@@ -170,7 +166,7 @@
             fill: #9ca3af;
         }
 
-        /* 優化版警示列表 */
+        /* 警示卡片 */
         .alert-card {
             display: flex;
             align-items: start;
@@ -269,18 +265,18 @@
             text-decoration: line-through;
         }
 
-        /* 檔案上傳回饋 (已上傳狀態) */
+        /* 檔案上傳回饋 */
         .file-input-group.uploaded .form-input {
             border-color: var(--semantic-env);
             background-color: #f0fdf4;
             color: #166534;
-            pointer-events: none; /* 模擬已鎖定 */
+            pointer-events: none;
         }
         .file-feedback {
             font-size: 0.875rem;
             color: var(--semantic-env);
             margin-top: 0.5rem;
-            display: none; /* JS控制 */
+            display: none; 
             align-items: center;
             font-weight: 600;
         }
@@ -510,20 +506,16 @@
                         <h3 class="text-lg font-bold text-gray-800 mb-3">風險分數趨勢</h3>
                         <div class="chart-container">
                             <svg class="chart-svg" viewBox="0 0 600 250" preserveAspectRatio="none">
-                                <!-- 網格 -->
                                 <g class="chart-grid">
                                     <line x1="0" y1="50" x2="600" y2="50" />
                                     <line x1="0" y1="100" x2="600" y2="100" />
                                     <line x1="0" y1="150" x2="600" y2="150" />
                                     <line x1="0" y1="200" x2="600" y2="200" />
                                 </g>
-                                <!-- Y軸標籤 -->
                                 <text x="10" y="20" class="chart-axis-text">100</text>
                                 <text x="10" y="240" class="chart-axis-text">0</text>
-                                <!-- 動態路徑 (Area & Line) -->
                                 <path id="chart-area" class="chart-area-path" />
                                 <path id="chart-line" class="chart-line-path" />
-                                <!-- 互動點 (由 JS 生成) -->
                                 <g id="chart-dots"></g>
                             </svg>
                         </div>
@@ -536,7 +528,7 @@
                     </div>
                 </section>
 
-                <!-- 客戶列表表格 (Portfolio View) -->
+                <!-- 客戶列表表格 -->
                 <section>
                     <h3 class="text-lg font-bold text-gray-800 mb-3">投資組合概覽</h3>
                     <div class="overflow-x-auto rounded-lg border border-gray-200">
@@ -790,10 +782,10 @@
 
     <script>
         // --- 核心邏輯 ---
-        let riskCount = 0; // 全局變數
-        let currentClientId = 'yingying'; // 追蹤當前客戶
+        let riskCount = 0; 
+        let currentClientId = 'yingying'; 
 
-        // 1. 完整的客戶數據 (新增 SLL 運算結果設定)
+        // 1. 完整的客戶數據 (新增差異化 SLL 數據)
         const clientData = {
             'yingying': { 
                 name: '盈盈水泥集團', 
@@ -801,39 +793,37 @@
                 cost: 5000000, 
                 benefit: 17000000, 
                 project: '盈才計畫 - 2025',
-                // API Mock Data
                 apiData: { power: '1,240', carbon: '0.48' },
-                // Dashboard Metrics
+                // Dashboard
                 riskScore: 25, 
                 riskLevel: 'low',
                 riskChange: '-33.8%',
                 riskDesc: '風險改善顯著，持續監測中。',
-                riskColor: 'text-green-600',
                 redFlags: 0,
                 envScore: 92,
                 envChange: '+1.5%',
                 sroiRatio: '1:3.4',
                 sroiChange: '+0.3',
-                // SLL Result (Environment Section)
+                // SLL Result - Success
                 sll: {
                     status: 'success',
                     title: '✅ 符合標準：利率減碼 -15bps',
-                    icon: 'fas fa-check-circle',
                     color: 'green',
                     reduction: '-15',
-                    msg: '環境承諾穩定兌現，且無重大 HRDD 風險。'
+                    msg: '環境承諾穩定兌現，且無重大 HRDD 風險。',
+                    // Specific Env Data for Yingying
+                    carbonVal: '-6.2%', carbonTarget: '-5.0%',
+                    renewableVal: '12.5%', renewableTarget: '10.0%'
                 },
-                // Files (Simulation)
                 files: {
                     iso: '盈盈水泥_2024_ISO14064_查證報告.pdf',
                     power: '台電_2024_年度用電明細.csv'
                 },
-                // HRDD Risks
                 risks: [
                     { id: 'risk-y1', title: '據傳工廠排放廢水導致農田污染', source: '匿名論壇 • 5小時前', desc: '網友爆料指出，某水泥廠區夜間偷排廢水。無具體證據。', cred: '低 (30%)', type: 'low' },
                     { id: 'risk-y2', title: '高雄廠區鷹架倒塌意外', source: 'XX 日報 • 1天前', desc: '昨日下午發生工安意外，造成兩名工人輕傷。', cred: '高 (90%)', type: 'high' }
                 ],
-                chartData: [100, 120, 140, 160, 175] // Low Risk trend
+                chartData: [100, 120, 140, 160, 175] 
             },
             'grandwheel': { 
                 name: '宏輪自行車集團', 
@@ -841,38 +831,37 @@
                 cost: 8500000, 
                 benefit: 21000000, 
                 project: '零招聘費返還計畫',
-                // API Mock Data
                 apiData: { power: '850', carbon: '0.32' },
-                // Dashboard Metrics
+                // Dashboard
                 riskScore: 78,
                 riskLevel: 'high',
                 riskChange: '+15.2%',
                 riskDesc: '受 WRO 影響，風險指數飆升。',
-                riskColor: 'text-red-600',
                 redFlags: 2,
                 envScore: 88,
                 envChange: '-0.5%',
                 sroiRatio: '1:2.5',
                 sroiChange: '+0.1',
-                // SLL Result (Environment Section) - FAILURE
+                // SLL Result - Fail
                 sll: {
                     status: 'fail',
                     title: '❌ 未符合標準：HRDD 風險過高',
-                    icon: 'fas fa-times-circle',
                     color: 'red',
                     reduction: '0',
-                    msg: '雖環境績效達標，但因 WRO 暫扣令風險，SLL 優惠暫停核發。'
+                    msg: '雖環境績效達標，但因 WRO 暫扣令風險，SLL 優惠暫停核發。',
+                    // Specific Env Data for GrandWheel
+                    carbonVal: '-3.1%', carbonTarget: '-3.0%',
+                    renewableVal: '6.2%', renewableTarget: '5.0%'
                 },
                 files: {
                     iso: '宏輪集團_2024_GHG_Inventory.pdf',
                     power: 'GrandWheel_Power_Usage_2024.xlsx'
                 },
-                // HRDD Risks
                 risks: [
                     { id: 'risk-g1', title: '美國 CBP 發布暫扣令 (WRO)', source: '路透社 (Reuters) • 3小時前', desc: '指控供應鏈涉及移工「債務束縛」，要求宏輪說明招聘費結構。', cred: '極高 (99%)', type: 'high' },
                     { id: 'risk-g2', title: '移工宿舍環境遭投訴', source: '當地 NGO • 1週前', desc: '指稱宿舍擁擠且限制出入，不符合 RBA 標準。', cred: '中高 (75%)', type: 'high' }
                 ],
-                chartData: [120, 100, 80, 60, 44] // High Risk trend
+                chartData: [120, 100, 80, 60, 44] 
             },
             'tech_a': { 
                 name: '光華電子 (Tech A)', 
@@ -880,38 +869,37 @@
                 cost: 12000000, 
                 benefit: 30000000, 
                 project: '供應鏈綠能轉型',
-                // API Mock Data
                 apiData: { power: '3,420', carbon: '1.25' },
-                // Dashboard Metrics
+                // Dashboard
                 riskScore: 65,
                 riskLevel: 'med',
                 riskChange: '-5.0%',
                 riskDesc: '旺季工時偏高，需注意過勞風險。',
-                riskColor: 'text-yellow-600',
                 redFlags: 1,
                 envScore: 95,
                 envChange: '+2.0%',
                 sroiRatio: '1:2.8',
                 sroiChange: '+0.2',
-                // SLL Result (Environment Section) - WARNING
+                // SLL Result - Warning
                 sll: {
                     status: 'warning',
                     title: '⚠️ 觀察名單：利率維持不變',
-                    icon: 'fas fa-exclamation-circle',
                     color: 'yellow',
                     reduction: '0',
-                    msg: '環境績效優異，但需先改善勞工工時問題始能啟用優惠。'
+                    msg: '環境績效優異，但需先改善勞工工時問題始能啟用優惠。',
+                    // Specific Env Data for Tech A
+                    carbonVal: '-8.5%', carbonTarget: '-5.0%',
+                    renewableVal: '42.0%', renewableTarget: '20.0%'
                 },
                 files: {
                     iso: 'TechA_ISO14064_Verification.pdf',
                     power: 'TechA_GreenPower_Cert.pdf'
                 },
-                // HRDD Risks
                 risks: [
                     { id: 'risk-t1', title: '供應鏈疑似使用衝突礦產', source: '國際特赦組織 • 2天前', desc: '報告指出部分原料可能來自剛果衝突區域。', cred: '高 (80%)', type: 'high' },
                     { id: 'risk-t2', title: '旺季嚴重超時加班', source: '員工爆料 • 3小時前', desc: '產線員工指控連續上班 14 天未休假。', cred: '中 (60%)', type: 'medium' }
                 ],
-                chartData: [60, 60, 64, 68, 70] // Medium Risk trend
+                chartData: [60, 60, 64, 68, 70] 
             }
         };
 
@@ -1282,13 +1270,13 @@
                                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
                                         <div class="bg-white p-4 rounded shadow-sm">
                                             <div class="text-sm text-gray-500">碳排強度降幅</div>
-                                            <div class="text-2xl font-bold text-green-600">-6.2%</div>
-                                            <div class="text-xs text-green-700 bg-green-100 px-2 py-1 rounded inline-block mt-1">目標: -5.0%</div>
+                                            <div class="text-2xl font-bold text-green-600">${sllData.carbonVal}</div>
+                                            <div class="text-xs text-green-700 bg-green-100 px-2 py-1 rounded inline-block mt-1">目標: ${sllData.carbonTarget}</div>
                                         </div>
                                         <div class="bg-white p-4 rounded shadow-sm">
                                             <div class="text-sm text-gray-500">再生能源佔比</div>
-                                            <div class="text-2xl font-bold text-green-600">12.5%</div>
-                                            <div class="text-xs text-green-700 bg-green-100 px-2 py-1 rounded inline-block mt-1">目標: 10.0%</div>
+                                            <div class="text-2xl font-bold text-green-600">${sllData.renewableVal}</div>
+                                            <div class="text-xs text-green-700 bg-green-100 px-2 py-1 rounded inline-block mt-1">目標: ${sllData.renewableTarget}</div>
                                         </div>
                                         <div class="bg-white p-4 rounded shadow-sm border-2 ${sllData.color === 'green' ? 'border-green-500' : 'border-gray-200'}">
                                             <div class="text-sm text-gray-500">核定利率減碼</div>
