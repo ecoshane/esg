@@ -568,7 +568,8 @@
     <script>
         // --- 核心邏輯 ---
         
-        // 1. 客戶資料與動態新聞庫 (Dynamic Data)
+        // 1. 全局變數宣告 (修正 Scope 問題)
+        let riskCount = 0;
         const clientData = {
             'yingying': { 
                 name: '盈盈水泥集團', 
@@ -712,7 +713,7 @@
         renderRisks(clientSelect.value);
 
         // 7. HRDD 風險計分
-        let riskCount = 0;
+        // let riskCount = 0; // Moved to top
         window.verifyRisk = function(elementId, isTrue) {
             const card = document.getElementById(elementId);
             const scoreDisplay = document.getElementById('risk-score-display');
